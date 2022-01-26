@@ -1,9 +1,4 @@
 package cc.carm.plugin.easysql;
 
-public class EasySQL {
-
-
-
-
-
+public class EasySQLBukkit {
 }

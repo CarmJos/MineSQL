@@ -1,4 +1,4 @@
-package cc.carm.plugin.easysql.velocity;
+package cc.carm.plugin.easysql;
 
 
 import com.google.inject.Inject;
@@ -11,15 +11,15 @@ import java.util.logging.Logger;
 		description = "",
 		url = "https://github.com/CarmJos/EasySQL-Plugin", authors = "CarmJos"
 )
-public class EasySQLPlugin {
+public class EasySQLVelocity {
 
-	private static EasySQLPlugin instance;
+	private static EasySQLVelocity instance;
 
 	private final ProxyServer server;
 	private final Logger logger;
 
 	@Inject
-	public EasySQLPlugin(ProxyServer server, Logger logger) {
+	public EasySQLVelocity(ProxyServer server, Logger logger) {
 		instance = this;
 		this.server = server;
 		this.logger = logger;
@@ -27,7 +27,7 @@ public class EasySQLPlugin {
 	}
 
 
-	public static EasySQLPlugin getInstance() {
+	public static EasySQLVelocity getInstance() {
 		return instance;
 	}
 
