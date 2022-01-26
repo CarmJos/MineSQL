@@ -45,7 +45,9 @@ jobs:
 
       - name: "Javadoc Deploy Staging"
         run: |
+          rm -rf docs
           mkdir -vp docs
+          cp -vrf api-docs/* docs/
           cp -vrf .documentation/JAVADOC-README.md docs/README.md
 
       - name: "Generate the Javadoc sitemap"
