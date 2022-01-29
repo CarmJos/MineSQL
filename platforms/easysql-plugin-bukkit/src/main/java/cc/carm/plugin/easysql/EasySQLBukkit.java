@@ -5,6 +5,7 @@ import cc.carm.lib.easysql.manager.SQLManagerImpl;
 import cc.carm.plugin.easysql.api.EasySQLAPI;
 import cc.carm.plugin.easysql.api.EasySQLPluginPlatform;
 import cn.beecp.BeeDataSource;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -48,6 +49,7 @@ public class EasySQLBukkit extends JavaPlugin implements EasySQLPluginPlatform, 
     @Override
     public void onEnable() {
         setup();  // 在特定情况下 Bukkit 可能不会调用 onLoad 函数
+        Bukkit.getPluginManager().registerEvents(this,this);
     }
 
     @Override
