@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class EasySQLAPI {
 
-	public static @Nullable SQLManager getSQLManager(@Nullable String database) {
+	public static @Nullable SQLManager getSQLManager(@Nullable String name) {
 		return null;
 	}
 
