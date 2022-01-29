@@ -47,14 +47,6 @@
             <version>2.2.1</version>
             <scope>compile</scope>
         </dependency>
-
-        <dependency>
-            <groupId>cc.carm.lib</groupId>
-            <artifactId>easyplugin-main</artifactId>
-            <optional>true</optional>
-            <scope>compile</scope>
-        </dependency>
-
     </dependencies>
 
     <build>
