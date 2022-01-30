@@ -38,6 +38,7 @@ public class EasySQLBukkit extends JavaPlugin implements EasySQLPluginPlatform, 
                 this.register(this, instanceName, sqlManager);
             }
         }
+        // 获取指定UUID的玩家的盔甲
         setup = true;
     }
 

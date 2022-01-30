@@ -112,12 +112,10 @@ public class EasySQLManager implements EasySQLAPI {
     @Override
     public void unregisterSQLManager(@NotNull String name) {
         LOCK.lock();
-        // 先清除命名空间
-        this.sqlManagerRegistry.remove(name);
-        // 再清除名称
         for (Map.Entry<String, Set<String>> stringSetEntry : this.nameSpaceRegistry.entrySet()) {
             stringSetEntry.getValue().remove(name);
         }
+        this.nameSpaceRegistry.entrySet().removeIf(stringSetEntry -> stringSetEntry.getValue().isEmpty());
         LOCK.unlock();
     }
 
