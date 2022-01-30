@@ -29,7 +29,7 @@ public class EasySQLBukkit extends JavaPlugin implements EasySQLPluginPlatform, 
         if (instancesConfig != null) {
             for (String instanceName : instancesConfig.getKeys(false)) {
                 SQLManager sqlManager = new SQLManagerImpl(
-                        new BeeDataSource("mysql"
+                        new BeeDataSource("com.mysql.jdbc.Driver"
                                 , instancesConfig.getString("url")
                                 , instancesConfig.getString("username")
                                 , instancesConfig.getString("password")

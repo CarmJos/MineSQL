@@ -42,7 +42,7 @@ public class EasySQLBungee extends Plugin implements EasySQLPluginPlatform {
         apiImpl = new EasySQLManager(this);
         saveDefaultConfig();
         // 读取配置文件 - 预注册 instance
-        Configuration configuration = null;
+        Configuration configuration;
         try {
             configuration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(getDataFolder(), "config.yml"));
         } catch (IOException e) {
@@ -53,7 +53,7 @@ public class EasySQLBungee extends Plugin implements EasySQLPluginPlatform {
         if (instancesConfig != null) {
             for (String instanceName : instancesConfig.getKeys()) {
                 SQLManager sqlManager = new SQLManagerImpl(
-                        new BeeDataSource("mysql"
+                        new BeeDataSource("com.mysql.jdbc.Driver"
                                 , instancesConfig.getString("url")
                                 , instancesConfig.getString("username")
                                 , instancesConfig.getString("password")
