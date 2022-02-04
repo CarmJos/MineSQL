@@ -44,7 +44,6 @@ public class EasySQLVelocity  {
 
 	@Subscribe
 	public void onInitialize(ProxyInitializeEvent event) {
-
 	}
 
 }

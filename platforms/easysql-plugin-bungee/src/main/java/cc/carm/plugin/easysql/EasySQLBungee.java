@@ -10,6 +10,7 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
@@ -122,5 +123,16 @@ public class EasySQLBungee extends Plugin implements EasySQLPluginPlatform {
      */
     public void unregister(@NotNull Plugin plugin){
         this.apiImpl.unregisterSQLManagerAll(plugin.getDescription().getName());
+    }
+
+    /**
+     * 获取 SQL 管理器
+     *
+     * @param name 注册键
+     * @return SQL管理器
+     */
+    @Override
+    public @Nullable SQLManager getSqlManager(@NotNull String name) {
+        return this.apiImpl.getSQLManager(name);
     }
 }

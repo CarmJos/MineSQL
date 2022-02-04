@@ -14,6 +14,7 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class EasySQLBukkit extends JavaPlugin implements EasySQLPluginPlatform, Listener {
     private EasySQLAPI apiImpl;
@@ -107,4 +108,14 @@ public class EasySQLBukkit extends JavaPlugin implements EasySQLPluginPlatform, 
         this.apiImpl.unregisterSQLManagerAll(plugin.getName());
     }
 
+    /**
+     * 获取 SQL 管理器
+     *
+     * @param name 注册键
+     * @return SQL管理器
+     */
+    @Override
+    public @Nullable SQLManager getSqlManager(@NotNull String name) {
+        return this.apiImpl.getSQLManager(name);
+    }
 }
