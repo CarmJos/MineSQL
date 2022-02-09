@@ -29,8 +29,14 @@
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>easysql-plugin-impl</artifactId>
+            <artifactId>easysql-plugin-core</artifactId>
             <version>${project.parent.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cc.carm.lib</groupId>
+            <artifactId>easyplugin-main</artifactId>
             <scope>compile</scope>
         </dependency>
 

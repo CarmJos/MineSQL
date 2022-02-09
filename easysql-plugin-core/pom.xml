@@ -17,7 +17,7 @@
         <maven.javadoc.skip>true</maven.javadoc.skip>
         <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
-    <artifactId>easysql-plugin-impl</artifactId>
+    <artifactId>easysql-plugin-core</artifactId>
 
     <name>EasySQL-Plugin-Impl</name>
 
@@ -31,8 +31,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.chris2018998</groupId>
-            <artifactId>beecp</artifactId>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
             <scope>compile</scope>
         </dependency>
 
@@ -48,7 +48,24 @@
             <scope>compile</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>

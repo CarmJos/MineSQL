@@ -10,8 +10,9 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-        <easyplugin.version>1.3.7</easyplugin.version>
-        <easysql.version>0.3.5</easysql.version>
+        <easysql.version>0.3.6</easysql.version>
+        <easyplugin.version>1.3.8</easyplugin.version>
+        <hikaricp.version>4.0.3</hikaricp.version>
     </properties>
 
     <groupId>cc.carm.plugin</groupId>
@@ -19,15 +20,12 @@
     <packaging>pom</packaging>
     <version>0.0.2</version>
     <modules>
-
         <module>easysql-plugin-api</module>
-        <module>easysql-plugin-impl</module>
+        <module>easysql-plugin-core</module>
 
         <module>platforms/easysql-plugin-bukkit</module>
         <module>platforms/easysql-plugin-bungee</module>
-        <module>platforms/easysql-plugin-fabric</module>
         <module>platforms/easysql-plugin-velocity</module>
-
     </modules>
 
     <name>EasySQL-Plugin</name>
@@ -126,23 +124,17 @@
         <dependencies>
 
             <dependency>
-                <groupId>com.github.chris2018998</groupId>
-                <artifactId>beecp</artifactId>
-                <version>3.3.1</version>
-                <scope>compile</scope>
+                <!--项目地址 https://github.com/brettwooldridge/HikariCP/  -->
+                <groupId>com.zaxxer</groupId>
+                <artifactId>HikariCP</artifactId>
+                <version>${hikaricp.version}</version>
+                <optional>true</optional>
             </dependency>
 
             <dependency>
                 <groupId>cc.carm.lib</groupId>
                 <artifactId>githubreleases4j</artifactId>
                 <version>1.3.0</version>
-                <scope>compile</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>cc.carm.lib</groupId>
-                <artifactId>easyplugin-main</artifactId>
-                <version>${easyplugin.version}</version>
             </dependency>
 
             <dependency>
@@ -157,11 +149,38 @@
                 <version>${easysql.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>cc.carm.lib</groupId>
+                <artifactId>easyplugin-main</artifactId>
+                <version>${easyplugin.version}</version>
+            </dependency>
+
             <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>31.0.1-jre</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
+            <dependency>
+                <groupId>org.mariadb.jdbc</groupId>
+                <artifactId>mariadb-java-client</artifactId>
+                <version>3.0.3</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>8.0.28</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>2.1.210</version>
             </dependency>
 
         </dependencies>

@@ -1,9 +1,0 @@
-instances:
-  name1:
-     url: jdbc:mysql://localhost:3306/name1
-     username: mc
-     password: password
-  name2:
-    url: jdbc:mysql://localhost:3306/name2
-    username: mc
-    password: password

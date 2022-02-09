@@ -1,28 +1,24 @@
 package cc.carm.plugin.easysql;
 
-import cc.carm.lib.easysql.api.SQLManager;
-import cc.carm.lib.easysql.manager.SQLManagerImpl;
-import cc.carm.plugin.easysql.api.EasySQLAPI;
-import cc.carm.plugin.easysql.api.EasySQLPluginPlatform;
-import cn.beecp.BeeDataSource;
+import cc.carm.plugin.easysql.api.DBConfiguration;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EasySQLBungee extends Plugin implements EasySQLPluginPlatform {
-    private EasySQLAPI apiImpl;
 
     private boolean setup = false;
 
-    private void saveDefaultConfig(){
+    private void saveDefaultConfig() {
         if (!getDataFolder().exists())
             getDataFolder().mkdir();
 
@@ -40,7 +36,6 @@ public class EasySQLBungee extends Plugin implements EasySQLPluginPlatform {
 
     public void setup() {
         if (setup) return;
-        apiImpl = new EasySQLManager(this);
         saveDefaultConfig();
         // 读取配置文件 - 预注册 instance
         Configuration configuration;
@@ -52,16 +47,6 @@ public class EasySQLBungee extends Plugin implements EasySQLPluginPlatform {
         }
         Configuration instancesConfig = configuration.getSection("instances");
         if (instancesConfig != null) {
-            for (String instanceName : instancesConfig.getKeys()) {
-                SQLManager sqlManager = new SQLManagerImpl(
-                        new BeeDataSource("com.mysql.jdbc.Driver"
-                                , instancesConfig.getString("url")
-                                , instancesConfig.getString("username")
-                                , instancesConfig.getString("password")
-                        )
-                );
-                this.register(this, instanceName, sqlManager);
-            }
         }
         setup = true;
     }
@@ -75,64 +60,15 @@ public class EasySQLBungee extends Plugin implements EasySQLPluginPlatform {
     public void onEnable() {
         setup();
     }
+
     @Override
     public void onDisable() {
         getLogger().info("Shutting down...");
-        this.unregister(this);
-        apiImpl.getSQLManagers().keySet().forEach(apiImpl::unregisterSQLManager);
-        super.onDisable();
-    }
-    // =========== 平台注册方法 ===========
-
-    /**
-     * 注册 SQLManager 实例
-     * @param plugin 插件实例
-     * @param name SQLManager 映射名称
-     * @param sqlManager SQLManager 实例
-     */
-    public void register(@NotNull Plugin plugin, @NotNull String name, @NotNull SQLManager sqlManager){
-        if(this.apiImpl.getSQLManagers().containsKey(name)){
-            // 名称冲突处理
-            throw new IllegalArgumentException("Instance name conflict: " + name+", Already registered by "+this.apiImpl.getNameSpace(name));
-        }
-        this.apiImpl.registerSQLManager(plugin.getDescription().getName(), name, sqlManager);
     }
 
-    /**
-     * 注销指定 SQLManager 实例
-     * @param sqlManager SQLManager 实例
-     */
-    public void unregister(@NotNull SQLManager sqlManager){
-        String name = this.apiImpl.getName(sqlManager);
-        if(name != null){
-            this.apiImpl.unregisterSQLManager(name);
-        }
-    }
-
-    /**
-     * 注销指定名称的 SQLManager
-     * @param name SQLManager 名称
-     */
-    public void unregister(@NotNull String name){
-        this.apiImpl.unregisterSQLManager(name);
-    }
-
-    /**
-     * 注销指定插件注册的所有 SQLManager 实例
-     * @param plugin 插件
-     */
-    public void unregister(@NotNull Plugin plugin){
-        this.apiImpl.unregisterSQLManagerAll(plugin.getDescription().getName());
-    }
-
-    /**
-     * 获取 SQL 管理器
-     *
-     * @param name 注册键
-     * @return SQL管理器
-     */
     @Override
-    public @Nullable SQLManager getSqlManager(@NotNull String name) {
-        return this.apiImpl.getSQLManager(name);
+    public @NotNull Map<String, DBConfiguration> readConfigurations() {
+        return new HashMap<>();
     }
+
 }

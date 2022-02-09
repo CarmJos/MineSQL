@@ -1,0 +1,18 @@
+# 检查更新设定
+# 该选项用于插件判断是否要检查更新，若您不希望插件检查更新并提示您，可以选择关闭。
+# 检查更新为异步操作，绝不会影响性能与使用体验。
+check-update: true
+
+
+instances:
+  name1:
+
+    url: jdbc:mysql://localhost:3306/name1
+    port: 3306
+    username: mc
+    password: password
+    use-ssl: false
+  name2:
+    url: jdbc:mysql://localhost:3306/name2
+    username: mc
+    password: password

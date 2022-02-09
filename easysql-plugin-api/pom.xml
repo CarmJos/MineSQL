@@ -19,7 +19,7 @@
     <artifactId>easysql-plugin-api</artifactId>
     <packaging>jar</packaging>
 
-    <name>EasySQL-Plugin-API</name>
+    <name>EasySQL-Plugin-Common</name>
 
     <dependencies>
 
