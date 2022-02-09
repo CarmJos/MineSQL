@@ -9,4 +9,4 @@
                  |___/                                       |___/         
 ```
 
-# EasySQL-Plugin ~~~~
+# EasySQL-Plugin

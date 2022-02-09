@@ -22,7 +22,7 @@ public class EasySQLManagerImpl implements EasySQLManager {
         Map<String, DBConfiguration> configurations = platform.readConfigurations();
 
         if (configurations.isEmpty()) {
-            platform.getLogger().warning("No database configurations found. Skipping SQLManager initialization.");
+            platform.getLogger().warning("未检测到任何数据库配置，将不会创建任何SQLManager。");
             return;
         }
 
@@ -31,7 +31,7 @@ public class EasySQLManagerImpl implements EasySQLManager {
                 SQLManager sqlManager = create(id, configuration);
                 this.sqlManagerRegistry.put(id, sqlManager);
             } catch (Exception exception) {
-                platform.getLogger().warning("Failed to initialize SQLManager #" + id + " .");
+                platform.getLogger().warning("初始化SQLManager(#" + id + ") 出错，请检查配置文件.");
                 exception.printStackTrace();
             }
         });
@@ -41,7 +41,7 @@ public class EasySQLManagerImpl implements EasySQLManager {
     @Override
     public @NotNull SQLManager get(@Nullable String id) throws NullPointerException {
         if (!this.sqlManagerRegistry.containsKey(id)) {
-            throw new NullPointerException("SQLManager #" + id + " does not exist.");
+            throw new NullPointerException("并不存在ID为 #" + id + " 的SQLManager.");
         }
         return this.sqlManagerRegistry.get(id);
     }

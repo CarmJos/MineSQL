@@ -1,13 +1,21 @@
 package cc.carm.plugin.easysql;
 
 import cc.carm.lib.easyplugin.EasyPlugin;
+import cc.carm.lib.easyplugin.i18n.EasyPluginMessageProvider;
 import cc.carm.plugin.easysql.api.DBConfiguration;
+import cc.carm.plugin.easysql.util.PropertiesUtil;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 public class EasySQLBukkit extends EasyPlugin implements EasySQLPluginPlatform {
+
+    public EasySQLBukkit() {
+        super(new EasyPluginMessageProvider.zh_CN());
+    }
 
     @Override
     protected void load() {
@@ -22,6 +30,11 @@ public class EasySQLBukkit extends EasyPlugin implements EasySQLPluginPlatform {
     @Override
     public @NotNull Map<String, DBConfiguration> readConfigurations() {
         return new HashMap<>();
+    }
+
+    @Override
+    public @NotNull Map<String, Properties> readProperties() {
+        return PropertiesUtil.readDBProperties(new File(getDataFolder(), "properties"));
     }
 
     @Override

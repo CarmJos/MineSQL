@@ -1,6 +1,7 @@
 package cc.carm.plugin.easysql;
 
 import cc.carm.plugin.easysql.api.DBConfiguration;
+import cc.carm.plugin.easysql.util.PropertiesUtil;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
@@ -13,6 +14,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 public class EasySQLBungee extends Plugin implements EasySQLPluginPlatform {
 
@@ -70,5 +72,11 @@ public class EasySQLBungee extends Plugin implements EasySQLPluginPlatform {
     public @NotNull Map<String, DBConfiguration> readConfigurations() {
         return new HashMap<>();
     }
+
+    @Override
+    public @NotNull Map<String, Properties> readProperties() {
+        return PropertiesUtil.readDBProperties(new File(getDataFolder(), "properties"));
+    }
+
 
 }

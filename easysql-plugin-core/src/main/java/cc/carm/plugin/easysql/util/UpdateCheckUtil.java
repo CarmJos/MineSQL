@@ -1,10 +1,10 @@
-package cc.carm.plugin.easysql;
+package cc.carm.plugin.easysql.util;
 
 import cc.carm.lib.githubreleases4j.GithubReleases4J;
 
 import java.util.logging.Logger;
 
-public class UpdateChecker {
+public class UpdateCheckUtil {
 
     public static final String REPO_OWNER = "CarmJos";
     public static final String REPO_NAME = "EasySQL-Plugin";
