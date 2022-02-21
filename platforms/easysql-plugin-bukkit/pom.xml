@@ -24,7 +24,6 @@
 
     <name>EasySQL-Plugin-Bukkit</name>
 
-
     <dependencies>
 
         <dependency>
@@ -37,6 +36,8 @@
         <dependency>
             <groupId>cc.carm.lib</groupId>
             <artifactId>easyplugin-main</artifactId>
+            <version>${easyplugin.version}</version>
+            <optional>true</optional>
             <scope>compile</scope>
         </dependency>
 
@@ -50,9 +51,19 @@
         <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
-            <version>2.2.1</version>
+            <version>3.0.0</version>
+            <optional>true</optional>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>co.aikar</groupId>
+            <artifactId>acf-paper</artifactId>
+            <version>0.5.1-SNAPSHOT</version>
+            <optional>true</optional>
+            <scope>compile</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -86,6 +97,14 @@
                         <relocation>
                             <pattern>cc.carm.lib.easyplugin</pattern>
                             <shadedPattern>cc.carm.plugin.easysql.lib.easyplugin</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>co.aikar.commands</pattern>
+                            <shadedPattern>cc.carm.plugin.easysql.lib.acf</shadedPattern> <!-- Replace this -->
+                        </relocation>
+                        <relocation>
+                            <pattern>co.aikar.locales</pattern>
+                            <shadedPattern>cc.carm.plugin.easysql.lib.locales</shadedPattern> <!-- Replace this -->
                         </relocation>
                     </relocations>
                     <filters>

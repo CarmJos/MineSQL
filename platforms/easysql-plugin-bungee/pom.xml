@@ -26,10 +26,12 @@
 
 
     <repositories>
+
         <repository>
             <id>bungeecord-repo</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
+
     </repositories>
 
     <dependencies>
@@ -60,7 +62,16 @@
         <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bungeecord</artifactId>
-            <version>2.2.1</version>
+            <version>3.0.0</version>
+            <optional>true</optional>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>co.aikar</groupId>
+            <artifactId>acf-bungee</artifactId>
+            <version>0.5.1-SNAPSHOT</version>
+            <optional>true</optional>
             <scope>compile</scope>
         </dependency>
 
@@ -110,6 +121,24 @@
                             </excludes>
                         </filter>
                     </filters>
+                    <relocations>
+                        <relocation>
+                            <pattern>org.bstats</pattern>
+                            <shadedPattern>cc.carm.plugin.easysql.lib.bstats</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>org.json</pattern>
+                            <shadedPattern>cc.carm.plugin.easysql.lib.json</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>co.aikar.commands</pattern>
+                            <shadedPattern>cc.carm.plugin.easysql.lib.acf</shadedPattern> <!-- Replace this -->
+                        </relocation>
+                        <relocation>
+                            <pattern>co.aikar.locales</pattern>
+                            <shadedPattern>cc.carm.plugin.easysql.lib.locales</shadedPattern> <!-- Replace this -->
+                        </relocation>
+                    </relocations>
                 </configuration>
             </plugin>
         </plugins>

@@ -6,7 +6,7 @@ public class EasySQLAPI {
 
     protected static EasySQLRegistry api;
 
-    protected static void init(EasySQLRegistry api) {
+    protected static void initializeAPI(EasySQLRegistry api) {
         EasySQLAPI.api = api;
     }
 

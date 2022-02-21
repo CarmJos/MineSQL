@@ -26,6 +26,7 @@
         <module>platforms/easysql-plugin-bukkit</module>
         <module>platforms/easysql-plugin-bungee</module>
         <module>platforms/easysql-plugin-velocity</module>
+        <module>platforms/easysql-plugin-sponge</module>
     </modules>
 
     <name>EasySQL-Plugin</name>
@@ -89,6 +90,11 @@
         </repository>
 
         <repository>
+            <id>aikar</id>
+            <url>https://repo.aikar.co/content/groups/aikar/</url>
+        </repository>
+
+        <repository>
             <id>central</id>
             <url>https://repo1.maven.org/maven2/</url>
         </repository>
@@ -146,12 +152,6 @@
                 <groupId>cc.carm.lib</groupId>
                 <artifactId>easysql-impl</artifactId>
                 <version>${easysql.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>cc.carm.lib</groupId>
-                <artifactId>easyplugin-main</artifactId>
-                <version>${easyplugin.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->

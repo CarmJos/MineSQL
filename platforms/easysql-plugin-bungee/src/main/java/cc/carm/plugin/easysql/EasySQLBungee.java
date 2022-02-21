@@ -1,6 +1,7 @@
 package cc.carm.plugin.easysql;
 
 import cc.carm.plugin.easysql.api.DBConfiguration;
+import cc.carm.plugin.easysql.api.EasySQLRegistry;
 import cc.carm.plugin.easysql.util.PropertiesUtil;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
@@ -66,6 +67,11 @@ public class EasySQLBungee extends Plugin implements EasySQLPluginPlatform {
     @Override
     public void onDisable() {
         getLogger().info("Shutting down...");
+    }
+
+    @Override
+    public @NotNull EasySQLRegistry getRegistry() {
+        return null;
     }
 
     @Override

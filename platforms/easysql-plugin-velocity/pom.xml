@@ -52,9 +52,20 @@
         <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-velocity</artifactId>
-            <version>2.2.1</version>
+            <version>3.0.0</version>
+            <optional>true</optional>
             <scope>compile</scope>
         </dependency>
+
+
+        <dependency>
+            <groupId>co.aikar</groupId>
+            <artifactId>acf-velocity</artifactId>
+            <version>0.5.1-SNAPSHOT</version>
+            <optional>true</optional>
+            <scope>compile</scope>
+        </dependency>
+
 
     </dependencies>
 

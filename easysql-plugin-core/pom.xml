@@ -31,6 +31,13 @@
         </dependency>
 
         <dependency>
+            <groupId>co.aikar</groupId>
+            <artifactId>acf-core</artifactId>
+            <version>0.5.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>com.github.chris2018998</groupId>
             <artifactId>beecp</artifactId>
             <scope>compile</scope>
