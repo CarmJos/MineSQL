@@ -31,8 +31,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
+            <groupId>com.github.chris2018998</groupId>
+            <artifactId>beecp</artifactId>
             <scope>compile</scope>
         </dependency>
 

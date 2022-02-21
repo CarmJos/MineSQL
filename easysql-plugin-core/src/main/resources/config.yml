@@ -3,16 +3,17 @@
 # 检查更新为异步操作，绝不会影响性能与使用体验。
 check-update: true
 
+properties:
+  enable: true
+  folder: "properties/"
 
-instances:
-  name1:
+configurations:
+  "example-mariadb": # database id
+    driver-type: mariadb
+    url: 127.0.0.1 # 数据库地址
+    port: 3306 # 数据库端口
+    use-ssl: false # 是否使用SSL连接
+    username: minecraft # 数据库用户名
+    password: password #数据库连接密码
+    database: minecraft #数据库名
 
-    url: jdbc:mysql://localhost:3306/name1
-    port: 3306
-    username: mc
-    password: password
-    use-ssl: false
-  name2:
-    url: jdbc:mysql://localhost:3306/name2
-    username: mc
-    password: password

@@ -4,21 +4,22 @@ import cc.carm.lib.easysql.api.SQLManager;
 import cc.carm.lib.easysql.api.SQLQuery;
 import cc.carm.lib.easysql.manager.SQLManagerImpl;
 import cc.carm.plugin.easysql.api.DBConfiguration;
-import cc.carm.plugin.easysql.api.EasySQLManager;
+import cc.carm.plugin.easysql.api.EasySQLRegistry;
+import cn.beecp.BeeDataSource;
+import cn.beecp.BeeDataSourceConfig;
 import com.google.common.collect.ImmutableMap;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;
 
 import java.util.*;
+import java.util.function.Consumer;
 
-public class EasySQLManagerImpl implements EasySQLManager {
+public class EasySQLRegistryImpl implements EasySQLRegistry {
 
     private final HashMap<String, SQLManager> sqlManagerRegistry = new HashMap<>();
 
-    public EasySQLManagerImpl(@NotNull EasySQLPluginPlatform platform) {
+    public EasySQLRegistryImpl(@NotNull EasySQLPluginPlatform platform) {
         Map<String, DBConfiguration> configurations = platform.readConfigurations();
 
         if (configurations.isEmpty()) {
@@ -64,54 +65,53 @@ public class EasySQLManagerImpl implements EasySQLManager {
 
     @Override
     public @NotNull SQLManager create(@Nullable String name, @NotNull DBConfiguration configuration) {
-        HikariConfig config = new HikariConfig();
+        BeeDataSourceConfig config = new BeeDataSourceConfig();
         config.setDriverClassName(configuration.getDriverClassName());
         config.setJdbcUrl(configuration.getUrlPrefix() + configuration.getUrl());
-
-        Optional.ofNullable(configuration.getPoolName()).ifPresent(config::setPoolName);
         Optional.ofNullable(configuration.getUsername()).ifPresent(config::setUsername);
         Optional.ofNullable(configuration.getPassword()).ifPresent(config::setPassword);
-        Optional.ofNullable(configuration.getMaxPoolSize()).ifPresent(config::setMaximumPoolSize);
-        Optional.ofNullable(configuration.getMinIdle()).ifPresent(config::setMinimumIdle);
+
+        Optional.ofNullable(configuration.getPoolName()).ifPresent(config::setPoolName);
+        Optional.ofNullable(configuration.getMaxPoolSize()).ifPresent(config::setMaxActive);
+        Optional.ofNullable(configuration.getMaxActive()).ifPresent(config::setMaxActive);
+
         Optional.ofNullable(configuration.getIdleTimeout()).ifPresent(config::setIdleTimeout);
-        Optional.ofNullable(configuration.getKeepaliveTime()).ifPresent(config::setKeepaliveTime);
-        Optional.ofNullable(configuration.getConnectionTimeout()).ifPresent(config::setConnectionTimeout);
-        Optional.ofNullable(configuration.getValidationTimeout()).ifPresent(config::setValidationTimeout);
-        Optional.ofNullable(configuration.getMaxLifetime()).ifPresent(config::setMaxLifetime);
-        Optional.ofNullable(configuration.getLeakDetectionThreshold()).ifPresent(config::setLeakDetectionThreshold);
-        Optional.ofNullable(configuration.getConnectionTestQuery()).ifPresent(config::setConnectionTestQuery);
-        Optional.ofNullable(configuration.getConnectionInitSql()).ifPresent(config::setConnectionInitSql);
-        Optional.ofNullable(configuration.getAutoCommit()).ifPresent(config::setAutoCommit);
-        Optional.ofNullable(configuration.getReadOnly()).ifPresent(config::setReadOnly);
-        Optional.ofNullable(configuration.getSchema()).ifPresent(config::setSchema);
+        Optional.ofNullable(configuration.getMaxWaitTime()).ifPresent(config::setMaxWait);
+        Optional.ofNullable(configuration.getMaxHoldTime()).ifPresent(config::setHoldTimeout);
+
+        Optional.ofNullable(configuration.getAutoCommit()).ifPresent(config::setDefaultAutoCommit);
+        Optional.ofNullable(configuration.getReadOnly()).ifPresent(config::setDefaultReadOnly);
+        Optional.ofNullable(configuration.getSchema()).ifPresent(config::setDefaultSchema);
+
+        Optional.ofNullable(configuration.getValidationSQL()).ifPresent(config::setValidTestSql);
+        Optional.ofNullable(configuration.getValidationTimeout()).ifPresent(config::setValidTestTimeout);
+        Optional.ofNullable(configuration.getValidationInterval()).ifPresent(config::setValidAssumeTime);
 
         return create(name, config);
     }
 
     @Override
     public @NotNull SQLManager create(@Nullable String name, @NotNull Properties properties) {
-        return create(name, new HikariConfig(properties));
+        return create(name, new BeeDataSourceConfig(properties));
     }
 
     @Override
     public @NotNull SQLManager create(@Nullable String name, @NotNull String propertyFileName) {
-        return create(name, new HikariConfig(propertyFileName));
+        return create(name, new BeeDataSourceConfig(propertyFileName));
     }
 
-    public @NotNull SQLManager create(@Nullable String name, @NotNull HikariConfig configuration) {
-        return new SQLManagerImpl(new HikariDataSource(configuration), name);
+    public @NotNull SQLManager create(@Nullable String name, @NotNull BeeDataSourceConfig configuration) {
+        return new SQLManagerImpl(new BeeDataSource(configuration), name);
     }
 
     @Override
-    public Map<UUID, SQLQuery> shutdown(SQLManager manager, boolean forceClose) {
-        Map<UUID, SQLQuery> queries = manager.getActiveQuery();
-        if (forceClose) manager.getActiveQuery().values().forEach(SQLQuery::close);
+    public void shutdown(SQLManager manager, @Nullable Consumer<Map<UUID, SQLQuery>> activeQueries) {
+        if (activeQueries != null) activeQueries.accept(manager.getActiveQuery());
 
-        if (manager.getDataSource() instanceof HikariDataSource) {
-            //Close hikari pool
-            ((HikariDataSource) manager.getDataSource()).close();
+        if (manager.getDataSource() instanceof BeeDataSource) {
+            BeeDataSource dataSource = (BeeDataSource) manager.getDataSource();
+            dataSource.close();         //Close bee connection pool
         }
-
-        return queries;
     }
+
 }

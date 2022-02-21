@@ -10,11 +10,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 /**
  * 入口类
  */
-public interface EasySQLManager {
+public interface EasySQLRegistry {
 
     /**
      * 获取原生注册的指定名称的 SQLManager 实例
@@ -75,15 +76,33 @@ public interface EasySQLManager {
                                @NotNull String propertyFileName) throws Exception;
 
     /**
-     * 终止一个 SQLManager 实例。
+     * 终止并关闭一个 SQLManager 实例。
      *
-     * @param manager
-     * @return
+     * @param manager       SQLManager实例
+     * @param activeQueries 终止前仍未被关闭的SQLQuery列表
      */
-    default Map<UUID, SQLQuery> shutdown(SQLManager manager) {
-        return shutdown(manager, true);
+    void shutdown(SQLManager manager, @Nullable Consumer<Map<UUID, SQLQuery>> activeQueries);
+
+    /**
+     * 终止并关闭一个 SQLManager 实例。
+     *
+     * @param manager    SQLManager实例
+     * @param forceClose 是否强制关闭进行中的查询
+     */
+    default void shutdown(SQLManager manager, boolean forceClose) {
+        shutdown(manager, (unclosedQueries) -> {
+            if (forceClose) unclosedQueries.values().forEach(SQLQuery::close);
+        });
     }
 
-    Map<UUID, SQLQuery> shutdown(SQLManager manager, boolean forceClose);
+    /**
+     * 终止并关闭一个 SQLManager 实例。
+     * <br>若在终止时仍有活跃的查询，则将会强制关闭。
+     *
+     * @param manager SQLManager实例
+     */
+    default void shutdown(SQLManager manager) {
+        shutdown(manager, true);
+    }
 
 }

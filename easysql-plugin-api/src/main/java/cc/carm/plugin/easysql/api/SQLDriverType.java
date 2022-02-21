@@ -2,7 +2,7 @@ package cc.carm.plugin.easysql.api;
 
 import org.jetbrains.annotations.NotNull;
 
-public enum SQLSourceType {
+public enum SQLDriverType {
 
     MARIADB("org.mariadb.jdbc.Driver", "jdbc:mariadb://", "mariadb", new String[]{}),
     MYSQL("com.mysql.jdbc.Driver", "jdbc:mysql://", "mysql", new String[]{}),
@@ -13,12 +13,12 @@ public enum SQLSourceType {
     private final @NotNull String urlPrefix;
     private final @NotNull String[] defaultSettings;
 
-    SQLSourceType(@NotNull String driverClass, @NotNull String urlPrefix,
-                  @NotNull String databaseID, @NotNull String[] defaultSettings) {
+    SQLDriverType(@NotNull String driverClass, @NotNull String urlPrefix,
+                  @NotNull String databaseID, @NotNull String[] initializeSQLs) {
         this.databaseID = databaseID;
         this.driverClass = driverClass;
         this.urlPrefix = urlPrefix;
-        this.defaultSettings = defaultSettings;
+        this.defaultSettings = initializeSQLs;
     }
 
     public @NotNull String getDatabaseID() {

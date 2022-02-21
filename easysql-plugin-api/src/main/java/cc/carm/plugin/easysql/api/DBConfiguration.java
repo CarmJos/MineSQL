@@ -9,14 +9,13 @@ import java.util.List;
 
 public class DBConfiguration {
 
-    public DBConfiguration create(@NotNull SQLSourceType sourceType, @NotNull String url) {
+    public DBConfiguration create(@NotNull SQLDriverType sourceType, @NotNull String url) {
         return new DBConfiguration(sourceType.getDriverClass(), sourceType.getUrlPrefix(), url, sourceType.getDefaultSettings());
     }
 
     private final @NotNull String driverClassName;
     private final @NotNull String urlPrefix;
-    private final @NotNull List<String> defaultSettings;
-    private final @NotNull List<String> extraSettings;
+    private final @NotNull List<String> initializeSQLs;
 
     private @NotNull String url;
 
@@ -24,28 +23,33 @@ public class DBConfiguration {
     private @Nullable String password;
 
     private @Nullable String connectionInitSql;
-    private @Nullable String connectionTestQuery;
+
     private @Nullable String poolName;
+    private @Nullable Integer maxPoolSize;
+    private @Nullable Integer maxActive;
+
+    private @Nullable Integer maxHoldTime;
+
+    private @Nullable Long idleTimeout;
+
+    private @Nullable Long maxWaitTime;
+
+
     private @Nullable String schema;
     private @Nullable Boolean autoCommit;
     private @Nullable Boolean readOnly;
 
-    private @Nullable Long connectionTimeout;
-    private @Nullable Long validationTimeout;
-    private @Nullable Long idleTimeout;
-    private @Nullable Long leakDetectionThreshold;
-    private @Nullable Long maxLifetime;
-    private @Nullable Long keepaliveTime;
-    private @Nullable Integer maxPoolSize;
-    private @Nullable Integer minIdle;
+    private @Nullable String validationSQL;
+    private @Nullable Integer validationTimeout;
+    private @Nullable Long validationInterval;
+
 
     private DBConfiguration(@NotNull String driverClass, @NotNull String urlPrefix,
-                            @NotNull String url, @NotNull String[] defaultSettings) {
+                            @NotNull String url, @NotNull String[] initializeSQLs) {
         this.driverClassName = driverClass;
         this.urlPrefix = urlPrefix;
         this.url = url;
-        this.defaultSettings = Arrays.asList(defaultSettings);
-        this.extraSettings = new ArrayList<>();
+        this.initializeSQLs = Arrays.asList(initializeSQLs);
     }
 
     public @NotNull String getDriverClassName() {
@@ -56,39 +60,23 @@ public class DBConfiguration {
         return urlPrefix;
     }
 
-    public @NotNull List<String> getDefaultSettings() {
-        return defaultSettings;
+    public @NotNull List<String> getInitializeSQLs() {
+        return initializeSQLs;
     }
 
-    public @NotNull List<String> getExtraSettings() {
-        return extraSettings;
-    }
-
-    public DBConfiguration setDefaultSettings(@Nullable String[] defaultSettings) {
-        this.defaultSettings.clear();
-        this.defaultSettings.addAll(Arrays.asList(defaultSettings));
+    public DBConfiguration setInitializeSQLs(@Nullable String[] initializeSQLs) {
+        this.initializeSQLs.clear();
+        this.initializeSQLs.addAll(Arrays.asList(initializeSQLs));
         return this;
     }
 
-
-    public DBConfiguration clearDefaultSettings() {
-        this.defaultSettings.clear();
-        return this;
-    }
-
-    public DBConfiguration setExtraSettings(@Nullable String[] extraSettings) {
-        this.defaultSettings.clear();
-        this.extraSettings.addAll(Arrays.asList(extraSettings));
-        return this;
-    }
-
-    public DBConfiguration addExtraSetting(@NotNull String extraSetting) {
-        this.extraSettings.add(extraSetting);
+    public DBConfiguration addInitializeSQL(@NotNull String initializeSQL) {
+        this.initializeSQLs.add(initializeSQL);
         return this;
     }
 
     public DBConfiguration clearExtraSettings() {
-        this.defaultSettings.clear();
+        this.initializeSQLs.clear();
         return this;
     }
 
@@ -128,12 +116,21 @@ public class DBConfiguration {
         return this;
     }
 
-    public @Nullable String getConnectionTestQuery() {
-        return connectionTestQuery;
+    public @Nullable String getValidationSQL() {
+        return validationSQL;
     }
 
-    public DBConfiguration setConnectionTestQuery(String connectionTestQuery) {
-        this.connectionTestQuery = connectionTestQuery;
+    public DBConfiguration setValidationSQL(String validationSQL) {
+        this.validationSQL = validationSQL;
+        return this;
+    }
+
+    public @Nullable Long getValidationInterval() {
+        return validationInterval;
+    }
+
+    public DBConfiguration setValidationInterval(@Nullable Long validationInterval) {
+        this.validationInterval = validationInterval;
         return this;
     }
 
@@ -173,20 +170,20 @@ public class DBConfiguration {
         return this;
     }
 
-    public @Nullable Long getConnectionTimeout() {
-        return connectionTimeout;
+    public @Nullable Integer getMaxHoldTime() {
+        return maxHoldTime;
     }
 
-    public DBConfiguration setConnectionTimeout(Long connectionTimeout) {
-        this.connectionTimeout = connectionTimeout;
+    public DBConfiguration setMaxHoldTime(@Nullable Integer maxHoldTime) {
+        this.maxHoldTime = maxHoldTime;
         return this;
     }
 
-    public @Nullable Long getValidationTimeout() {
+    public @Nullable Integer getValidationTimeout() {
         return validationTimeout;
     }
 
-    public DBConfiguration setValidationTimeout(Long validationTimeout) {
+    public DBConfiguration setValidationTimeout(Integer validationTimeout) {
         this.validationTimeout = validationTimeout;
         return this;
     }
@@ -200,30 +197,12 @@ public class DBConfiguration {
         return this;
     }
 
-    public @Nullable Long getLeakDetectionThreshold() {
-        return leakDetectionThreshold;
+    public @Nullable Integer getMaxActive() {
+        return maxActive;
     }
 
-    public DBConfiguration setLeakDetectionThreshold(Long leakDetectionThreshold) {
-        this.leakDetectionThreshold = leakDetectionThreshold;
-        return this;
-    }
-
-    public @Nullable Long getMaxLifetime() {
-        return maxLifetime;
-    }
-
-    public DBConfiguration setMaxLifetime(Long maxLifetime) {
-        this.maxLifetime = maxLifetime;
-        return this;
-    }
-
-    public @Nullable Long getKeepaliveTime() {
-        return keepaliveTime;
-    }
-
-    public DBConfiguration setKeepaliveTime(Long keepaliveTime) {
-        this.keepaliveTime = keepaliveTime;
+    public DBConfiguration setMaxActive(Integer maxActive) {
+        this.maxActive = maxActive;
         return this;
     }
 
@@ -231,17 +210,18 @@ public class DBConfiguration {
         return maxPoolSize;
     }
 
-    public DBConfiguration setMaxPoolSize(Integer maxPoolSize) {
+    public DBConfiguration setMaxPoolSize(@Nullable Integer maxPoolSize) {
         this.maxPoolSize = maxPoolSize;
         return this;
     }
 
-    public @Nullable Integer getMinIdle() {
-        return minIdle;
+    public @Nullable Long getMaxWaitTime() {
+        return maxWaitTime;
     }
 
-    public DBConfiguration setMinIdle(Integer minIdle) {
-        this.minIdle = minIdle;
+    public DBConfiguration setMaxWaitTime(Long maxWaitTime) {
+        this.maxWaitTime = maxWaitTime;
         return this;
     }
+
 }

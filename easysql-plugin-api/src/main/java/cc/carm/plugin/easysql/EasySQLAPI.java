@@ -1,16 +1,16 @@
 package cc.carm.plugin.easysql;
 
-import cc.carm.plugin.easysql.api.EasySQLManager;
+import cc.carm.plugin.easysql.api.EasySQLRegistry;
 
 public class EasySQLAPI {
 
-    protected static EasySQLManager api;
+    protected static EasySQLRegistry api;
 
-    protected static void init(EasySQLManager api) {
+    protected static void init(EasySQLRegistry api) {
         EasySQLAPI.api = api;
     }
 
-    public static EasySQLManager get() {
+    public static EasySQLRegistry get() {
         return api;
     }
 

@@ -124,11 +124,10 @@
         <dependencies>
 
             <dependency>
-                <!--项目地址 https://github.com/brettwooldridge/HikariCP/  -->
-                <groupId>com.zaxxer</groupId>
-                <artifactId>HikariCP</artifactId>
-                <version>${hikaricp.version}</version>
-                <optional>true</optional>
+                <!--项目地址 https://github.com/Chris2018998/BeeCP  -->
+                <groupId>com.github.chris2018998</groupId>
+                <artifactId>beecp</artifactId>
+                <version>3.3.2</version>
             </dependency>
 
             <dependency>

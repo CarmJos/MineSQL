@@ -9,6 +9,8 @@ import java.util.logging.Logger;
 
 public interface EasySQLPluginPlatform {
 
+
+
     @NotNull Map<String, DBConfiguration> readConfigurations();
 
     @NotNull Map<String, Properties> readProperties();
