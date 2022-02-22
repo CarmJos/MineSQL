@@ -52,7 +52,7 @@ databases:
     file-path: "db-files/minecraft"
 ```
 
-### Properties 配置文件 [`<插件目录>/db-properties/*.properties](easysql-plugin-core/src/main/resources/db-properties/.example-mysql.properties)
+### Properties 配置文件 [`<插件目录>/db-properties/*.properties`](easysql-plugin-core/src/main/resources/db-properties/.example-mysql.properties)
 
 示例配置请见 [示例MySQL数据源Properties](easysql-plugin-core/src/main/resources/db-properties/.example-mysql.properties)。
 
