@@ -19,9 +19,109 @@
 
 ## 配置
 
+### 插件配置文件 [`config.yml`](easysql-plugin-core/src/main/resources/config.yml)
+
+完整示例配置请见 [源文件](easysql-plugin-core/src/main/resources/config.yml)。
+
+#### MySQL/MariaDB 数据源详细配置示例
+
+```yaml
+databases:
+  "mysql-database": # 数据源ID，建议全英文小写并以“-”分隔，例如：hello-minecraft
+    # 数据库驱动类型
+    # 若您的数据库为 mariadb，则强烈推荐设置为 mariadb
+    driver-type: mysql
+    host: 127.0.0.1 # 数据库地址
+    port: 3306 # 数据库端口
+    database: minecraft # 数据库库名
+    username: db-user # 数据库用户名
+    password: 1234567 #数据库连接密码
+```
+
+#### h2 数据源详细配置示例
+
+```yaml
+databases:
+  "h2-database": # 数据源ID，建议全小写以“-”分隔，例如：hello-minecraft
+    driver-type: h2
+    # h2数据库运行模式
+    # 可选 file(文件模式) 与 mem(内存模式)
+    # 文件模式下，须指定 file-path ，以服务器运行目录为基准，支持绝对路径和相对路径。
+    # 内存模式下，所有数据库都将存储在内存中，一旦关服则数据将全部丢失，该模式一般用于测试
+    mode: file # 可选 mem(内存) file(文件) ；内存模式
+    file-path: "db-files/minecraft"
+```
+
 ## 开发
 
 ### 依赖方式
+
+<details>
+<summary>展开查看 Maven 依赖方式</summary>
+
+```xml
+
+<project>
+    <repositories>
+
+        <repository>
+            <!--采用Maven中心库，安全稳定，但版本更新需要等待同步-->
+            <id>maven</id>
+            <name>Maven Central</name>
+            <url>https://repo1.maven.org/maven2</url>
+        </repository>
+        
+        <repository>
+            <!--采用github依赖库，安全稳定，但需要配置 (推荐)-->
+            <id>EasySQL-Plugin</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/CarmJos/EasySQL-Plugin</url>
+        </repository>
+
+        <repository>
+            <!--采用我的私人依赖库，简单方便，但可能因为变故而无法使用-->
+            <id>carm-repo</id>
+            <name>Carm's Repo</name>
+            <url>https://repo.carm.cc/repository/maven-public/</url>
+        </repository>
+
+    </repositories>
+
+    <dependencies>
+        
+        <dependency>
+            <groupId>cc.carm.plugin</groupId>
+            <artifactId>easysql-plugin-api</artifactId>
+            <version>[LATEST RELEASE]</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+</project>
+```
+</details>
+
+<details>
+<summary>展开查看 Gradle 依赖方式</summary>
+
+```groovy
+repositories {
+    
+    //采用Maven中心库，安全稳定，但版本更新需要等待同步
+    mavenCentral()
+    
+    // 采用github依赖库，安全稳定，但需要配置 (推荐)
+    maven { url 'https://maven.pkg.github.com/CarmJos/EasyPlugin' }
+
+    // 采用我的私人依赖库，简单方便，但可能因为变故而无法使用
+    maven { url 'https://repo.carm.cc/repository/maven-public/' }
+}
+
+dependencies {
+    compileOnly "cc.carm.plugin:easysql-plugin-api:[LATEST RELEASE]"
+}
+```
+</details>
 
 ## 指令
 
