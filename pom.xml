@@ -18,7 +18,7 @@
     <groupId>cc.carm.plugin</groupId>
     <artifactId>easysql-plugin</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.2</version>
+    <version>0.0.3-SNAPSHOT</version>
     <modules>
         <module>easysql-plugin-api</module>
         <module>easysql-plugin-core</module>
