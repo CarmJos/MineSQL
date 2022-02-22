@@ -52,6 +52,16 @@ databases:
     file-path: "db-files/minecraft"
 ```
 
+### Properties 配置文件 [`<插件目录>/db-properties/*.properties](easysql-plugin-core/src/main/resources/db-properties/.example-mysql.properties)
+
+示例配置请见 [示例MySQL数据源Properties](easysql-plugin-core/src/main/resources/db-properties/.example-mysql.properties)。
+
+该功能一般用于专业开发者使用，若您不了解该功能，请尽量使用config.yml中提供的配置方式，简单便捷，能够满足大多数需求。
+
+更多帮助详见 [BeeCP项目帮助](https://github.com/Chris2018998/BeeCP) 。
+
+
+
 ## 开发
 
 ### 依赖方式
@@ -70,7 +80,7 @@ databases:
             <name>Maven Central</name>
             <url>https://repo1.maven.org/maven2</url>
         </repository>
-        
+
         <repository>
             <!--采用github依赖库，安全稳定，但需要配置 (推荐)-->
             <id>EasySQL-Plugin</id>
@@ -88,7 +98,7 @@ databases:
     </repositories>
 
     <dependencies>
-        
+
         <dependency>
             <groupId>cc.carm.plugin</groupId>
             <artifactId>easysql-plugin-api</artifactId>
@@ -99,6 +109,7 @@ databases:
     </dependencies>
 </project>
 ```
+
 </details>
 
 <details>
@@ -106,12 +117,12 @@ databases:
 
 ```groovy
 repositories {
-    
+
     //采用Maven中心库，安全稳定，但版本更新需要等待同步
     mavenCentral()
-    
+
     // 采用github依赖库，安全稳定，但需要配置 (推荐)
-    maven { url 'https://maven.pkg.github.com/CarmJos/EasyPlugin' }
+    maven { url 'https://maven.pkg.github.com/CarmJos/EasySQL-Plugin' }
 
     // 采用我的私人依赖库，简单方便，但可能因为变故而无法使用
     maven { url 'https://repo.carm.cc/repository/maven-public/' }
@@ -121,6 +132,7 @@ dependencies {
     compileOnly "cc.carm.plugin:easysql-plugin-api:[LATEST RELEASE]"
 }
 ```
+
 </details>
 
 ## 指令
