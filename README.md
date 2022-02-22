@@ -9,6 +9,8 @@
                  |___/                                       |___/         
 ```
 
+<font size="20" color="red">注意：该项目仍在开发中！</font>
+
 # EasySQL-Plugin
 
 轻松(用)SQL的独立运行库插件，支持多种服务端，适用于MineCraft全版本。
