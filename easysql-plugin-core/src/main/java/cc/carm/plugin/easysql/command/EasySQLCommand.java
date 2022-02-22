@@ -73,7 +73,7 @@ public class EasySQLCommand extends BaseCommand {
     @Syntax("&9<数据源名称>")
     @Description("查看指定数据源的统计信息与当前仍未关闭的查询。")
     public void info(CommandIssuer issuer,
-                     @Syntax("数据源管理器名称，一般在配置文件中指定。") SQLManager manager) {
+                     @Syntax("&9数据源名称") @Description("数据源管理器名称，一般在配置文件中指定。") SQLManager manager) {
         if (issuer.isPlayer()) {
             issuer.sendMessage("§c只有后台执行才能使用此命令。");
             return;

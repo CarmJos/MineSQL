@@ -61,7 +61,7 @@ public class EasySQLBukkit extends EasyPlugin implements EasySQLPluginPlatform {
 
     @Override
     public void outputInfo() {
-        Optional.ofNullable(ResourceReadUtil.readResource(this.getResource("info.txt"))).ifPresent(this::log);
+        Optional.ofNullable(ResourceReadUtil.readResource(this.getResource("PLUGIN_INFO"))).ifPresent(this::log);
     }
 
     public static EasySQLBukkit getInstance() {
