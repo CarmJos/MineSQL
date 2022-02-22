@@ -32,7 +32,7 @@ public interface EasySQLRegistry {
      * @param name 要获取的 SQLManager 实例名称, 如果为 null 则获取首个实例
      * @return {@link SQLManager} 实例
      */
-    @NotNull Optional<@Nullable SQLManager> getOptional(@Nullable String name);
+    @NotNull Optional<? extends SQLManager> getOptional(@Nullable String name);
 
     /**
      * 获取某命名空间下所有 SQLManager 实例
@@ -40,7 +40,7 @@ public interface EasySQLRegistry {
      * @return {@link SQLManager} 实例集合
      */
     @Unmodifiable
-    @NotNull Map<String, SQLManager> list();
+    @NotNull Map<String, ? extends SQLManager> list();
 
     /**
      * 创建并注册一个新的 SQLManager 实例

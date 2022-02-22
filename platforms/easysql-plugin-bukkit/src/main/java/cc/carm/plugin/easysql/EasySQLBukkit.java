@@ -1,9 +1,7 @@
-package cc.carm.plugin.easysql.bukkit;
+package cc.carm.plugin.easysql;
 
 import cc.carm.lib.easyplugin.EasyPlugin;
 import cc.carm.lib.easyplugin.i18n.EasyPluginMessageProvider;
-import cc.carm.plugin.easysql.EasySQLPluginPlatform;
-import cc.carm.plugin.easysql.EasySQLRegistryImpl;
 import cc.carm.plugin.easysql.api.DBConfiguration;
 import cc.carm.plugin.easysql.util.PropertiesUtil;
 import cc.carm.plugin.easysql.util.ResourceReadUtil;
@@ -24,21 +22,22 @@ public class EasySQLBukkit extends EasyPlugin implements EasySQLPluginPlatform {
 
     protected static EasySQLBukkit instance;
 
-    protected PaperCommandManager commandManager;
-    protected EasySQLRegistryImpl registry;
+    private PaperCommandManager commandManager;
+    private EasySQLRegistryImpl registry;
 
     @Override
     protected void load() {
         EasySQLBukkit.instance = this;
-        this.commandManager = new PaperCommandManager(this);
-
+        this.registry = new EasySQLRegistryImpl(this);
 
         initializeAPI(getRegistry());
+
     }
 
     @Override
     protected boolean initialize() {
-        //TODO COMMANDS
+        this.commandManager = new PaperCommandManager(this);
+        initializeCommands(getCommandManager());
         return true;
     }
 
@@ -68,7 +67,6 @@ public class EasySQLBukkit extends EasyPlugin implements EasySQLPluginPlatform {
     public static EasySQLBukkit getInstance() {
         return EasySQLBukkit.instance;
     }
-
 
     protected PaperCommandManager getCommandManager() {
         return commandManager;

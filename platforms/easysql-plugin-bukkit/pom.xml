@@ -99,6 +99,10 @@
                             <shadedPattern>cc.carm.plugin.easysql.lib.easyplugin</shadedPattern>
                         </relocation>
                         <relocation>
+                            <pattern>cc.carm.lib.githubreleases4j</pattern>
+                            <shadedPattern>cc.carm.plugin.easysql.lib.githubreleases4j</shadedPattern>
+                        </relocation>
+                        <relocation>
                             <pattern>co.aikar.commands</pattern>
                             <shadedPattern>cc.carm.plugin.easysql.lib.acf</shadedPattern> <!-- Replace this -->
                         </relocation>
@@ -108,6 +112,15 @@
                         </relocation>
                     </relocations>
                     <filters>
+                        <filter>
+                            <artifact>co.aikar:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/MANIFEST.MF</exclude>
+                                <exclude>META-INF/*.txt</exclude>
+                                <exclude>acf-core*.properties</exclude>
+                                <exclude>acf-minecraft*.properties</exclude>
+                            </excludes>
+                        </filter>
                         <filter>
                             <artifact>*:*</artifact>
                             <excludes>

@@ -118,6 +118,7 @@
                             <excludes>
                                 <exclude>META-INF/MANIFEST.MF</exclude>
                                 <exclude>META-INF/*.txt</exclude>
+                                <exclude>acf-minecraft*.properties</exclude>
                             </excludes>
                         </filter>
                     </filters>
@@ -129,6 +130,10 @@
                         <relocation>
                             <pattern>org.json</pattern>
                             <shadedPattern>cc.carm.plugin.easysql.lib.json</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>cc.carm.lib.githubreleases4j</pattern>
+                            <shadedPattern>cc.carm.plugin.easysql.lib.githubreleases4j</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>co.aikar.commands</pattern>

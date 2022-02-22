@@ -10,7 +10,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-        <easysql.version>0.3.6</easysql.version>
+        <easysql.version>0.3.8</easysql.version>
         <easyplugin.version>1.3.8</easyplugin.version>
         <hikaricp.version>4.0.3</hikaricp.version>
     </properties>
@@ -99,12 +99,6 @@
             <url>https://repo1.maven.org/maven2/</url>
         </repository>
 
-        <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/CarmJos/*</url>
-        </repository>
-
     </repositories>
 
     <dependencies>
@@ -188,6 +182,22 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${project.basedir}/asset/</directory>
+                            <useDefaultExcludes>true</useDefaultExcludes>
+                            <includes>
+                                <include>**/*</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>

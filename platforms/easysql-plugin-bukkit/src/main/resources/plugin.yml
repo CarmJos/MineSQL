@@ -1,5 +1,6 @@
-main: cc.carm.plugin.easysql.bukkit.EasySQLBukkit
+main: cc.carm.plugin.easysql.EasySQLBukkit
 version: ${project.version}
+prefix: EasySQL-Plugin
 name: EasySQL-Plugin-Bukkit
 load: STARTUP
 
@@ -10,12 +11,3 @@ authors:
   - GhostChu
 
 api-version: 1.13
-
-prefix: EasySQL
-
-commands:
-  "EasySQLBukkit":
-    usage: "/EasySQLBukkit help"
-    description: "EasySQL独立插件的主指令，只允许后台运行。"
-    aliases:
-      - "EasySQL"
