@@ -81,7 +81,7 @@ public class EasySQLBungee extends Plugin implements EasySQLPluginPlatform {
 
     @Override
     public @NotNull Map<String, Properties> readProperties() {
-        return PropertiesUtil.readDBProperties(new File(getDataFolder(), "properties"));
+        return PropertiesUtil.readDBProperties(new File(getDataFolder(), "db-properties"));
     }
 
 

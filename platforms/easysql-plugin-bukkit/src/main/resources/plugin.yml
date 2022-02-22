@@ -1,7 +1,7 @@
 main: cc.carm.plugin.easysql.EasySQLBukkit
 version: ${project.version}
 prefix: EasySQL-Plugin
-name: EasySQL-Plugin-Bukkit
+name: EasySQL-Plugin
 load: STARTUP
 
 website: ${project.url}

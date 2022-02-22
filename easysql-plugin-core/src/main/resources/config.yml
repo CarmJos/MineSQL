@@ -1,19 +1,33 @@
+version: ${project.version} #配置文件版本，若与插件版本不同请记得检查配置文件内容
+
+debug: false
+
+# 统计数据设定
+# 改选项用于帮助开发者统计插件版本与使用情况，且绝不会影响性能与使用体验。
+# 当然，您也可以选择在这里关闭，或在plugins/bStats下的配置文件中关闭。
+metrics: true
+
 # 检查更新设定
 # 该选项用于插件判断是否要检查更新，若您不希望插件检查更新并提示您，可以选择关闭。
 # 检查更新为异步操作，绝不会影响性能与使用体验。
 check-update: true
 
+# 启用 Properties 文件配置
+# 相关配置介绍(BeeCP) https://github.com/Chris2018998/BeeCP/wiki/Configuration--List#配置列表
 properties:
+  # 该选项用于启用 Properties 配置读取，若您不希望插件启用 Properties 文件配置，可以选择关闭。
   enable: true
-  folder: "properties/"
+  # 文件夹路径，将读取该文件夹下的所有 .properties 文件，并以文件名为数据管理器名称。
+  # 读取时，将排除以 “.” 开头的文件与非 .properties 文件。
+  # 默认为 "db-properties/" 相对路径，指向“plugins/EasySQL-Plugin/db-properties/”；
+  # 该选项也支持绝对路径，但使用绝对路径时，请务必注意权限问题。
+  folder: "db-properties/"
 
 configurations:
   "example-mariadb": # database id
     driver-type: mariadb
     url: 127.0.0.1 # 数据库地址
     port: 3306 # 数据库端口
-    use-ssl: false # 是否使用SSL连接
     username: minecraft # 数据库用户名
     password: password #数据库连接密码
     database: minecraft #数据库名
-

@@ -30,8 +30,7 @@ public class EasySQLBukkit extends EasyPlugin implements EasySQLPluginPlatform {
         EasySQLBukkit.instance = this;
         this.registry = new EasySQLRegistryImpl(this);
 
-        initializeAPI(getRegistry());
-
+        initializeAPI(getRegistry()); // 尽快的初始化接口，方便其他插件调用
     }
 
     @Override
@@ -56,7 +55,7 @@ public class EasySQLBukkit extends EasyPlugin implements EasySQLPluginPlatform {
     @Override
     public @NotNull
     Map<String, Properties> readProperties() {
-        return PropertiesUtil.readDBProperties(new File(getDataFolder(), "properties"));
+        return PropertiesUtil.readDBProperties(new File(getDataFolder(), "db-properties"));
     }
 
     @Override
