@@ -30,6 +30,25 @@ public class EasySQLCommand extends BaseCommand {
         help.showHelp();
     }
 
+    @Subcommand("version")
+    @Description("查看当前插件版本与核心库(EasySQL)版本。")
+    public void version(CommandIssuer issuer) {
+        if (issuer.isPlayer()) {
+            issuer.sendMessage("只有后台执行才能使用此命令。");
+            return;
+        }
+        String pluginVersion = getVersion(this, "cc.carm.plugin", "easysql-plugin-core");
+        String apiVersion = getVersion(this, "cc.carm.lib", "easysql-api");
+        String poolVersion = getVersion(this, "com.github.chris2018998", "beecp");
+        if (pluginVersion == null || apiVersion == null) {
+            issuer.sendMessage("无法获取当前版本信息，请保证使用原生版本以避免安全问题。");
+            return;
+        }
+        issuer.sendMessage("当前插件版本为 " + pluginVersion + " ，核心接口版本为 " + apiVersion + "。 (基于 BeeCP " + poolVersion + ")");
+        issuer.sendMessage("正在检查更新，请稍候...");
+        EasySQLRegistryImpl.getInstance().checkUpdate(pluginVersion);
+    }
+
     @Subcommand("list")
     @Description("列出当前所有的数据源管理器与相关信息。")
     public void list(CommandIssuer issuer) {
@@ -47,24 +66,6 @@ public class EasySQLCommand extends BaseCommand {
             );
         }
 
-    }
-
-    @Subcommand("version")
-    @Description("查看当前插件版本与核心库(EasySQL)版本。")
-    public void version(CommandIssuer issuer) {
-        if (issuer.isPlayer()) {
-            issuer.sendMessage("只有后台执行才能使用此命令。");
-            return;
-        }
-        String pluginVersion = getVersion(this, "cc.carm.plugin", "easysql-plugin-core");
-        String apiVersion = getVersion(this, "cc.carm.lib", "easysql-api");
-        if (pluginVersion == null || apiVersion == null) {
-            issuer.sendMessage("无法获取当前版本信息，请保证使用原生版本以避免安全问题。");
-            return;
-        }
-        issuer.sendMessage("当前插件版本为 " + pluginVersion + "。 (核心接口版本 " + apiVersion + ")");
-        issuer.sendMessage("正在检查更新，请稍候...");
-        EasySQLRegistryImpl.getInstance().checkUpdate(pluginVersion);
     }
 
     @Subcommand("info")
