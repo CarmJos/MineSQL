@@ -1,28 +1,41 @@
 package cc.carm.plugin.easysql.api;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Arrays;
 
 public enum SQLDriverType {
 
-    MARIADB("org.mariadb.jdbc.Driver", "jdbc:mariadb://", "mariadb", new String[]{}),
-    MYSQL("com.mysql.jdbc.Driver", "jdbc:mysql://", "mysql", new String[]{}),
-    H2("org.h2.Driver", "jdbc:h2:", "h2", new String[]{"MODE=MySQL", "DB_CLOSE_DELAY=-1"});
+    MARIADB("org.mariadb.jdbc.Driver", "jdbc:mariadb://",
+            new String[]{"mariadb", "maria-db"}, new String[]{}
+    ),
+    MYSQL("com.mysql.jdbc.Driver", "jdbc:mysql://",
+            new String[]{"mysql"}, new String[]{}
+    ),
+    H2("org.h2.Driver", "jdbc:h2:",
+            new String[]{"h2", "h2-db", "h2-database"},
+            new String[]{"SET MODE=MySQL", "SET DB_CLOSE_DELAY=-1"}
+    );
 
-    private final @NotNull String databaseID;
     private final @NotNull String driverClass;
     private final @NotNull String urlPrefix;
-    private final @NotNull String[] defaultSettings;
+    private final @NotNull String[] databaseAlias;
+    private final @NotNull String[] initializeSQLs;
 
     SQLDriverType(@NotNull String driverClass, @NotNull String urlPrefix,
-                  @NotNull String databaseID, @NotNull String[] initializeSQLs) {
-        this.databaseID = databaseID;
+                  @NotNull String[] databaseAlias,
+                  @NotNull String[] initializeSQLs) {
+
         this.driverClass = driverClass;
         this.urlPrefix = urlPrefix;
-        this.defaultSettings = initializeSQLs;
+        this.databaseAlias = databaseAlias;
+        this.initializeSQLs = initializeSQLs;
     }
 
-    public @NotNull String getDatabaseID() {
-        return databaseID;
+    public @NotNull String[] getDatabaseAlias() {
+        return databaseAlias;
     }
 
     public @NotNull String getDriverClass() {
@@ -33,7 +46,20 @@ public enum SQLDriverType {
         return urlPrefix;
     }
 
-    public @NotNull String[] getDefaultSettings() {
-        return defaultSettings;
+    public @NotNull String[] getInitializeSQLs() {
+        return initializeSQLs;
+    }
+
+    @Contract("null->null")
+    public static @Nullable SQLDriverType parse(@Nullable String driverString) {
+        if (driverString == null) return null;
+        return Arrays.stream(values())
+                .filter(value -> value.name().equalsIgnoreCase(driverString) || has(value.getDatabaseAlias(), driverString))
+                .findFirst().orElse(null);
+    }
+
+
+    private static boolean has(String[] array, String value) {
+        return Arrays.stream(array).anyMatch(s -> s.equalsIgnoreCase(value));
     }
 }

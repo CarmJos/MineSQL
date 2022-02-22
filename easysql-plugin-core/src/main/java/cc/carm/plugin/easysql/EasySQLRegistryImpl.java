@@ -37,14 +37,25 @@ public class EasySQLRegistryImpl implements EasySQLRegistry {
             thread.setDaemon(true);
             return thread;
         });
-        Map<String, DBConfiguration> configurations = platform.readConfigurations();
+        Map<String, Properties> dbProperties = platform.readProperties();
+        Map<String, DBConfiguration> dbConfigurations = platform.readConfigurations();
 
-        if (configurations.isEmpty()) {
+        if (dbProperties.isEmpty() && dbConfigurations.isEmpty()) {
             platform.getLogger().warning("未检测到任何数据库配置，将不会创建任何SQLManager。");
             return;
         }
 
-        configurations.forEach((id, configuration) -> {
+        dbProperties.forEach((id, properties) -> {
+            try {
+                SQLManagerImpl sqlManager = create(id, properties);
+                this.sqlManagerRegistry.put(id, sqlManager);
+            } catch (Exception exception) {
+                platform.getLogger().warning("初始化SQLManager(#" + id + ") 出错，请检查配置文件.");
+                exception.printStackTrace();
+            }
+        });
+
+        dbConfigurations.forEach((id, configuration) -> {
             try {
                 SQLManagerImpl sqlManager = create(id, configuration);
                 this.sqlManagerRegistry.put(id, sqlManager);
@@ -128,6 +139,10 @@ public class EasySQLRegistryImpl implements EasySQLRegistry {
             BeeDataSource dataSource = (BeeDataSource) manager.getDataSource();
             dataSource.close();         //Close bee connection pool
         }
+    }
+
+    protected HashMap<String, SQLManagerImpl> getManagers() {
+        return sqlManagerRegistry;
     }
 
     public ExecutorService getExecutor() {

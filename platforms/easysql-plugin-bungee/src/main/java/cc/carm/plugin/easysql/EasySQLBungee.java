@@ -1,23 +1,16 @@
 package cc.carm.plugin.easysql;
 
-import cc.carm.plugin.easysql.api.DBConfiguration;
-import cc.carm.plugin.easysql.api.EasySQLRegistry;
-import cc.carm.plugin.easysql.util.PropertiesUtil;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
 
-public class EasySQLBungee extends Plugin implements EasySQLPluginPlatform {
+public class EasySQLBungee extends Plugin {
 
     private boolean setup = false;
 
@@ -68,21 +61,5 @@ public class EasySQLBungee extends Plugin implements EasySQLPluginPlatform {
     public void onDisable() {
         getLogger().info("Shutting down...");
     }
-
-    @Override
-    public @NotNull EasySQLRegistry getRegistry() {
-        return null;
-    }
-
-    @Override
-    public @NotNull Map<String, DBConfiguration> readConfigurations() {
-        return new HashMap<>();
-    }
-
-    @Override
-    public @NotNull Map<String, Properties> readProperties() {
-        return PropertiesUtil.readDBProperties(new File(getDataFolder(), "db-properties"));
-    }
-
 
 }

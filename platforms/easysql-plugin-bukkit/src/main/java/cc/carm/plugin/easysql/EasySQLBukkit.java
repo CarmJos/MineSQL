@@ -2,17 +2,18 @@ package cc.carm.plugin.easysql;
 
 import cc.carm.lib.easyplugin.EasyPlugin;
 import cc.carm.lib.easyplugin.i18n.EasyPluginMessageProvider;
+import cc.carm.lib.easysql.api.SQLManager;
 import cc.carm.plugin.easysql.api.DBConfiguration;
 import cc.carm.plugin.easysql.util.PropertiesUtil;
 import cc.carm.plugin.easysql.util.ResourceReadUtil;
+import cn.beecp.BeeDataSource;
 import co.aikar.commands.PaperCommandManager;
+import org.bstats.bukkit.Metrics;
+import org.bstats.charts.SimplePie;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Properties;
+import java.util.*;
 
 public class EasySQLBukkit extends EasyPlugin implements EasySQLPluginPlatform {
 
@@ -22,22 +23,74 @@ public class EasySQLBukkit extends EasyPlugin implements EasySQLPluginPlatform {
 
     protected static EasySQLBukkit instance;
 
-    private PaperCommandManager commandManager;
+    private BukkitConfiguration configuration;
     private EasySQLRegistryImpl registry;
+
+    private PaperCommandManager commandManager;
 
     @Override
     protected void load() {
         EasySQLBukkit.instance = this;
+
+        log("加载配置文件...");
+        getInstance().saveDefaultConfig();
+        this.configuration = new BukkitConfiguration(getInstance().getConfig());
+
+        log("初始化EasySQL注册器...");
         this.registry = new EasySQLRegistryImpl(this);
 
-        initializeAPI(getRegistry()); // 尽快的初始化接口，方便其他插件调用
+        log("初始化EasySQLAPI...");
+        initializeAPI(getRegistry()); // 尽快地初始化接口，方便其他插件调用
     }
 
     @Override
     protected boolean initialize() {
+        log("初始化指令管理器...");
         this.commandManager = new PaperCommandManager(this);
+        log("注册相关指令...");
         initializeCommands(getCommandManager());
+
+        if (getConfiguration().isMetricsEnabled()) {
+            log("启用统计数据...");
+            Metrics metrics = new Metrics(this, 14075);
+            metrics.addCustomChart(new SimplePie("update_check",
+                    () -> getConfiguration().isUpdateCheckerEnabled() ? "ENABLED" : "DISABLED")
+            );
+            metrics.addCustomChart(new SimplePie("properties_configuration",
+                    () -> getConfiguration().isPropertiesEnabled() ? "ENABLED" : "DISABLED")
+            );
+        }
+
+        if (getConfiguration().isUpdateCheckerEnabled()) {
+            log("开始检查更新...");
+            getRegistry().checkUpdate(getDescription().getVersion());
+        } else {
+            log("已禁用检查更新，跳过。");
+        }
+
         return true;
+    }
+
+    @Override
+    protected void shutdown() {
+        log("终止全部数据库连接...");
+        for (String dbName : new HashSet<>(getRegistry().list().keySet())) {
+            log("   正在关闭数据库 " + dbName + "...");
+            SQLManager manager = getRegistry().get(dbName);
+            getRegistry().shutdown(manager, activeQueries -> {
+                log("   数据库 " + dbName + " 仍有有 " + activeQueries + " 条活动查询，强制关闭中...");
+                if (manager.getDataSource() instanceof BeeDataSource) {
+                    BeeDataSource dataSource = (BeeDataSource) manager.getDataSource();
+                    dataSource.close();         //Close bee connection pool
+                }
+            });
+        }
+        getRegistry().getManagers().clear(); // release all managers
+    }
+
+    @Override
+    public boolean isDebugging() {
+        return getConfiguration().isDebugEnabled();
     }
 
     @Override
@@ -49,13 +102,16 @@ public class EasySQLBukkit extends EasyPlugin implements EasySQLPluginPlatform {
     @Override
     public @NotNull
     Map<String, DBConfiguration> readConfigurations() {
-        return new HashMap<>();
+        return getConfiguration().getDBConfigurations();
     }
 
     @Override
     public @NotNull
     Map<String, Properties> readProperties() {
-        return PropertiesUtil.readDBProperties(new File(getDataFolder(), "db-properties"));
+        if (!getConfiguration().isPropertiesEnabled()) return new HashMap<>();
+        String propertiesFolder = getConfiguration().getPropertiesFolder();
+        if (propertiesFolder == null || propertiesFolder.length() == 0) return new HashMap<>();
+        else return PropertiesUtil.readDBProperties(new File(getDataFolder(), propertiesFolder));
     }
 
     @Override
@@ -65,6 +121,10 @@ public class EasySQLBukkit extends EasyPlugin implements EasySQLPluginPlatform {
 
     public static EasySQLBukkit getInstance() {
         return EasySQLBukkit.instance;
+    }
+
+    protected BukkitConfiguration getConfiguration() {
+        return configuration;
     }
 
     protected PaperCommandManager getCommandManager() {

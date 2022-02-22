@@ -3,14 +3,13 @@ package cc.carm.plugin.easysql.api;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class DBConfiguration {
 
-    public DBConfiguration create(@NotNull SQLDriverType sourceType, @NotNull String url) {
-        return new DBConfiguration(sourceType.getDriverClass(), sourceType.getUrlPrefix(), url, sourceType.getDefaultSettings());
+    public static DBConfiguration create(@NotNull SQLDriverType sourceType, @NotNull String url) {
+        return new DBConfiguration(sourceType.getDriverClass(), sourceType.getUrlPrefix(), url, sourceType.getInitializeSQLs());
     }
 
     private final @NotNull String driverClassName;
