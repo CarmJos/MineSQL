@@ -4,8 +4,8 @@ import cc.carm.lib.easyplugin.EasyPlugin;
 import cc.carm.lib.easyplugin.i18n.EasyPluginMessageProvider;
 import cc.carm.lib.easysql.api.SQLManager;
 import cc.carm.plugin.easysql.api.DBConfiguration;
-import cc.carm.plugin.easysql.util.PropertiesUtil;
-import cc.carm.plugin.easysql.util.ResourceReadUtil;
+import cc.carm.plugin.easysql.util.JarResourceUtils;
+import cc.carm.plugin.easysql.util.DBPropertiesUtil;
 import cn.beecp.BeeDataSource;
 import co.aikar.commands.PaperCommandManager;
 import org.bstats.bukkit.Metrics;
@@ -111,12 +111,12 @@ public class EasySQLBukkit extends EasyPlugin implements EasySQLPluginPlatform {
         if (!getConfiguration().isPropertiesEnabled()) return new HashMap<>();
         String propertiesFolder = getConfiguration().getPropertiesFolder();
         if (propertiesFolder == null || propertiesFolder.length() == 0) return new HashMap<>();
-        else return PropertiesUtil.readDBProperties(new File(getDataFolder(), propertiesFolder));
+        else return DBPropertiesUtil.readFromFolder(new File(getDataFolder(), propertiesFolder));
     }
 
     @Override
     public void outputInfo() {
-        Optional.ofNullable(ResourceReadUtil.readResource(this.getResource("PLUGIN_INFO"))).ifPresent(this::log);
+        Optional.ofNullable(JarResourceUtils.readResource(this.getResource("PLUGIN_INFO"))).ifPresent(this::log);
     }
 
     public static EasySQLBukkit getInstance() {

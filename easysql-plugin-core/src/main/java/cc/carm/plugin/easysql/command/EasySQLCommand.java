@@ -11,7 +11,7 @@ import co.aikar.commands.annotation.*;
 import java.util.Map;
 import java.util.UUID;
 
-import static cc.carm.plugin.easysql.util.ResourceReadUtil.getVersion;
+import static cc.carm.plugin.easysql.util.MavenReadUtil.getVersion;
 
 
 @SuppressWarnings("unused")

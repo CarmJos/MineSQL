@@ -15,6 +15,14 @@
 
 轻松(用)SQL的独立运行库插件，支持多种服务端，适用于MineCraft全版本。
 
+## 使用场景
+
+### 对于插件使用者
+
+### 对于插件开发者
+
+### 额外提醒
+
 ## 安装
 
 ## 配置
@@ -56,11 +64,11 @@ databases:
 
 示例配置请见 [示例MySQL数据源Properties](easysql-plugin-core/src/main/resources/db-properties/.example-mysql.properties)。
 
+Properties 文件的文件名几位数据源的ID，允许为英文、数字、下划线、短横线；请不要包含中文、其他特殊符号与空格，以`.`开头的文件将被忽略。
+
 该功能一般用于专业开发者使用，若您不了解该功能，请尽量使用config.yml中提供的配置方式，简单便捷，能够满足大多数需求。
 
 更多帮助详见 [BeeCP项目帮助](https://github.com/Chris2018998/BeeCP) 。
-
-
 
 ## 开发
 
