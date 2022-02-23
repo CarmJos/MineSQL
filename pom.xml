@@ -44,15 +44,6 @@
                 <role>Designer</role>
             </roles>
         </developer>
-        <developer>
-            <id>zimrs</id>
-            <name>Zimrs</name>
-            <email>zimrs@kar.red</email>
-            <url>https://www.zimrs.cn</url>
-            <roles>
-                <role>Product Manager</role>
-            </roles>
-        </developer>
     </developers>
 
     <licenses>
@@ -190,6 +181,13 @@
                     <filesets>
                         <fileset>
                             <directory>${project.basedir}/asset/</directory>
+                            <useDefaultExcludes>true</useDefaultExcludes>
+                            <includes>
+                                <include>**/*</include>
+                            </includes>
+                        </fileset>
+                        <fileset>
+                            <directory>${project.basedir}/api-docs/</directory>
                             <useDefaultExcludes>true</useDefaultExcludes>
                             <includes>
                                 <include>**/*</include>

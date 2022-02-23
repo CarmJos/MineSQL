@@ -23,6 +23,38 @@
     <packaging>jar</packaging>
 
     <name>EasySQL-Plugin-Bukkit</name>
+    <description>轻松(用)SQL的独立运行库Bukkit版本插件。</description>
+    <url>https://github.com/CarmJos/EasySQL-Plugin</url>
+
+    <developers>
+        <developer>
+            <id>CarmJos</id>
+            <name>Carm Jos</name>
+            <email>carm@carm.cc</email>
+            <url>https://www.carm.cc</url>
+            <roles>
+                <role>Main Developer</role>
+                <role>Designer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>GNU General Public License v3.0</name>
+            <url>https://opensource.org/licenses/GPL-3.0</url>
+        </license>
+    </licenses>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/CarmJos/EasySQL-Plugin/issues</url>
+    </issueManagement>
+
+    <ciManagement>
+        <system>GitHub Actions</system>
+        <url>https://github.com/CarmJos/EasySQL-Plugin/actions/workflows/maven.yml</url>
+    </ciManagement>
 
     <dependencies>
 
