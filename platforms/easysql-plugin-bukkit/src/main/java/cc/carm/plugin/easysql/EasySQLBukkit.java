@@ -4,8 +4,8 @@ import cc.carm.lib.easyplugin.EasyPlugin;
 import cc.carm.lib.easyplugin.i18n.EasyPluginMessageProvider;
 import cc.carm.lib.easysql.api.SQLManager;
 import cc.carm.plugin.easysql.api.DBConfiguration;
-import cc.carm.plugin.easysql.util.JarResourceUtils;
 import cc.carm.plugin.easysql.util.DBPropertiesUtil;
+import cc.carm.plugin.easysql.util.JarResourceUtils;
 import cn.beecp.BeeDataSource;
 import co.aikar.commands.PaperCommandManager;
 import org.bstats.bukkit.Metrics;
@@ -111,7 +111,20 @@ public class EasySQLBukkit extends EasyPlugin implements EasySQLPluginPlatform {
         if (!getConfiguration().isPropertiesEnabled()) return new HashMap<>();
         String propertiesFolder = getConfiguration().getPropertiesFolder();
         if (propertiesFolder == null || propertiesFolder.length() == 0) return new HashMap<>();
-        else return DBPropertiesUtil.readFromFolder(new File(getDataFolder(), propertiesFolder));
+
+        File file = new File(getDataFolder(), propertiesFolder);
+        if (!file.exists() || !file.isDirectory()) {
+            try {
+                JarResourceUtils.copyFolderFromJar(
+                        "db-properties", file,
+                        JarResourceUtils.CopyOption.COPY_IF_NOT_EXIST
+                );
+            } catch (Exception ex) {
+                error("初始化properties示例文件失败：" + ex.getMessage());
+            }
+        }
+
+        return DBPropertiesUtil.readFromFolder(file);
     }
 
     @Override

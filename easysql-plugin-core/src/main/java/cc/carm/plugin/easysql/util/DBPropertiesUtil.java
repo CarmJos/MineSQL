@@ -1,5 +1,6 @@
 package cc.carm.plugin.easysql.util;
 
+import cc.carm.plugin.easysql.util.JarResourceUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -14,7 +15,7 @@ public class DBPropertiesUtil {
 
     public static Map<String, Properties> readFromFolder(File propertiesFolder) {
         Map<String, Properties> propertiesMap = new HashMap<>();
-        if (!propertiesFolder.isDirectory()) return propertiesMap;
+        if (!propertiesFolder.exists() || !propertiesFolder.isDirectory()) return propertiesMap;
 
         File[] files = propertiesFolder.listFiles();
         if (files == null || files.length == 0) return propertiesMap;
