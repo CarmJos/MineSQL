@@ -90,7 +90,7 @@
                     <locale>zh_CN</locale>
 
                     <includeDependencySources>true</includeDependencySources>
-                    <dependencySourceIncludes>cc.carm.lib:*</dependencySourceIncludes>
+                    <dependencySourceIncludes>cc.carm.lib:easysql-api</dependencySourceIncludes>
                     <dependencySourceIncludes>cc.carm.plugin:*</dependencySourceIncludes>
                     <outputDirectory>${project.parent.basedir}/api-docs/</outputDirectory>
                 </configuration>

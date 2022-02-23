@@ -3,6 +3,7 @@ package cc.carm.plugin.easysql.command;
 import cc.carm.lib.easysql.api.SQLManager;
 import cc.carm.lib.easysql.api.SQLQuery;
 import cc.carm.plugin.easysql.EasySQLRegistryImpl;
+import cc.carm.plugin.easysql.util.VersionReader;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.CommandIssuer;
@@ -10,8 +11,6 @@ import co.aikar.commands.annotation.*;
 
 import java.util.Map;
 import java.util.UUID;
-
-import static cc.carm.plugin.easysql.util.MavenReadUtil.getVersion;
 
 
 @SuppressWarnings("unused")
@@ -37,15 +36,19 @@ public class EasySQLCommand extends BaseCommand {
             issuer.sendMessage("§c只有后台执行才能使用此命令。");
             return;
         }
-        String pluginVersion = getVersion(this, "cc.carm.plugin", "easysql-plugin-core");
-        String apiVersion = getVersion(this, "cc.carm.lib", "easysql-api");
-        String poolVersion = getVersion(this, "com.github.chris2018998", "beecp");
-        if (pluginVersion == null || apiVersion == null) {
+        VersionReader reader = new VersionReader();
+        String pluginVersion = reader.get("plugin", null);
+        if (pluginVersion == null) {
             issuer.sendMessage("§c无法获取当前版本信息，请保证使用原生版本以避免安全问题。");
             return;
         }
-        issuer.sendMessage("§r当前插件版本为 §b" + pluginVersion + " §r，核心接口版本为 §9" + apiVersion + "§r。 §7(基于 BeeCP " + poolVersion + ")");
-        issuer.sendMessage("§r正在检查更新，请稍候...");
+        issuer.sendMessage("§r当前插件版本为 §b" + pluginVersion + "§r。 §7(基于 EasySQL &3" + reader.get("api") + "&7)");
+        issuer.sendMessage("§8 - &f连接池依赖 BeeCP §9" + reader.get("beecp"));
+        issuer.sendMessage("§8 - &f数据库驱动 MySQL §9" + reader.get("mysql-driver"));
+        issuer.sendMessage("§8 - &f数据库驱动 MariaDB §9" + reader.get("mariadb-driver"));
+        issuer.sendMessage("§8 - &f数据库驱动 h2-database §9" + reader.get("h2-driver"));
+
+        issuer.sendMessage("§r正在检查插件更新，请稍候...");
         EasySQLRegistryImpl.getInstance().checkUpdate(pluginVersion);
     }
 
