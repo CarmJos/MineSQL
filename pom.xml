@@ -26,13 +26,13 @@
     <packaging>pom</packaging>
     <version>0.0.3-SNAPSHOT</version>
     <modules>
-        <module>easysql-plugin-api</module>
-        <module>easysql-plugin-core</module>
+        <module>api</module>
+        <module>core</module>
 
-        <module>platforms/easysql-plugin-bukkit</module>
-        <module>platforms/easysql-plugin-bungee</module>
-        <module>platforms/easysql-plugin-velocity</module>
-        <module>platforms/easysql-plugin-sponge</module>
+        <module>platforms/bukkit</module>
+        <module>platforms/bungee</module>
+        <module>platforms/velocity</module>
+        <module>platforms/sponge</module>
     </modules>
 
     <name>EasySQL-Plugin</name>
@@ -103,7 +103,7 @@
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>22.0.0</version>
+            <version>23.0.0</version>
             <scope>provided</scope>
         </dependency>
 
