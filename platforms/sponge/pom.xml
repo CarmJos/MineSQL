@@ -55,6 +55,43 @@
         <url>https://github.com/CarmJos/EasySQL-Plugin/actions/workflows/maven.yml</url>
     </ciManagement>
 
+    <repositories>
+        <repository>
+            <id>sponge</id>
+            <url>http://repo.spongepowered.org/maven</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>easysql-plugin-core</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spongepowered</groupId>
+            <artifactId>spongeapi</artifactId>
+            <version>8.0.0</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>ninja.leaping.configurate</groupId>
+                    <artifactId>configurate-hocon</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-sponge</artifactId>
+            <version>3.0.0</version>
+            <optional>true</optional>
+            <scope>compile</scope>
+        </dependency>
+
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>

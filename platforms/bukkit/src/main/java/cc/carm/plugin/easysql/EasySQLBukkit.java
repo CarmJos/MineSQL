@@ -67,7 +67,6 @@ public class EasySQLBukkit extends EasyPlugin implements EasySQLPluginPlatform {
         } else {
             log("已禁用检查更新，跳过。");
         }
-
         return true;
     }
 
