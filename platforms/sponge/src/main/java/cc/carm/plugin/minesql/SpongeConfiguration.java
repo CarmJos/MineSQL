@@ -1,8 +1,8 @@
-package cc.carm.plugin.easysql;
+package cc.carm.plugin.minesql;
 
-import cc.carm.plugin.easysql.api.DBConfiguration;
-import cc.carm.plugin.easysql.api.SQLDriverType;
-import cc.carm.plugin.easysql.configuration.PluginConfiguration;
+import cc.carm.plugin.minesql.api.DBConfiguration;
+import cc.carm.plugin.minesql.api.SQLDriverType;
+import cc.carm.plugin.minesql.configuration.PluginConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.ConfigurationNode;
 
@@ -60,18 +60,18 @@ public class SpongeConfiguration implements PluginConfiguration {
                 String driverString = dbSection.getString("driver-type");
                 SQLDriverType driverType = SQLDriverType.parse(driverString);
                 if (driverType == null) {
-                    EasySQLSponge.getInstance().getLog().error("不存在预设的驱动类型 " + driverString + "," + " 请检查配置文件 databases." + dbEntry + "。");
+                    MineSQLSponge.getInstance().getLog().error("不存在预设的驱动类型 " + driverString + "," + " 请检查配置文件 databases." + dbEntry + "。");
                     continue;
                 }
                 String host = dbSection.getString("host");
                 if (host == null) {
-                    EasySQLSponge.getInstance().getLog().error("地址配置不得为空," + " 请检查配置文件 databases." + dbEntry + "。");
+                    MineSQLSponge.getInstance().getLog().error("地址配置不得为空," + " 请检查配置文件 databases." + dbEntry + "。");
                     continue;
                 }
 
                 int port = dbSection.node("port").getInt(-1);
                 if (port < 0) {
-                    EasySQLSponge.getInstance().getLog().error("端口未配置正确," + " 请检查配置文件 databases." + dbEntry + "。");
+                    MineSQLSponge.getInstance().getLog().error("端口未配置正确," + " 请检查配置文件 databases." + dbEntry + "。");
                     continue;
                 }
                 DBConfiguration dbConfiguration = DBConfiguration.create(driverType, host + ":" + port);

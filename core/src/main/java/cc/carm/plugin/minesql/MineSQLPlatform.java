@@ -1,10 +1,10 @@
-package cc.carm.plugin.easysql;
+package cc.carm.plugin.minesql;
 
 import cc.carm.lib.easysql.api.SQLManager;
-import cc.carm.plugin.easysql.api.DBConfiguration;
-import cc.carm.plugin.easysql.api.EasySQLRegistry;
-import cc.carm.plugin.easysql.command.EasySQLCommand;
-import cc.carm.plugin.easysql.command.EasySQLHelpFormatter;
+import cc.carm.plugin.minesql.api.DBConfiguration;
+import cc.carm.plugin.minesql.api.SQLRegistry;
+import cc.carm.plugin.minesql.command.EasySQLCommand;
+import cc.carm.plugin.minesql.command.EasySQLHelpFormatter;
 import co.aikar.commands.CommandManager;
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.Locales;
@@ -15,9 +15,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public interface EasySQLPluginPlatform {
+public interface MineSQLPlatform {
 
-    @NotNull EasySQLRegistry getRegistry();
+    @NotNull SQLRegistry getRegistry();
 
     @NotNull Map<String, DBConfiguration> readConfigurations();
 
@@ -25,8 +25,8 @@ public interface EasySQLPluginPlatform {
 
     Logger getLogger();
 
-    default void initializeAPI(EasySQLRegistry registry) {
-        EasySQLAPI.initializeAPI(registry);
+    default void initializeAPI(SQLRegistry registry) {
+        MineSQL.initializeAPI(registry);
     }
 
     @SuppressWarnings("deprecation")

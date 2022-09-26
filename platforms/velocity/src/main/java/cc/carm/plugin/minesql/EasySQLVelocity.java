@@ -1,4 +1,4 @@
-package cc.carm.plugin.easysql;
+package cc.carm.plugin.minesql;
 
 
 import com.google.inject.Inject;

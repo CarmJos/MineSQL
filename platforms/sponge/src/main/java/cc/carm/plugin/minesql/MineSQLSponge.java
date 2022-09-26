@@ -1,10 +1,10 @@
-package cc.carm.plugin.easysql;
+package cc.carm.plugin.minesql;
 
 import cc.carm.lib.easysql.api.SQLManager;
-import cc.carm.plugin.easysql.api.DBConfiguration;
-import cc.carm.plugin.easysql.configuration.PluginConfiguration;
-import cc.carm.plugin.easysql.util.DBPropertiesUtil;
-import cc.carm.plugin.easysql.util.JarResourceUtils;
+import cc.carm.plugin.minesql.api.DBConfiguration;
+import cc.carm.plugin.minesql.configuration.PluginConfiguration;
+import cc.carm.plugin.minesql.util.DBPropertiesUtil;
+import cc.carm.plugin.minesql.util.JarResourceUtils;
 import cn.beecp.BeeDataSource;
 import com.google.common.io.MoreFiles;
 import com.google.inject.Inject;
@@ -39,30 +39,30 @@ import java.util.Properties;
  * @author huanmeng_qwq
  */
 @Plugin("easysql-plugin")
-public class EasySQLSponge implements EasySQLPluginPlatform {
+public class MineSQLSponge implements MineSQLPlatform {
     @Inject
     @ConfigDir(sharedRoot = false)
     private Path configDirectory;
     @Inject
     private org.apache.logging.log4j.Logger logger;
 
-    private static EasySQLSponge instance;
+    private static MineSQLSponge instance;
     private ConfigurationNode root;
     private PluginConfiguration configuration;
-    private EasySQLRegistryImpl registry;
+    private MineSQLRegistry registry;
     private PluginContainer pluginContainer;
 
     private final Metrics metrics;
 
     @Inject
-    public EasySQLSponge(Metrics.Factory factory, PluginContainer pluginContainer) {
+    public MineSQLSponge(Metrics.Factory factory, PluginContainer pluginContainer) {
         this.metrics = factory.make(14075);
         instance = this;
         HoconConfigurationLoader loader = HoconConfigurationLoader.builder().path(resolveConfig()).build();
         try {
             this.root = loader.load();
             this.configuration = new SpongeConfiguration(root);
-            this.registry = new EasySQLRegistryImpl(this);
+            this.registry = new MineSQLRegistry(this);
             this.pluginContainer = pluginContainer;
             enable();
         } catch (ConfigurateException ex) {
@@ -166,7 +166,7 @@ public class EasySQLSponge implements EasySQLPluginPlatform {
     }
 
     @Override
-    public @NotNull EasySQLRegistryImpl getRegistry() {
+    public @NotNull MineSQLRegistry getRegistry() {
         return registry;
     }
 
@@ -174,7 +174,7 @@ public class EasySQLSponge implements EasySQLPluginPlatform {
         return java.util.logging.Logger.getLogger("easysql-plugin");
     }
 
-    public static EasySQLSponge getInstance() {
+    public static MineSQLSponge getInstance() {
         return instance;
     }
 

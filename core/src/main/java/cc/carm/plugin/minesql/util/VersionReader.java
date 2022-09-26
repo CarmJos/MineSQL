@@ -1,4 +1,4 @@
-package cc.carm.plugin.easysql.util;
+package cc.carm.plugin.minesql.util;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;

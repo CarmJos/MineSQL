@@ -1,6 +1,6 @@
-package cc.carm.plugin.easysql.configuration;
+package cc.carm.plugin.minesql.configuration;
 
-import cc.carm.plugin.easysql.api.DBConfiguration;
+import cc.carm.plugin.minesql.api.DBConfiguration;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;

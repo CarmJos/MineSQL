@@ -11,8 +11,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.source>${project.jdk.version}</maven.compiler.source>
+        <maven.compiler.target>${project.jdk.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <maven.javadoc.skip>true</maven.javadoc.skip>
@@ -138,23 +138,23 @@
                     <relocations>
                         <relocation>
                             <pattern>org.bstats</pattern>
-                            <shadedPattern>cc.carm.plugin.easysql.lib.bstats</shadedPattern>
+                            <shadedPattern>cc.carm.plugin.minesql.lib.bstats</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.json</pattern>
-                            <shadedPattern>cc.carm.plugin.easysql.lib.json</shadedPattern>
+                            <shadedPattern>cc.carm.plugin.minesql.lib.json</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>cc.carm.lib.githubreleases4j</pattern>
-                            <shadedPattern>cc.carm.plugin.easysql.lib.githubreleases4j</shadedPattern>
+                            <shadedPattern>cc.carm.plugin.minesql.lib.githubreleases4j</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>co.aikar.commands</pattern>
-                            <shadedPattern>cc.carm.plugin.easysql.lib.acf</shadedPattern> <!-- Replace this -->
+                            <shadedPattern>cc.carm.plugin.minesql.lib.acf</shadedPattern> <!-- Replace this -->
                         </relocation>
                         <relocation>
                             <pattern>co.aikar.locales</pattern>
-                            <shadedPattern>cc.carm.plugin.easysql.lib.locales</shadedPattern> <!-- Replace this -->
+                            <shadedPattern>cc.carm.plugin.minesql.lib.locales</shadedPattern> <!-- Replace this -->
                         </relocation>
                     </relocations>
                 </configuration>

@@ -1,6 +1,5 @@
-package cc.carm.plugin.easysql.util;
+package cc.carm.plugin.minesql.util;
 
-import cc.carm.plugin.easysql.util.JarResourceUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;

@@ -1,11 +1,11 @@
-package cc.carm.plugin.easysql;
+package cc.carm.plugin.minesql;
 
 import cc.carm.lib.easysql.api.SQLManager;
 import cc.carm.lib.easysql.api.SQLQuery;
 import cc.carm.lib.easysql.manager.SQLManagerImpl;
 import cc.carm.lib.githubreleases4j.GithubReleases4J;
-import cc.carm.plugin.easysql.api.DBConfiguration;
-import cc.carm.plugin.easysql.api.EasySQLRegistry;
+import cc.carm.plugin.minesql.api.DBConfiguration;
+import cc.carm.plugin.minesql.api.SQLRegistry;
 import cn.beecp.BeeDataSource;
 import cn.beecp.BeeDataSourceConfig;
 import com.google.common.collect.ImmutableMap;
@@ -13,25 +13,26 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;
 
+import javax.sql.DataSource;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
-public class EasySQLRegistryImpl implements EasySQLRegistry {
+public class MineSQLRegistry implements SQLRegistry {
     public static final String REPO_OWNER = "CarmJos";
     public static final String REPO_NAME = "EasySQL-Plugin";
 
-    private static EasySQLRegistryImpl instance;
+    private static MineSQLRegistry instance;
 
     protected ExecutorService executorPool;
-    protected EasySQLPluginPlatform platform;
+    protected MineSQLPlatform platform;
     private final HashMap<String, SQLManagerImpl> sqlManagerRegistry = new HashMap<>();
 
-    protected EasySQLRegistryImpl(@NotNull EasySQLPluginPlatform platform) {
+    protected MineSQLRegistry(@NotNull MineSQLPlatform platform) {
         this.platform = platform;
-        EasySQLRegistryImpl.instance = this;
+        MineSQLRegistry.instance = this;
         this.executorPool = Executors.newFixedThreadPool(2, (r) -> {
             Thread thread = new Thread(r, "EasySQLRegistry");
             thread.setDaemon(true);
@@ -69,19 +70,12 @@ public class EasySQLRegistryImpl implements EasySQLRegistry {
 
     @Override
     public @NotNull SQLManagerImpl get(@Nullable String id) throws NullPointerException {
-        if (!this.sqlManagerRegistry.containsKey(id)) {
-            throw new NullPointerException("并不存在ID为 #" + id + " 的SQLManager.");
-        }
-        return this.sqlManagerRegistry.get(id);
+        return Objects.requireNonNull(this.sqlManagerRegistry.get(id), "并不存在ID为 #" + id + " 的SQLManager.");
     }
 
     @Override
-    public @NotNull Optional<@Nullable SQLManagerImpl> getOptional(@Nullable String name) {
-        try {
-            return Optional.of(get(name));
-        } catch (Exception exception) {
-            return Optional.empty();
-        }
+    public @NotNull Optional<@Nullable SQLManagerImpl> getOptional(@Nullable String id) {
+        return Optional.of(this.sqlManagerRegistry.get(id));
     }
 
     @Override
@@ -91,7 +85,7 @@ public class EasySQLRegistryImpl implements EasySQLRegistry {
     }
 
     @Override
-    public @NotNull SQLManagerImpl create(@Nullable String name, @NotNull DBConfiguration configuration) {
+    public @NotNull SQLManagerImpl create(@NotNull String name, @NotNull DBConfiguration configuration) throws Exception {
         BeeDataSourceConfig config = new BeeDataSourceConfig();
         config.setDriverClassName(configuration.getDriverClassName());
         config.setJdbcUrl(configuration.getUrlPrefix() + configuration.getUrl());
@@ -118,17 +112,17 @@ public class EasySQLRegistryImpl implements EasySQLRegistry {
     }
 
     @Override
-    public @NotNull SQLManagerImpl create(@Nullable String name, @NotNull Properties properties) {
+    public @NotNull SQLManagerImpl create(@NotNull String name, @NotNull Properties properties) {
         return create(name, new BeeDataSourceConfig(properties));
     }
 
     @Override
-    public @NotNull SQLManagerImpl create(@Nullable String name, @NotNull String propertyFileName) {
-        return create(name, new BeeDataSourceConfig(propertyFileName));
+    public @NotNull SQLManagerImpl create(@NotNull String name, @NotNull DataSource source) {
+        return new SQLManagerImpl(source, name);
     }
 
-    public @NotNull SQLManagerImpl create(@Nullable String name, @NotNull BeeDataSourceConfig configuration) {
-        return new SQLManagerImpl(new BeeDataSource(configuration), name);
+    public @NotNull SQLManagerImpl create(@NotNull String name, @NotNull BeeDataSourceConfig configuration) {
+        return create(name, (DataSource) new BeeDataSource(configuration));
     }
 
     @Override
@@ -149,11 +143,11 @@ public class EasySQLRegistryImpl implements EasySQLRegistry {
         return executorPool;
     }
 
-    public static EasySQLRegistryImpl getInstance() {
+    public static MineSQLRegistry getInstance() {
         return instance;
     }
 
-    public EasySQLPluginPlatform getPlatform() {
+    public MineSQLPlatform getPlatform() {
         return platform;
     }
 

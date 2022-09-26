@@ -1,4 +1,4 @@
-package cc.carm.plugin.easysql;
+package cc.carm.plugin.minesql;
 
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;

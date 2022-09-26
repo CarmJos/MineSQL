@@ -10,8 +10,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.source>${project.jdk.version}</maven.compiler.source>
+        <maven.compiler.target>${project.jdk.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <maven.javadoc.skip>true</maven.javadoc.skip>
@@ -78,6 +78,12 @@
         <dependency>
             <groupId>cc.carm.lib</groupId>
             <artifactId>easysql-impl</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cc.carm.lib</groupId>
+            <artifactId>easyplugin-githubchecker</artifactId>
             <scope>compile</scope>
         </dependency>
 

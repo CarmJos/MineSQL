@@ -1,9 +1,9 @@
-package cc.carm.plugin.easysql.command;
+package cc.carm.plugin.minesql.command;
 
 import cc.carm.lib.easysql.api.SQLManager;
 import cc.carm.lib.easysql.api.SQLQuery;
-import cc.carm.plugin.easysql.EasySQLRegistryImpl;
-import cc.carm.plugin.easysql.util.VersionReader;
+import cc.carm.plugin.minesql.MineSQLRegistry;
+import cc.carm.plugin.minesql.util.VersionReader;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.CommandIssuer;
@@ -49,7 +49,7 @@ public class EasySQLCommand extends BaseCommand {
         issuer.sendMessage("§8 - &f数据库驱动 h2-database §9" + reader.get("h2-driver"));
 
         issuer.sendMessage("§r正在检查插件更新，请稍候...");
-        EasySQLRegistryImpl.getInstance().checkUpdate(pluginVersion);
+        MineSQLRegistry.getInstance().checkUpdate(pluginVersion);
     }
 
     @Subcommand("list")
@@ -59,7 +59,7 @@ public class EasySQLCommand extends BaseCommand {
             issuer.sendMessage("§c只有后台执行才能使用此命令。");
             return;
         }
-        Map<String, ? extends SQLManager> runningManagers = EasySQLRegistryImpl.getInstance().list();
+        Map<String, ? extends SQLManager> runningManagers = MineSQLRegistry.getInstance().list();
         if (runningManagers.isEmpty()) {
             issuer.sendMessage("§r当前无正在运行的数据库管理器。");
         } else {

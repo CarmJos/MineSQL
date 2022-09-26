@@ -1,4 +1,4 @@
-package cc.carm.plugin.easysql.api;
+package cc.carm.plugin.minesql.api;
 
 import cc.carm.lib.easysql.api.SQLManager;
 import cc.carm.lib.easysql.api.SQLQuery;
@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;
 
+import javax.sql.DataSource;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
@@ -15,7 +16,7 @@ import java.util.function.Consumer;
 /**
  * 入口类
  */
-public interface EasySQLRegistry {
+public interface SQLRegistry {
 
     /**
      * 获取原生注册的指定名称的 SQLManager 实例
@@ -50,7 +51,7 @@ public interface EasySQLRegistry {
      * @return {@link SQLManager} 实例
      * @throws Exception 若创建失败则抛出异常
      */
-    @NotNull SQLManager create(@Nullable String name,
+    @NotNull SQLManager create(@NotNull String name,
                                @NotNull DBConfiguration configuration) throws Exception;
 
     /**
@@ -61,19 +62,10 @@ public interface EasySQLRegistry {
      * @return {@link SQLManager} 实例
      * @throws Exception 若创建失败则抛出异常
      */
-    @NotNull SQLManager create(@Nullable String name,
+    @NotNull SQLManager create(@NotNull String name,
                                @NotNull Properties properties) throws Exception;
 
-    /**
-     * 创建并注册一个新的 SQLManager 实例
-     *
-     * @param name             实例名称
-     * @param propertyFileName 配置文件的资源名称
-     * @return {@link SQLManager} 实例
-     * @throws Exception 若创建失败则抛出异常
-     */
-    @NotNull SQLManager create(@Nullable String name,
-                               @NotNull String propertyFileName) throws Exception;
+    @NotNull SQLManager create(@NotNull String name, @NotNull DataSource source) throws Exception;
 
     /**
      * 终止并关闭一个 SQLManager 实例。

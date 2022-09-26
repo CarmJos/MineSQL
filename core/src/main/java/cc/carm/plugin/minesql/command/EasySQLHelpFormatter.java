@@ -1,4 +1,4 @@
-package cc.carm.plugin.easysql.command;
+package cc.carm.plugin.minesql.command;
 
 import co.aikar.commands.*;
 

@@ -1,11 +1,11 @@
-package cc.carm.plugin.easysql;
+package cc.carm.plugin.minesql;
 
 import cc.carm.lib.easyplugin.EasyPlugin;
 import cc.carm.lib.easyplugin.i18n.EasyPluginMessageProvider;
 import cc.carm.lib.easysql.api.SQLManager;
-import cc.carm.plugin.easysql.api.DBConfiguration;
-import cc.carm.plugin.easysql.util.DBPropertiesUtil;
-import cc.carm.plugin.easysql.util.JarResourceUtils;
+import cc.carm.plugin.minesql.api.DBConfiguration;
+import cc.carm.plugin.minesql.util.DBPropertiesUtil;
+import cc.carm.plugin.minesql.util.JarResourceUtils;
 import cn.beecp.BeeDataSource;
 import co.aikar.commands.PaperCommandManager;
 import org.bstats.bukkit.Metrics;
@@ -15,29 +15,29 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.*;
 
-public class EasySQLBukkit extends EasyPlugin implements EasySQLPluginPlatform {
+public class MineSQLBukkit extends EasyPlugin implements MineSQLPlatform {
 
-    public EasySQLBukkit() {
+    public MineSQLBukkit() {
         super(new EasyPluginMessageProvider.zh_CN());
     }
 
-    protected static EasySQLBukkit instance;
+    protected static MineSQLBukkit instance;
 
     private BukkitConfiguration configuration;
-    private EasySQLRegistryImpl registry;
+    private MineSQLRegistry registry;
 
     private PaperCommandManager commandManager;
 
     @Override
     protected void load() {
-        EasySQLBukkit.instance = this;
+        MineSQLBukkit.instance = this;
 
         log("加载配置文件...");
         getInstance().saveDefaultConfig();
         this.configuration = new BukkitConfiguration(getInstance().getConfig());
 
         log("初始化EasySQL注册器...");
-        this.registry = new EasySQLRegistryImpl(this);
+        this.registry = new MineSQLRegistry(this);
 
         log("初始化EasySQLAPI...");
         initializeAPI(getRegistry()); // 尽快地初始化接口，方便其他插件调用
@@ -94,7 +94,7 @@ public class EasySQLBukkit extends EasyPlugin implements EasySQLPluginPlatform {
 
     @Override
     @NotNull
-    public EasySQLRegistryImpl getRegistry() {
+    public MineSQLRegistry getRegistry() {
         return this.registry;
     }
 
@@ -131,8 +131,8 @@ public class EasySQLBukkit extends EasyPlugin implements EasySQLPluginPlatform {
         Optional.ofNullable(JarResourceUtils.readResource(this.getResource("PLUGIN_INFO"))).ifPresent(this::log);
     }
 
-    public static EasySQLBukkit getInstance() {
-        return EasySQLBukkit.instance;
+    public static MineSQLBukkit getInstance() {
+        return MineSQLBukkit.instance;
     }
 
     protected BukkitConfiguration getConfiguration() {
