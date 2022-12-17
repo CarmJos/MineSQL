@@ -58,13 +58,8 @@
         <dependency>
             <groupId>cc.carm.lib</groupId>
             <artifactId>easysql-api</artifactId>
+            <version>${deps.easysql.version}</version>
             <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>cc.carm.lib</groupId>
-            <artifactId>easyconfiguration-core</artifactId>
-            <scope>provided</scope>
         </dependency>
 
     </dependencies>

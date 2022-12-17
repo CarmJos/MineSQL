@@ -127,7 +127,6 @@
     </dependencies>
 
     <dependencyManagement>
-
         <dependencies>
 
             <dependency>
@@ -139,44 +138,8 @@
 
             <dependency>
                 <groupId>cc.carm.lib</groupId>
-                <artifactId>githubreleases4j</artifactId>
-                <version>1.3.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>cc.carm.lib</groupId>
-                <artifactId>easysql-api</artifactId>
-                <version>${deps.easysql.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>cc.carm.lib</groupId>
                 <artifactId>easysql-impl</artifactId>
                 <version>${deps.easysql.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>cc.carm.lib</groupId>
-                <artifactId>easyconfiguration-core</artifactId>
-                <version>${deps.easyconf.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>cc.carm.lib</groupId>
-                <artifactId>easyconfiguration-yaml</artifactId>
-                <version>${deps.easyconf.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>cc.carm.lib</groupId>
-                <artifactId>easyplugin-utils</artifactId>
-                <version>${deps.easyplugin.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>cc.carm.lib</groupId>
-                <artifactId>easyplugin-githubchecker</artifactId>
-                <version>${deps.easyplugin.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
@@ -208,7 +171,6 @@
             </dependency>
 
         </dependencies>
-
     </dependencyManagement>
 
     <build>
