@@ -6,9 +6,13 @@
 #MineSQL (EasySQL-Plugin)
 ```
 
-<font size="20" color="red">注意：该项目仍在开发中！</font>
-
 # MineSQL (EasySQL-Plugin)
+[![version](https://img.shields.io/github/v/release/CarmJos/MineSQL)](https://github.com/CarmJos/MineSQL/releases)
+[![License](https://img.shields.io/github/license/CarmJos/MineSQL)](https://opensource.org/licenses/GPL-3.0)
+[![workflow](https://github.com/CarmJos/MineSQL/actions/workflows/maven.yml/badge.svg?branch=master)](https://github.com/CarmJos/MineSQL/actions/workflows/maven.yml)
+![CodeSize](https://img.shields.io/github/languages/code-size/CarmJos/MineSQL)
+[![CodeFactor](https://www.codefactor.io/repository/github/carmjos/minesql/badge)](https://www.codefactor.io/repository/github/carmjos/minesql)
+![](https://visitor-badge.glitch.me/badge?page_id=MineSQL.readme)
 
 轻松(用)SQL的独立运行库插件，支持多种服务端，适用于MineCraft全版本。
 
@@ -174,9 +178,11 @@ dependencies {
 > #### 可以用来盈利
 > 你可以在分发软件的时候收费，但你必须在收费前向你的客户提供该软件的 GNU GPL 许可协议，以便让他们知道，他们可以从别的渠道免费得到这份软件，以及你收费的理由。
 > #### 可自由修改
-> 如果你想添加或删除某个功能，没问题，如果你想在别的项目中使用部分代码，也没问题，唯一的要求是，使用了这段代码的项目也必须使用 GPL 协议。
+> 如果你想添加或删除某个功能，没问题，如果你想在别的项目中使用部分代码，也没问题，唯一的要求是，使用了这段代码的项目也必须使用
+> GPL 协议。
 >
-> 需要注意的是，分发的时候，需要明确提供源代码和二进制文件，另外，用于某些程序的某些协议有一些问题和限制，你可以看一下 @PierreJoye 写的 Practical Guide to GPL Compliance 一文。使用 GPL 协议，你必须在源代码代码中包含相应信息，以及协议本身。
+> 需要注意的是，分发的时候，需要明确提供源代码和二进制文件，另外，用于某些程序的某些协议有一些问题和限制，你可以看一下
+> @PierreJoye 写的 Practical Guide to GPL Compliance 一文。使用 GPL 协议，你必须在源代码代码中包含相应信息，以及协议本身。
 >
 > *以上文字来自 [五种开源协议GPL,LGPL,BSD,MIT,Apache](https://www.oschina.net/question/54100_9455) 。*
 </details>
