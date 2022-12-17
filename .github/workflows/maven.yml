@@ -27,10 +27,15 @@ jobs:
           distribution: 'adopt'
       - name: "Package"
         run: mvn -B package --file pom.xml -Dgpg.skip
-      - name: "Target Stage"
-        run: mkdir staging && cp */target/*.jar staging
-      - name: "Upload artifact"
+
+      - name: "Upload artifacts"
         uses: actions/upload-artifact@v2
         with:
-          name: Artifact
-          path: staging
+          name: artifacts
+          path: "**/target/"
+
+      - name: "Upload assets"
+        uses: actions/upload-artifact@v2
+        with:
+          name: assets
+          path: ".asset/"
