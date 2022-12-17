@@ -119,6 +119,6 @@ public class MineSQLVelocity implements MineSQLPlatform {
     }
 
     public void outputInfo() {
-        //TODO
+
     }
 }
