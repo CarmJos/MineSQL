@@ -32,6 +32,18 @@ public class SQLSourceGroup {
         return data;
     }
 
+    public static @NotNull SQLSourceGroup defaults() {
+        LinkedHashMap<String, SQLDriverConfig> configs = new LinkedHashMap<>();
+        configs.put("example-mysql", new RemoteAuthConfig(
+                SQLDriverType.MARIADB, "127.0.0.1", 3306,
+                "minecraft", "minecraft", "minecraft",
+                "?sslMode=false"
+        ));
+        configs.put("example-h2-file", new FileBasedConfig(SQLDriverType.H2_FILE, "test"));
+        configs.put("example-h2-mem", new H2MemConfig("temp"));
+        return new SQLSourceGroup(configs);
+    }
+
     public static @NotNull SQLSourceGroup parse(ConfigurationWrapper<?> rootSection) {
         LinkedHashMap<String, SQLDriverConfig> configs = new LinkedHashMap<>();
         for (String name : rootSection.getKeys(false)) {

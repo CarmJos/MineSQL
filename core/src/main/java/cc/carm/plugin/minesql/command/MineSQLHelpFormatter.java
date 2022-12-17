@@ -2,9 +2,9 @@ package cc.carm.plugin.minesql.command;
 
 import co.aikar.commands.*;
 
-public class EasySQLHelpFormatter extends CommandHelpFormatter {
+public class MineSQLHelpFormatter extends CommandHelpFormatter {
 
-    public EasySQLHelpFormatter(CommandManager manager) {
+    public MineSQLHelpFormatter(CommandManager manager) {
         super(manager);
     }
 

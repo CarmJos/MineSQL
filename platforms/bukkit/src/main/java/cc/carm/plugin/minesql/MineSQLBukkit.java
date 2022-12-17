@@ -22,9 +22,6 @@ public class MineSQLBukkit extends EasyPlugin implements MineSQLPlatform {
 
         log("加载基础核心...");
         this.core = new MineSQLCore(this);
-
-        log("初始化MineSQL API...");
-        MineSQL.initializeAPI(this.core);
     }
 
     @Override

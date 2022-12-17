@@ -27,7 +27,11 @@ public class FileBasedConfig extends SQLDriverConfig {
     @Override
     public SQLSourceConfig createSource() {
         File file = new File(MineSQL.getDataSourceFolder(), filePath);
-        return SQLSourceConfig.create(getType().getDriverClass(), file.getAbsolutePath(), getType().getInitializer());
+        return SQLSourceConfig.create(
+                getType().getDriverClass(),
+                getType().getJdbcPrefix() + file.getAbsolutePath(),
+                getType().getInitializer()
+        );
     }
 
     @Override

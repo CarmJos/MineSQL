@@ -24,7 +24,7 @@
     <groupId>cc.carm.plugin</groupId>
     <artifactId>minesql-parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>1.0.0</version>
     <modules>
         <module>api</module>
         <module>core</module>
@@ -182,14 +182,7 @@
                 <configuration>
                     <filesets>
                         <fileset>
-                            <directory>${project.basedir}/asset/</directory>
-                            <useDefaultExcludes>true</useDefaultExcludes>
-                            <includes>
-                                <include>**/*</include>
-                            </includes>
-                        </fileset>
-                        <fileset>
-                            <directory>${project.basedir}/api-docs/</directory>
+                            <directory>${project.basedir}/.asset/</directory>
                             <useDefaultExcludes>true</useDefaultExcludes>
                             <includes>
                                 <include>**/*</include>

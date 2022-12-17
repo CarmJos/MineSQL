@@ -5,7 +5,7 @@
     <parent>
         <artifactId>minesql-parent</artifactId>
         <groupId>cc.carm.plugin</groupId>
-        <version>0.0.3-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <properties>
@@ -47,6 +47,18 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.2.3</version>
                 <executions>
@@ -80,6 +92,20 @@
                             <shadedPattern>cc.carm.plugin.minesql.lib.githubreleases4j</shadedPattern>
                         </relocation>
                         <relocation>
+                            <pattern>cc.carm.lib.configuration</pattern>
+                            <shadedPattern>cc.carm.plugin.minesql.lib.configuration</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>org.bspfsystems.yamlconfiguration</pattern>
+                            <shadedPattern>cc.carm.plugin.minesql.lib.configuration.yaml
+                            </shadedPattern> <!-- Replace this -->
+                        </relocation>
+                        <relocation>
+                            <pattern>org.yaml.snakeyaml</pattern>
+                            <shadedPattern>cc.carm.plugin.minesql.lib.yaml</shadedPattern> <!-- Replace this -->
+                        </relocation>
+
+                        <relocation>
                             <pattern>co.aikar.commands</pattern>
                             <shadedPattern>cc.carm.plugin.minesql.lib.acf</shadedPattern> <!-- Replace this -->
                         </relocation>
@@ -87,6 +113,45 @@
                             <pattern>co.aikar.locales</pattern>
                             <shadedPattern>cc.carm.plugin.minesql.lib.locales</shadedPattern> <!-- Replace this -->
                         </relocation>
+                        <relocation>
+                            <pattern>cn.beecp</pattern>
+                            <shadedPattern>cc.carm.plugin.minesql.lib.beecp</shadedPattern> <!-- Replace this -->
+                        </relocation>
+
+                        <relocation>
+                            <pattern>org.h2</pattern>
+                            <shadedPattern>cc.carm.plugin.minesql.driver.h2</shadedPattern> <!-- Replace this -->
+                        </relocation>
+                        <relocation>
+                            <pattern>org.mariadb</pattern>
+                            <shadedPattern>cc.carm.plugin.minesql.driver.mariadb</shadedPattern> <!-- Replace this -->
+                        </relocation>
+                        <relocation>
+                            <pattern>com.mysql</pattern>
+                            <shadedPattern>cc.carm.plugin.minesql.driver.mysql</shadedPattern> <!-- Replace this -->
+                        </relocation>
+
+                        <relocation>
+                            <pattern>com.sun.jna</pattern>
+                            <shadedPattern>cc.carm.plugin.minesql.lib.jna</shadedPattern> <!-- Replace this -->
+                        </relocation>
+                        <relocation>
+                            <pattern>com.google</pattern>
+                            <shadedPattern>cc.carm.plugin.minesql.lib.google</shadedPattern> <!-- Replace this -->
+                        </relocation>
+                        <relocation>
+                            <pattern>com.github</pattern>
+                            <shadedPattern>cc.carm.plugin.minesql.lib.github</shadedPattern> <!-- Replace this -->
+                        </relocation>
+                        <relocation>
+                            <pattern>org.checkerframework</pattern>
+                            <shadedPattern>cc.carm.plugin.minesql.lib.checkerframework</shadedPattern> <!-- Replace this -->
+                        </relocation>
+                        <relocation>
+                            <pattern>waffle</pattern>
+                            <shadedPattern>cc.carm.plugin.minesql.lib.waffle</shadedPattern> <!-- Replace this -->
+                        </relocation>
+
                     </relocations>
                     <filters>
                         <filter>

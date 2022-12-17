@@ -42,6 +42,7 @@ public class PluginConfiguration extends ConfigurationRoot {
             .asValue(SQLSourceGroup.class).fromSection()
             .parseValue((w, d) -> SQLSourceGroup.parse(w))
             .serializeValue(SQLSourceGroup::serialize)
+            .defaults(SQLSourceGroup.defaults())
             .build();
 
     public static class PropertiesConfig extends ConfigurationRoot {

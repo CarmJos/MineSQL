@@ -45,21 +45,25 @@ public class MineSQLRegistry implements SQLRegistry {
 
         dbProperties.forEach((id, properties) -> {
             try {
+                core.getLogger().info("正在初始化数据库 #" + id + " ...");
                 SQLManagerImpl sqlManager = create(id, properties);
                 this.managers.put(id, sqlManager);
-            } catch (Exception exception) {
-                core.getLogger().warning("初始化SQLManager(#" + id + ") 出错，请检查配置文件.");
-                exception.printStackTrace();
+                core.getLogger().info("完成成初始化数据库 #" + id + " 。");
+            } catch (Exception ex) {
+                core.getLogger().severe("初始化SQLManager(#" + id + ") 出错，请检查配置文件: " + ex.getMessage());
+                ex.printStackTrace();
             }
         });
 
         dbConfigurations.forEach((id, configuration) -> {
             try {
+                core.getLogger().info("正在初始化数据库 #" + id + " ...");
                 SQLManagerImpl sqlManager = create(id, configuration);
                 this.managers.put(id, sqlManager);
-            } catch (Exception exception) {
-                core.getLogger().warning("初始化SQLManager(#" + id + ") 出错，请检查配置文件.");
-                exception.printStackTrace();
+                core.getLogger().info("完成初始化数据库 #" + id + " 。");
+            } catch (Exception ex) {
+                core.getLogger().severe("初始化SQLManager(#" + id + ") 出错，请检查配置文件: " + ex.getMessage());
+                ex.printStackTrace();
             }
         });
 
@@ -69,7 +73,8 @@ public class MineSQLRegistry implements SQLRegistry {
         this.managers.forEach((k, manager) -> {
             getCore().getLogger().info("   正在关闭数据库 " + k + "...");
             shutdown(manager, activeQueries -> {
-                getCore().getLogger().info("   数据库 " + k + " 仍有有 " + activeQueries + " 条活动查询");
+                if (activeQueries.isEmpty()) return;
+                getCore().getLogger().info("   数据库 " + k + " 仍有 " + activeQueries.size() + " 条活动查询");
                 if (manager.getDataSource() instanceof BeeDataSource
                         && this.core.getConfig().SETTINGS.FORCE_CLOSE.getNotNull()) {
                     getCore().getLogger().info("   将强制关闭全部活跃链接...");

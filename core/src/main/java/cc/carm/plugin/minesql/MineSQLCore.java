@@ -6,8 +6,8 @@ import cc.carm.lib.easyplugin.utils.JarResourceUtils;
 import cc.carm.lib.easysql.api.SQLManager;
 import cc.carm.lib.githubreleases4j.GithubReleases4J;
 import cc.carm.plugin.minesql.api.source.SQLSourceConfig;
-import cc.carm.plugin.minesql.command.EasySQLCommand;
-import cc.carm.plugin.minesql.command.EasySQLHelpFormatter;
+import cc.carm.plugin.minesql.command.MineSQLCommand;
+import cc.carm.plugin.minesql.command.MineSQLHelpFormatter;
 import cc.carm.plugin.minesql.conf.PluginConfiguration;
 import cc.carm.plugin.minesql.conf.SQLSourceGroup;
 import cc.carm.plugin.minesql.util.DBPropertiesUtil;
@@ -42,6 +42,9 @@ public class MineSQLCore implements IMineSQL {
         this.configProvider = EasyConfiguration.from(new File(platform.getPluginFolder(), "config.yml"));
         this.config = new PluginConfiguration();
         this.configProvider.initialize(this.config);
+
+        getLogger().info("初始化MineSQL API...");
+        MineSQL.initializeAPI(this);
 
         getLogger().info("初始化注册池...");
         this.registry = new MineSQLRegistry(this);
@@ -78,7 +81,9 @@ public class MineSQLCore implements IMineSQL {
     public @NotNull Map<String, SQLSourceConfig> readConfigurations() {
         SQLSourceGroup group = getConfig().SOURCES.getNotNull();
         Map<String, SQLSourceConfig> sources = new LinkedHashMap<>();
-        group.getSources().forEach((k, v) -> sources.put(k, v.createSource()));
+        group.getSources().entrySet().stream()
+                .filter(entry -> !entry.getKey().startsWith("example-"))
+                .forEach(entry -> sources.put(entry.getKey(), entry.getValue().createSource()));
         return sources;
     }
 
@@ -90,12 +95,17 @@ public class MineSQLCore implements IMineSQL {
 
         File file = new File(getPluginFolder(), propertiesFolder);
         if (!file.exists() || !file.isDirectory()) {
-            try {
-                JarResourceUtils.copyFolderFromJar(
-                        "db-properties", file, JarResourceUtils.CopyOption.COPY_IF_NOT_EXIST
-                );
-            } catch (Exception ex) {
-                getLogger().severe("初始化properties示例文件失败：" + ex.getMessage());
+            if ((propertiesFolder.equals("db-properties/") || propertiesFolder.equals("db-properties"))) {
+                try {
+                    JarResourceUtils.copyFolderFromJar(
+                            "db-properties", getPluginFolder(),
+                            JarResourceUtils.CopyOption.COPY_IF_NOT_EXIST
+                    );
+                } catch (Exception ex) {
+                    getLogger().severe("初始化properties示例文件失败：" + ex.getMessage());
+                }
+            } else {
+                file.mkdirs();
             }
         }
 
@@ -105,7 +115,7 @@ public class MineSQLCore implements IMineSQL {
     @SuppressWarnings("deprecation")
     protected void initializeCommands(CommandManager<?, ?, ?, ?, ?, ?> commandManager) {
         commandManager.enableUnstableAPI("help");
-        commandManager.setHelpFormatter(new EasySQLHelpFormatter(commandManager));
+        commandManager.setHelpFormatter(new MineSQLHelpFormatter(commandManager));
         commandManager.getLocales().setDefaultLocale(Locales.SIMPLIFIED_CHINESE);
         commandManager.getCommandContexts().registerContext(SQLManager.class, c -> {
             String name = c.popFirstArg();
@@ -119,7 +129,7 @@ public class MineSQLCore implements IMineSQL {
             if (c.getIssuer().isPlayer()) return ImmutableList.of();
             else return ImmutableList.copyOf(getRegistry().list().keySet());
         });
-        commandManager.registerCommand(new EasySQLCommand(this));
+        commandManager.registerCommand(new MineSQLCommand(this));
     }
 
     public void checkUpdate(String currentVersion) {

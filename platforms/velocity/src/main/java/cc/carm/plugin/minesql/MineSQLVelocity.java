@@ -53,9 +53,6 @@ public class MineSQLVelocity implements MineSQLPlatform {
 
         getLogger().info("加载基础核心...");
         this.core = new MineSQLCore(this);
-
-        getLogger().info("初始化MineSQL API...");
-        MineSQL.initializeAPI(this.core);
     }
 
     @Subscribe(order = PostOrder.FIRST)

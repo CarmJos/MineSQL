@@ -15,13 +15,13 @@ import java.util.UUID;
 
 
 @SuppressWarnings("unused")
-@CommandAlias("EasySQL")
+@CommandAlias("MineSQL")
 @Description("MineSQL的主指令，用于开发者进行调试，只允许后台执行。")
-public class EasySQLCommand extends BaseCommand {
+public class MineSQLCommand extends BaseCommand {
 
     protected final MineSQLCore core;
 
-    public EasySQLCommand(MineSQLCore core) {
+    public MineSQLCommand(MineSQLCore core) {
         this.core = core;
     }
 
