@@ -86,7 +86,7 @@ public class MineSQLVelocity implements MineSQLPlatform {
     public void onShutdown(ProxyShutdownEvent event) {
         outputInfo();
         getLogger().info("终止全部数据库连接...");
-        this.core.getRegistry().shutdownAll();
+        this.core.shutdownAll();
     }
 
     public ProxyServer getServer() {

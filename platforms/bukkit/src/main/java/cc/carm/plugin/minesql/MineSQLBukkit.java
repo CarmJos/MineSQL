@@ -57,7 +57,7 @@ public class MineSQLBukkit extends EasyPlugin implements MineSQLPlatform {
     @Override
     protected void shutdown() {
         log("终止全部数据库连接...");
-        this.core.getRegistry().shutdownAll();
+        this.core.shutdownAll();
     }
 
     @Override

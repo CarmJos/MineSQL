@@ -66,7 +66,7 @@ public class MineSQLBungee extends Plugin implements MineSQLPlatform {
     public void onDisable() {
         outputInfo();
         getLogger().info("终止全部数据库连接...");
-        this.core.getRegistry().shutdownAll();
+        this.core.shutdownAll();
     }
 
     public static MineSQLBungee getInstance() {

@@ -1,21 +1,16 @@
 package cc.carm.plugin.minesql;
 
 import cc.carm.lib.easysql.api.SQLManager;
-import cc.carm.lib.easysql.api.SQLQuery;
 import cc.carm.lib.easysql.manager.SQLManagerImpl;
 import cc.carm.plugin.minesql.api.SQLRegistry;
 import cc.carm.plugin.minesql.api.source.SQLSourceConfig;
-import cn.beecp.BeeDataSource;
-import cn.beecp.BeeDataSourceConfig;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;
 
-import javax.sql.DataSource;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.Consumer;
 
 public class MineSQLRegistry implements SQLRegistry {
 
@@ -23,7 +18,7 @@ public class MineSQLRegistry implements SQLRegistry {
 
     protected ExecutorService executorPool;
     protected MineSQLCore core;
-    private final HashMap<String, SQLManagerImpl> managers = new HashMap<>();
+    private final HashMap<String, SQLManager> managers = new HashMap<>();
 
     protected MineSQLRegistry(@NotNull MineSQLCore core) {
         this.core = core;
@@ -45,7 +40,7 @@ public class MineSQLRegistry implements SQLRegistry {
         dbProperties.forEach((id, properties) -> {
             try {
                 core.getLogger().info("正在初始化数据库 #" + id + " ...");
-                SQLManagerImpl sqlManager = create(id, properties);
+                SQLManagerImpl sqlManager = this.core.create(id, properties);
                 this.managers.put(id, sqlManager);
                 core.getLogger().info("完成成初始化数据库 #" + id + " 。");
             } catch (Exception ex) {
@@ -57,7 +52,7 @@ public class MineSQLRegistry implements SQLRegistry {
         dbConfigurations.forEach((id, configuration) -> {
             try {
                 core.getLogger().info("正在初始化数据库 #" + id + " ...");
-                SQLManagerImpl sqlManager = create(id, configuration);
+                SQLManagerImpl sqlManager = this.core.create(id, configuration);
                 this.managers.put(id, sqlManager);
                 core.getLogger().info("完成初始化数据库 #" + id + " 。");
             } catch (Exception ex) {
@@ -68,24 +63,7 @@ public class MineSQLRegistry implements SQLRegistry {
 
     }
 
-    public void shutdownAll() {
-        this.managers.forEach((k, manager) -> {
-            getCore().getLogger().info("   正在关闭数据库 " + k + "...");
-            shutdown(manager, activeQueries -> {
-                if (activeQueries.isEmpty()) return;
-                getCore().getLogger().info("   数据库 " + k + " 仍有 " + activeQueries.size() + " 条活动查询");
-                if (manager.getDataSource() instanceof BeeDataSource
-                        && this.core.getConfig().SETTINGS.FORCE_CLOSE.getNotNull()) {
-                    getCore().getLogger().info("   将强制关闭全部活跃链接...");
-                    BeeDataSource dataSource = (BeeDataSource) manager.getDataSource();
-                    dataSource.close();         //Close bee connection pool
-                }
-            });
-        });
-        this.managers.clear();
-    }
-
-    protected HashMap<String, SQLManagerImpl> getManagers() {
+    protected HashMap<String, SQLManager> getManagers() {
         return managers;
     }
 
@@ -102,70 +80,29 @@ public class MineSQLRegistry implements SQLRegistry {
     }
 
     @Override
-    public @NotNull SQLManagerImpl get(@Nullable String id) throws NullPointerException {
-        return Objects.requireNonNull(this.managers.get(id), "并不存在ID为 #" + id + " 的SQLManager.");
-    }
-
-    @Override
-    public @NotNull Optional<@Nullable SQLManagerImpl> getOptional(@Nullable String id) {
+    public @NotNull Optional<@Nullable SQLManager> getOptional(@Nullable String id) {
         return Optional.of(this.managers.get(id));
     }
 
     @Override
     @Unmodifiable
-    public @NotNull Map<String, SQLManagerImpl> list() {
+    public @NotNull Map<String, SQLManager> list() {
         return Collections.unmodifiableMap(this.managers);
     }
 
     @Override
-    public @NotNull SQLManagerImpl create(@NotNull String name, @NotNull SQLSourceConfig conf) {
-        BeeDataSourceConfig config = new BeeDataSourceConfig();
-        config.setDriverClassName(conf.getDriverClassName());
-        config.setJdbcUrl(conf.getJdbcURL());
-        Optional.ofNullable(conf.getUsername()).ifPresent(config::setUsername);
-        Optional.ofNullable(conf.getPassword()).ifPresent(config::setPassword);
-
-        Optional.ofNullable(conf.getSettings().getPoolName()).ifPresent(config::setPoolName);
-        Optional.ofNullable(conf.getSettings().getMaxPoolSize()).ifPresent(config::setMaxActive);
-        Optional.ofNullable(conf.getSettings().getMaxActive()).ifPresent(config::setMaxActive);
-
-        Optional.ofNullable(conf.getSettings().getIdleTimeout()).ifPresent(config::setIdleTimeout);
-        Optional.ofNullable(conf.getSettings().getMaxWaitTime()).ifPresent(config::setMaxWait);
-        Optional.ofNullable(conf.getSettings().getMaxHoldTime()).ifPresent(config::setHoldTimeout);
-
-        Optional.ofNullable(conf.getSettings().getAutoCommit()).ifPresent(config::setDefaultAutoCommit);
-        Optional.ofNullable(conf.getSettings().getReadOnly()).ifPresent(config::setDefaultReadOnly);
-        Optional.ofNullable(conf.getSettings().getSchema()).ifPresent(config::setDefaultSchema);
-
-        Optional.ofNullable(conf.getSettings().getValidationSQL()).ifPresent(config::setValidTestSql);
-        Optional.ofNullable(conf.getSettings().getValidationTimeout()).ifPresent(config::setValidTestTimeout);
-        Optional.ofNullable(conf.getSettings().getValidationInterval()).ifPresent(config::setValidAssumeTime);
-
-        return create(name, config);
-    }
-
-    @Override
-    public @NotNull SQLManagerImpl create(@NotNull String name, @NotNull Properties properties) {
-        return create(name, new BeeDataSourceConfig(properties));
-    }
-
-    @Override
-    public @NotNull SQLManagerImpl create(@NotNull String name, @NotNull DataSource source) {
-        return new SQLManagerImpl(source, name);
-    }
-
-    public @NotNull SQLManagerImpl create(@NotNull String name, @NotNull BeeDataSourceConfig configuration) {
-        return create(name, (DataSource) new BeeDataSource(configuration));
-    }
-
-    @Override
-    public void shutdown(SQLManager manager, @Nullable Consumer<Map<UUID, SQLQuery>> activeQueries) {
-        if (activeQueries != null) activeQueries.accept(manager.getActiveQuery());
-
-        if (manager.getDataSource() instanceof BeeDataSource) {
-            BeeDataSource dataSource = (BeeDataSource) manager.getDataSource();
-            dataSource.close();         //Close bee connection pool
+    public void register(@NotNull String name, @NotNull SQLManager sqlManager) throws IllegalStateException {
+        if (this.managers.containsKey(name)) {
+            throw new IllegalStateException("已存在ID为 " + name + " 的SQLManager实例。");
         }
+        this.managers.put(name, sqlManager);
     }
 
+    @Override
+    public @NotNull SQLManager unregister(@NotNull String name) throws NullPointerException {
+        SQLManager manager = this.managers.remove(name);
+        if (manager == null) throw new NullPointerException("不存在ID为 " + name + " 的SQLManager实例。");
+        return manager;
+    }
+    
 }

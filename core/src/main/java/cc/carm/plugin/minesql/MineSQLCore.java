@@ -4,6 +4,8 @@ import cc.carm.lib.configuration.EasyConfiguration;
 import cc.carm.lib.configuration.yaml.YAMLConfigProvider;
 import cc.carm.lib.easyplugin.utils.JarResourceUtils;
 import cc.carm.lib.easysql.api.SQLManager;
+import cc.carm.lib.easysql.api.SQLQuery;
+import cc.carm.lib.easysql.manager.SQLManagerImpl;
 import cc.carm.lib.githubreleases4j.GithubReleases4J;
 import cc.carm.plugin.minesql.api.source.SQLSourceConfig;
 import cc.carm.plugin.minesql.command.MineSQLCommand;
@@ -11,13 +13,18 @@ import cc.carm.plugin.minesql.command.MineSQLHelpFormatter;
 import cc.carm.plugin.minesql.conf.PluginConfiguration;
 import cc.carm.plugin.minesql.conf.SQLSourceGroup;
 import cc.carm.plugin.minesql.util.DBPropertiesUtil;
+import cn.beecp.BeeDataSource;
+import cn.beecp.BeeDataSourceConfig;
 import co.aikar.commands.CommandManager;
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.Locales;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import javax.sql.DataSource;
 import java.io.File;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 public class MineSQLCore implements IMineSQL {
@@ -44,7 +51,6 @@ public class MineSQLCore implements IMineSQL {
 
         getLogger().info("初始化注册池...");
         this.registry = new MineSQLRegistry(this);
-
     }
 
     public MineSQLPlatform getPlatform() {
@@ -54,6 +60,74 @@ public class MineSQLCore implements IMineSQL {
     @Override
     public @NotNull MineSQLRegistry getRegistry() {
         return this.registry;
+    }
+
+    @Override
+    public @NotNull SQLManagerImpl create(@NotNull String name, @NotNull SQLSourceConfig conf) {
+        BeeDataSourceConfig config = new BeeDataSourceConfig();
+        config.setDriverClassName(conf.getDriverClassName());
+        config.setJdbcUrl(conf.getJdbcURL());
+        Optional.ofNullable(conf.getUsername()).ifPresent(config::setUsername);
+        Optional.ofNullable(conf.getPassword()).ifPresent(config::setPassword);
+
+        Optional.ofNullable(conf.getSettings().getPoolName()).ifPresent(config::setPoolName);
+        Optional.ofNullable(conf.getSettings().getMaxPoolSize()).ifPresent(config::setMaxActive);
+        Optional.ofNullable(conf.getSettings().getMaxActive()).ifPresent(config::setMaxActive);
+
+        Optional.ofNullable(conf.getSettings().getIdleTimeout()).ifPresent(config::setIdleTimeout);
+        Optional.ofNullable(conf.getSettings().getMaxWaitTime()).ifPresent(config::setMaxWait);
+        Optional.ofNullable(conf.getSettings().getMaxHoldTime()).ifPresent(config::setHoldTimeout);
+
+        Optional.ofNullable(conf.getSettings().getAutoCommit()).ifPresent(config::setDefaultAutoCommit);
+        Optional.ofNullable(conf.getSettings().getReadOnly()).ifPresent(config::setDefaultReadOnly);
+        Optional.ofNullable(conf.getSettings().getSchema()).ifPresent(config::setDefaultSchema);
+
+        Optional.ofNullable(conf.getSettings().getValidationSQL()).ifPresent(config::setValidTestSql);
+        Optional.ofNullable(conf.getSettings().getValidationTimeout()).ifPresent(config::setValidTestTimeout);
+        Optional.ofNullable(conf.getSettings().getValidationInterval()).ifPresent(config::setValidAssumeTime);
+
+        return create(name, config);
+    }
+
+    @Override
+    public @NotNull SQLManagerImpl create(@NotNull String name, @NotNull Properties properties) {
+        return create(name, new BeeDataSourceConfig(properties));
+    }
+
+    @Override
+    public @NotNull SQLManagerImpl create(@NotNull String name, @NotNull DataSource source) {
+        return new SQLManagerImpl(source, name);
+    }
+
+    public @NotNull SQLManagerImpl create(@NotNull String name, @NotNull BeeDataSourceConfig configuration) {
+        return create(name, (DataSource) new BeeDataSource(configuration));
+    }
+
+    @Override
+    public void shutdown(SQLManager manager, @Nullable Consumer<Map<UUID, SQLQuery>> activeQueries) {
+        if (activeQueries != null) activeQueries.accept(manager.getActiveQuery());
+
+        if (manager.getDataSource() instanceof BeeDataSource) {
+            BeeDataSource dataSource = (BeeDataSource) manager.getDataSource();
+            dataSource.close();         //Close bee connection pool
+        }
+    }
+
+    public void shutdownAll() {
+        this.registry.getManagers().forEach((k, manager) -> {
+            getLogger().info("   正在关闭数据库 " + k + "...");
+            shutdown(manager, activeQueries -> {
+                if (activeQueries.isEmpty()) return;
+                getLogger().info("   数据库 " + k + " 仍有 " + activeQueries.size() + " 条活动查询");
+                if (manager.getDataSource() instanceof BeeDataSource
+                        && getConfig().SETTINGS.FORCE_CLOSE.getNotNull()) {
+                    getLogger().info("   将强制关闭全部活跃链接...");
+                    BeeDataSource dataSource = (BeeDataSource) manager.getDataSource();
+                    dataSource.close();         //Close bee connection pool
+                }
+            });
+        });
+        this.registry.getManagers().clear();
     }
 
     @Override
@@ -116,7 +190,7 @@ public class MineSQLCore implements IMineSQL {
         commandManager.getCommandContexts().registerContext(SQLManager.class, c -> {
             String name = c.popFirstArg();
             try {
-                return getRegistry().get(name);
+                return getRegistry().getNotNull(name);
             } catch (NullPointerException exception) {
                 throw new InvalidCommandArgument("不存在名为 " + name + " 的数据库管理器。");
             }
@@ -146,5 +220,6 @@ public class MineSQLCore implements IMineSQL {
             logger.info("检查完成，当前已是最新版本。");
         }
     }
+
 
 }
