@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>easysql-plugin</artifactId>
+        <artifactId>minesql-parent</artifactId>
         <groupId>cc.carm.plugin</groupId>
         <version>0.0.3-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
@@ -19,12 +19,12 @@
         <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
 
-    <artifactId>easysql-plugin-bukkit</artifactId>
+    <artifactId>minesql-bukkit</artifactId>
     <packaging>jar</packaging>
 
-    <name>EasySQL-Plugin-Bukkit</name>
+    <name>MineSQL-Bukkit</name>
     <description>轻松(用)SQL的独立运行库Bukkit版本插件。</description>
-    <url>https://github.com/CarmJos/EasySQL-Plugin</url>
+    <url>https://github.com/CarmJos/MineSQL</url>
 
     <developers>
         <developer>
@@ -48,19 +48,19 @@
 
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/CarmJos/EasySQL-Plugin/issues</url>
+        <url>https://github.com/CarmJos/MineSQL/issues</url>
     </issueManagement>
 
     <ciManagement>
         <system>GitHub Actions</system>
-        <url>https://github.com/CarmJos/EasySQL-Plugin/actions/workflows/maven.yml</url>
+        <url>https://github.com/CarmJos/MineSQL/actions/workflows/maven.yml</url>
     </ciManagement>
 
     <dependencies>
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>easysql-plugin-core</artifactId>
+            <artifactId>minesql-core</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>
@@ -68,7 +68,7 @@
         <dependency>
             <groupId>cc.carm.lib</groupId>
             <artifactId>easyplugin-main</artifactId>
-            <version>${easyplugin.version}</version>
+            <version>${deps.easyplugin.version}</version>
             <optional>true</optional>
             <scope>compile</scope>
         </dependency>
@@ -102,66 +102,15 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.3</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
-
-                <configuration>
-                    <finalName>${project.name}-${project.version}</finalName>
-                    <outputDirectory>${project.parent.basedir}/asset/</outputDirectory>
-                    <createDependencyReducedPom>false</createDependencyReducedPom>
-                    <relocations>
-                        <relocation>
-                            <pattern>org.bstats</pattern>
-                            <shadedPattern>cc.carm.plugin.minesql.lib.bstats</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>org.json</pattern>
-                            <shadedPattern>cc.carm.plugin.minesql.lib.json</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>cc.carm.lib.easyplugin</pattern>
-                            <shadedPattern>cc.carm.plugin.minesql.lib.easyplugin</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>cc.carm.lib.githubreleases4j</pattern>
-                            <shadedPattern>cc.carm.plugin.minesql.lib.githubreleases4j</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>co.aikar.commands</pattern>
-                            <shadedPattern>cc.carm.plugin.minesql.lib.acf</shadedPattern> <!-- Replace this -->
-                        </relocation>
-                        <relocation>
-                            <pattern>co.aikar.locales</pattern>
-                            <shadedPattern>cc.carm.plugin.minesql.lib.locales</shadedPattern> <!-- Replace this -->
-                        </relocation>
-                    </relocations>
-                    <filters>
-                        <filter>
-                            <artifact>co.aikar:*</artifact>
-                            <excludes>
-                                <exclude>META-INF/MANIFEST.MF</exclude>
-                                <exclude>META-INF/*.txt</exclude>
-                                <exclude>acf-core*.properties</exclude>
-                                <exclude>acf-minecraft*.properties</exclude>
-                            </excludes>
-                        </filter>
-                        <filter>
-                            <artifact>*:*</artifact>
-                            <excludes>
-                                <exclude>META-INF/MANIFEST.MF</exclude>
-                                <exclude>META-INF/*.txt</exclude>
-                            </excludes>
-                        </filter>
-                    </filters>
-                </configuration>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

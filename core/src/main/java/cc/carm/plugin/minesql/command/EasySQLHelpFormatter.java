@@ -10,7 +10,7 @@ public class EasySQLHelpFormatter extends CommandHelpFormatter {
 
     @Override
     public void printHelpHeader(CommandHelp help, CommandIssuer issuer) {
-        issuer.sendMessage("§3§lEasySQL-Plugin §7指令帮助");
+        issuer.sendMessage("§3§lMineSQL §7指令帮助");
     }
 
     @Override
@@ -27,7 +27,7 @@ public class EasySQLHelpFormatter extends CommandHelpFormatter {
 
     @Override
     public void printSearchHeader(CommandHelp help, CommandIssuer issuer) {
-        issuer.sendMessage("§3§lEasySQL-Plugin §7指令帮助查询");
+        issuer.sendMessage("§3§lMineSQL §7指令帮助查询");
     }
 
     @Override
@@ -41,7 +41,7 @@ public class EasySQLHelpFormatter extends CommandHelpFormatter {
 
     @Override
     public void printDetailedHelpHeader(CommandHelp help, CommandIssuer issuer, HelpEntry entry) {
-        issuer.sendMessage("§3§lEasySQL-Plugin §7指令帮助 §8(§f" + entry.getCommand() + "§8)");
+        issuer.sendMessage("§3§lMineSQL §7指令帮助 §8(§f" + entry.getCommand() + "§8)");
     }
 
     @Override

@@ -1,17 +1,14 @@
 ```text
- ______                 _____  ____  _        _____  _             _       
-|  ____|               / ____|/ __ \| |      |  __ \| |           (_)      
-| |__   __ _ ___ _   _| (___ | |  | | |      | |__) | |_   _  __ _ _ _ __  
-|  __| / _` / __| | | |\___ \| |  | | |      |  ___/| | | | |/ _` | | '_ \ 
-| |___| (_| \__ \ |_| |____) | |__| | |____  | |    | | |_| | (_| | | | | |
-|______\__,_|___/\__, |_____/ \___\_\______| |_|    |_|\__,_|\__, |_|_| |_|
-                  __/ |                                       __/ |        
-                 |___/                                       |___/         
+   __  ____          ________    __ 
+  /  |/  (_)__  ___ / __/ __ \  / / 
+ / /|_/ / / _ \/ -_)\ \/ /_/ / / /__
+/_/  /_/_/_//_/\__/___/\___\_\/____/
+#MineSQL (EasySQL-Plugin)
 ```
 
 <font size="20" color="red">注意：该项目仍在开发中！</font>
 
-# EasySQL-Plugin
+# MineSQL (EasySQL-Plugin)
 
 轻松(用)SQL的独立运行库插件，支持多种服务端，适用于MineCraft全版本。
 
@@ -27,9 +24,9 @@
 
 ## 配置
 
-### 插件配置文件 [`config.yml`](easysql-plugin-core/src/main/resources/config.yml)
+### 插件配置文件 [`config.yml`](minesql-core/src/main/resources/config.yml)
 
-完整示例配置请见 [源文件](easysql-plugin-core/src/main/resources/config.yml)。
+完整示例配置请见 [源文件](minesql-core/src/main/resources/config.yml)。
 
 #### MySQL/MariaDB 数据源详细配置示例
 
@@ -60,9 +57,9 @@ databases:
     file-path: "db-files/minecraft"
 ```
 
-### Properties 配置文件 [`<插件目录>/db-properties/*.properties`](easysql-plugin-core/src/main/resources/db-properties/.example-mysql.properties)
+### Properties 配置文件 [`<插件目录>/db-properties/*.properties`](minesql-core/src/main/resources/db-properties/.example-mysql.properties)
 
-示例配置请见 [示例MySQL数据源Properties](easysql-plugin-core/src/main/resources/db-properties/.example-mysql.properties)。
+示例配置请见 [示例MySQL数据源Properties](minesql-core/src/main/resources/db-properties/.example-mysql.properties)。
 
 Properties 文件的文件名几位数据源的ID，允许为英文、数字、下划线、短横线；请不要包含中文、其他特殊符号与空格，以`.`开头的文件将被忽略。
 
@@ -91,9 +88,9 @@ Properties 文件的文件名几位数据源的ID，允许为英文、数字、�
 
         <repository>
             <!--采用github依赖库，安全稳定，但需要配置 (推荐)-->
-            <id>EasySQL-Plugin</id>
+            <id>MineSQL</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/CarmJos/EasySQL-Plugin</url>
+            <url>https://maven.pkg.github.com/CarmJos/MineSQL</url>
         </repository>
 
         <repository>
@@ -109,7 +106,7 @@ Properties 文件的文件名几位数据源的ID，允许为英文、数字、�
 
         <dependency>
             <groupId>cc.carm.plugin</groupId>
-            <artifactId>easysql-plugin-api</artifactId>
+            <artifactId>minesql-api</artifactId>
             <version>[LATEST RELEASE]</version>
             <scope>provided</scope>
         </dependency>
@@ -130,14 +127,14 @@ repositories {
     mavenCentral()
 
     // 采用github依赖库，安全稳定，但需要配置 (推荐)
-    maven { url 'https://maven.pkg.github.com/CarmJos/EasySQL-Plugin' }
+    maven { url 'https://maven.pkg.github.com/CarmJos/MineSQL' }
 
     // 采用我的私人依赖库，简单方便，但可能因为变故而无法使用
     maven { url 'https://repo.carm.cc/repository/maven-public/' }
 }
 
 dependencies {
-    compileOnly "cc.carm.plugin:easysql-plugin-api:[LATEST RELEASE]"
+    compileOnly "cc.carm.plugin:minesql-api:[LATEST RELEASE]"
 }
 ```
 

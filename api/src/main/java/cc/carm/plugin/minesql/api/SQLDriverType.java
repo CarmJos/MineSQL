@@ -1,37 +1,54 @@
 package cc.carm.plugin.minesql.api;
 
+import cc.carm.lib.easysql.api.SQLManager;
+import cc.carm.lib.easysql.api.function.SQLHandler;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 public enum SQLDriverType {
 
-    MARIADB("org.mariadb.jdbc.Driver", "jdbc:mariadb://",
-            new String[]{"mariadb", "maria-db"}, new String[]{}
+    MARIADB(
+            "org.mariadb.jdbc.Driver", "jdbc:mariadb://",
+            new String[]{"maria-db"}, null
     ),
-    MYSQL("com.mysql.jdbc.Driver", "jdbc:mysql://",
-            new String[]{"mysql"}, new String[]{}
+
+    MYSQL("com.mysql.jdbc.Driver", "jdbc:mysql://", null, null),
+
+    H2_FILE("org.h2.Driver", "jdbc:h2:file:",
+            new String[]{"h2"},
+            (manager) -> {
+                manager.executeSQL("SET MODE=MySQL");
+                manager.executeSQL("SET DB_CLOSE_DELAY=-1");
+                manager.executeSQL("SET DB_CLOSE_ON_EXIT=FALSE");
+            }
     ),
-    H2("org.h2.Driver", "jdbc:h2:",
-            new String[]{"h2", "h2-db", "h2-database"},
-            new String[]{"SET MODE=MySQL", "SET DB_CLOSE_DELAY=-1"}
+
+    H2_MEM("org.h2.Driver", "jdbc:h2:mem:",
+            new String[]{"h2-memory", "h2-temp"},
+            (manager) -> {
+                manager.executeSQL("SET MODE=MySQL");
+                manager.executeSQL("SET DB_CLOSE_DELAY=-1");
+                manager.executeSQL("SET DB_CLOSE_ON_EXIT=FALSE");
+            }
     );
 
     private final @NotNull String driverClass;
-    private final @NotNull String urlPrefix;
+    private final @NotNull String jdbcPrefix;
     private final @NotNull String[] databaseAlias;
-    private final @NotNull String[] initializeSQLs;
+    private final @Nullable SQLHandler<SQLManager> initializer;
 
-    SQLDriverType(@NotNull String driverClass, @NotNull String urlPrefix,
-                  @NotNull String[] databaseAlias,
-                  @NotNull String[] initializeSQLs) {
+    SQLDriverType(@NotNull String driverClass, @NotNull String jdbcPrefix,
+                  @Nullable String[] databaseAlias,
+                  @Nullable SQLHandler<SQLManager> initializer) {
 
         this.driverClass = driverClass;
-        this.urlPrefix = urlPrefix;
-        this.databaseAlias = databaseAlias;
-        this.initializeSQLs = initializeSQLs;
+        this.jdbcPrefix = jdbcPrefix;
+        this.databaseAlias = Optional.ofNullable(databaseAlias).orElse(new String[0]);
+        this.initializer = initializer;
     }
 
     public @NotNull String[] getDatabaseAlias() {
@@ -42,24 +59,24 @@ public enum SQLDriverType {
         return driverClass;
     }
 
-    public @NotNull String getUrlPrefix() {
-        return urlPrefix;
+    public @NotNull String getJdbcPrefix() {
+        return jdbcPrefix;
     }
 
-    public @NotNull String[] getInitializeSQLs() {
-        return initializeSQLs;
+    public @Nullable SQLHandler<SQLManager> getInitializer() {
+        return initializer;
     }
 
     @Contract("null->null")
     public static @Nullable SQLDriverType parse(@Nullable String driverString) {
         if (driverString == null) return null;
         return Arrays.stream(values())
-                .filter(value -> value.name().equalsIgnoreCase(driverString) || has(value.getDatabaseAlias(), driverString))
+                .filter(value -> value.name().equalsIgnoreCase(driverString) || anyMatch(value.getDatabaseAlias(), driverString))
                 .findFirst().orElse(null);
     }
 
-
-    private static boolean has(String[] array, String value) {
+    private static boolean anyMatch(String[] array, String value) {
         return Arrays.stream(array).anyMatch(s -> s.equalsIgnoreCase(value));
     }
+
 }

@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>easysql-plugin</artifactId>
+        <artifactId>minesql-parent</artifactId>
         <groupId>cc.carm.plugin</groupId>
         <version>0.0.3-SNAPSHOT</version>
     </parent>
@@ -16,12 +16,12 @@
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     </properties>
 
-    <artifactId>easysql-plugin-api</artifactId>
+    <artifactId>minesql-api</artifactId>
     <packaging>jar</packaging>
 
-    <name>EasySQL-Plugin-API</name>
+    <name>MineSQL-API</name>
     <description>轻松(用)SQL的独立运行库插件的公用API接口部分。</description>
-    <url>https://github.com/CarmJos/EasySQL-Plugin</url>
+    <url>https://github.com/CarmJos/MineSQL</url>
 
     <developers>
         <developer>
@@ -45,12 +45,12 @@
 
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/CarmJos/EasySQL-Plugin/issues</url>
+        <url>https://github.com/CarmJos/MineSQL/issues</url>
     </issueManagement>
 
     <ciManagement>
         <system>GitHub Actions</system>
-        <url>https://github.com/CarmJos/EasySQL-Plugin/actions/workflows/maven.yml</url>
+        <url>https://github.com/CarmJos/MineSQL/actions/workflows/maven.yml</url>
     </ciManagement>
 
     <dependencies>
@@ -59,6 +59,12 @@
             <groupId>cc.carm.lib</groupId>
             <artifactId>easysql-api</artifactId>
             <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cc.carm.lib</groupId>
+            <artifactId>easyconfiguration-core</artifactId>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>
@@ -92,7 +98,6 @@
                     <includeDependencySources>true</includeDependencySources>
                     <dependencySourceIncludes>cc.carm.lib:easysql-api</dependencySourceIncludes>
                     <dependencySourceIncludes>cc.carm.plugin:*</dependencySourceIncludes>
-                    <outputDirectory>${project.parent.basedir}/api-docs/</outputDirectory>
                 </configuration>
                 <executions>
                     <execution>

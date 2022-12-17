@@ -19,7 +19,7 @@ properties:
   enable: true
   # 文件夹路径，将读取该文件夹下的所有 .properties 文件，并以文件名为数据管理器名称。
   # 读取时，将排除以 “.” 开头的文件与非 .properties 文件。
-  # 默认为 "db-properties/" 相对路径，指向“plugins/EasySQL-Plugin/db-properties/”；
+  # 默认为 "db-properties/" 相对路径，指向“plugins/MineSQL/db-properties/”；
   # 该选项也支持绝对路径，但使用绝对路径时，请务必注意权限问题。
   folder: "db-properties/"
 
@@ -38,7 +38,4 @@ databases:
 
   "example-h2": # 数据库源名称 不可包含“.” 以“example-”开头的数据源不会被加载
     driver-type: h2 #数据库驱动类型，目前支持 mariadb, mysql, h2
-    file: "example.db" #数据库文件路径，相对于“plugins/EasySQL-Plugin/db-files/”
-    username: minecraft # 数据库用户名
-    password: password #数据库连接密码
-    database: minecraft #数据库名
+    file: "example.db" #数据库文件路径，相对于“plugins/MineSQL/db-files/”

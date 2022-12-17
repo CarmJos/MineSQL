@@ -2,6 +2,7 @@ package cc.carm.plugin.minesql.command;
 
 import cc.carm.lib.easysql.api.SQLManager;
 import cc.carm.lib.easysql.api.SQLQuery;
+import cc.carm.plugin.minesql.MineSQLCore;
 import cc.carm.plugin.minesql.MineSQLRegistry;
 import cc.carm.plugin.minesql.util.VersionReader;
 import co.aikar.commands.BaseCommand;
@@ -15,8 +16,14 @@ import java.util.UUID;
 
 @SuppressWarnings("unused")
 @CommandAlias("EasySQL")
-@Description("EasySQL-Plugin的主指令，用于开发者进行调试，只允许后台执行。")
+@Description("MineSQL的主指令，用于开发者进行调试，只允许后台执行。")
 public class EasySQLCommand extends BaseCommand {
+
+    protected final MineSQLCore core;
+
+    public EasySQLCommand(MineSQLCore core) {
+        this.core = core;
+    }
 
     @HelpCommand
     @Syntax("&9[页码或子指令名称]")
@@ -49,7 +56,7 @@ public class EasySQLCommand extends BaseCommand {
         issuer.sendMessage("§8 - &f数据库驱动 h2-database §9" + reader.get("h2-driver"));
 
         issuer.sendMessage("§r正在检查插件更新，请稍候...");
-        MineSQLRegistry.getInstance().checkUpdate(pluginVersion);
+        core.checkUpdate(pluginVersion);
     }
 
     @Subcommand("list")

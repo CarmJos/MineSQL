@@ -2,6 +2,7 @@ package cc.carm.plugin.minesql.api;
 
 import cc.carm.lib.easysql.api.SQLManager;
 import cc.carm.lib.easysql.api.SQLQuery;
+import cc.carm.plugin.minesql.api.source.SQLSourceConfig;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;
@@ -52,7 +53,7 @@ public interface SQLRegistry {
      * @throws Exception 若创建失败则抛出异常
      */
     @NotNull SQLManager create(@NotNull String name,
-                               @NotNull DBConfiguration configuration) throws Exception;
+                               @NotNull SQLSourceConfig configuration) throws Exception;
 
     /**
      * 创建并注册一个新的 SQLManager 实例

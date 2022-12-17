@@ -1,7 +1,8 @@
-main: cc.carm.plugin.easysql.EasySQLBukkit
+main: cc.carm.plugin.minesql.MineSQLBukkit
 version: ${project.version}
-prefix: EasySQL-Plugin
-name: EasySQL-Plugin
+
+prefix: MineSQL
+name: MineSQL
 load: STARTUP
 
 website: ${project.url}

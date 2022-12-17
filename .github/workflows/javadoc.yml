@@ -1,0 +1,74 @@
+name: "Publish Javadoc"
+
+on:
+  # 支持手动触发构建
+  workflow_dispatch:
+  release:
+    # 创建release的时候触发
+    types: [ published ]
+
+
+jobs:
+
+  javadoc-deploy:
+    name: "Deploy Javadoc (Github Pages)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: "Set up JDK"
+        uses: actions/setup-java@v2
+        with:
+          java-version: '8'
+          distribution: 'adopt'
+          cache: maven
+
+      - name: "Generate Javadoc"
+        run: mvn -B javadoc:javadoc -pl api --file pom.xml -DskipTests
+
+      - name: "Copy Javadoc"
+        run: |
+          rm -rf docs
+          mkdir -vp docs
+          cp -vrf api/target/site/apidocs/* docs/
+          cp -vrf .doc/javadoc/JAVADOC-README.md docs/README.md
+
+      - name: "Generate Sitemap"
+        id: sitemap
+        uses: cicirello/generate-sitemap@v1
+        with:
+          base-url-path: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+          path-to-root: docs
+
+      - name: Output stats
+        run: |
+          echo "sitemap-path = ${{ steps.sitemap.outputs.sitemap-path }}"
+          echo "url-count = ${{ steps.sitemap.outputs.url-count }}"
+          echo "excluded-count = ${{ steps.sitemap.outputs.excluded-count }}"
+          ls -l docs
+
+      - name: Configure Git
+        env:
+          DEPLOY_PRI: ${{secrets.DEPLOY_PRI}}
+        run: |
+          sudo timedatectl set-timezone "Asia/Shanghai"
+          mkdir -p ~/.ssh/
+          echo "$DEPLOY_PRI" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global user.name '${{ github.repository_owner }}'
+          git config --global user.email '${{ github.repository_owner }}@users.noreply.github.com'
+
+      - name: Commit documentation changes
+        run: |
+          echo "Committing changes to git@github.com:${{ github.repository_owner }}/${{ github.event.repository.name }}.git ..."
+          cd docs
+          git init
+          git remote add origin git@github.com:${{ github.repository_owner }}/${{ github.event.repository.name }}.git
+          git checkout -b gh-pages
+          git add -A
+          git commit -m "API Document generated."
+
+      - name: Javadoc Website Push
+        run: |
+          cd docs
+          git push origin HEAD:gh-pages --force

@@ -11,18 +11,18 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
 
-        <easysql.version>0.3.8</easysql.version>
-        <easyplugin.version>1.3.8</easyplugin.version>
+        <deps.easysql.version>0.4.6</deps.easysql.version>
+        <deps.easyconf.version>3.3.1</deps.easyconf.version>
+        <deps.easyplugin.version>1.4.18</deps.easyplugin.version>
+        <deps.beecp.version>3.3.9</deps.beecp.version>
 
-        <beecp.version>3.3.2</beecp.version>
-        <mysql-driver.version>8.0.28</mysql-driver.version>
-        <mariadb-driver.version>3.0.3</mariadb-driver.version>
-        <h2-driver.version>2.1.210</h2-driver.version>
-
+        <deps.mysql-driver.version>8.0.31</deps.mysql-driver.version>
+        <deps.mariadb-driver.version>3.1.0</deps.mariadb-driver.version>
+        <deps.h2-driver.version>2.1.214</deps.h2-driver.version>
     </properties>
 
     <groupId>cc.carm.plugin</groupId>
-    <artifactId>easysql-plugin</artifactId>
+    <artifactId>minesql-parent</artifactId>
     <packaging>pom</packaging>
     <version>0.0.3-SNAPSHOT</version>
     <modules>
@@ -32,12 +32,12 @@
         <module>platforms/bukkit</module>
         <module>platforms/bungee</module>
         <module>platforms/velocity</module>
-        <module>platforms/sponge</module>
+        <module>plugin</module>
     </modules>
 
-    <name>EasySQL-Plugin</name>
+    <name>MineSQL</name>
     <description>轻松(用)SQL的独立运行库插件，支持多种服务端，适用于MineCraft全版本。</description>
-    <url>https://github.com/CarmJos/EasySQL-Plugin</url>
+    <url>https://github.com/CarmJos/MineSQL</url>
 
     <developers>
         <developer>
@@ -50,6 +50,16 @@
                 <role>Designer</role>
             </roles>
         </developer>
+        <developer>
+            <id>Ghost-Chu</id>
+            <name>鬼畜</name>
+            <url>https://github.com/Ghost-Chu/</url>
+        </developer>
+        <developer>
+            <id>huanmeng_qwq</id>
+            <name>幻梦</name>
+            <url>https://github.com/huanmeng-qwq/</url>
+        </developer>
     </developers>
 
     <licenses>
@@ -61,30 +71,24 @@
 
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/CarmJos/EasySQL-Plugin/issues</url>
+        <url>https://github.com/CarmJos/MineSQL/issues</url>
     </issueManagement>
 
     <ciManagement>
         <system>GitHub Actions</system>
-        <url>https://github.com/CarmJos/EasySQL-Plugin/actions/workflows/maven.yml</url>
+        <url>https://github.com/CarmJos/MineSQL/actions/workflows/maven.yml</url>
     </ciManagement>
 
     <distributionManagement>
-        <downloadUrl>https://github.com/CarmJos/EasySQL-Plugin/releases</downloadUrl>
+        <downloadUrl>https://github.com/CarmJos/MineSQL/releases</downloadUrl>
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/CarmJos/EasySQL-Plugin</url>
+            <url>https://maven.pkg.github.com/CarmJos/MineSQL</url>
         </repository>
     </distributionManagement>
 
     <repositories>
-
-        <repository>
-            <id>carm-repo</id>
-            <name>Carm's Repo</name>
-            <url>https://repo.carm.cc/repository/maven-public/</url>
-        </repository>
 
         <repository>
             <id>aikar</id>
@@ -96,6 +100,12 @@
             <url>https://repo1.maven.org/maven2/</url>
         </repository>
 
+        <repository>
+            <id>carm-repo</id>
+            <name>Carm's Repo</name>
+            <url>https://repo.carm.cc/repository/maven-public/</url>
+        </repository>
+
     </repositories>
 
     <dependencies>
@@ -103,7 +113,7 @@
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>23.0.0</version>
+            <version>23.1.0</version>
             <scope>provided</scope>
         </dependency>
 
@@ -124,7 +134,7 @@
                 <!--项目地址 https://github.com/Chris2018998/BeeCP  -->
                 <groupId>com.github.chris2018998</groupId>
                 <artifactId>beecp</artifactId>
-                <version>${beecp.version}</version>
+                <version>${deps.beecp.version}</version>
             </dependency>
 
             <dependency>
@@ -136,13 +146,37 @@
             <dependency>
                 <groupId>cc.carm.lib</groupId>
                 <artifactId>easysql-api</artifactId>
-                <version>${easysql.version}</version>
+                <version>${deps.easysql.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>cc.carm.lib</groupId>
                 <artifactId>easysql-impl</artifactId>
-                <version>${easysql.version}</version>
+                <version>${deps.easysql.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cc.carm.lib</groupId>
+                <artifactId>easyconfiguration-core</artifactId>
+                <version>${deps.easyconf.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cc.carm.lib</groupId>
+                <artifactId>easyconfiguration-yaml</artifactId>
+                <version>${deps.easyconf.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cc.carm.lib</groupId>
+                <artifactId>easyplugin-utils</artifactId>
+                <version>${deps.easyplugin.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cc.carm.lib</groupId>
+                <artifactId>easyplugin-githubchecker</artifactId>
+                <version>${deps.easyplugin.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
@@ -156,21 +190,21 @@
             <dependency>
                 <groupId>org.mariadb.jdbc</groupId>
                 <artifactId>mariadb-java-client</artifactId>
-                <version>${mariadb-driver.version}</version>
+                <version>${deps.mariadb-driver.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql-driver.version}</version>
+                <version>${deps.mysql-driver.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
-                <version>${h2-driver.version}</version>
+                <version>${deps.h2-driver.version}</version>
             </dependency>
 
         </dependencies>

@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>easysql-plugin</artifactId>
+        <artifactId>minesql-parent</artifactId>
         <groupId>cc.carm.plugin</groupId>
         <version>0.0.3-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
@@ -19,12 +19,12 @@
         <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
 
-    <artifactId>easysql-plugin-velocity</artifactId>
+    <artifactId>minesql-velocity</artifactId>
     <packaging>jar</packaging>
 
-    <name>EasySQL-Plugin-Velocity</name>
+    <name>MineSQL-Velocity</name>
     <description>轻松(用)SQL的独立运行库Velocity版本插件。</description>
-    <url>https://github.com/CarmJos/EasySQL-Plugin</url>
+    <url>https://github.com/CarmJos/MineSQL</url>
 
     <developers>
         <developer>
@@ -48,12 +48,12 @@
 
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/CarmJos/EasySQL-Plugin/issues</url>
+        <url>https://github.com/CarmJos/MineSQL/issues</url>
     </issueManagement>
 
     <ciManagement>
         <system>GitHub Actions</system>
-        <url>https://github.com/CarmJos/EasySQL-Plugin/actions/workflows/maven.yml</url>
+        <url>https://github.com/CarmJos/MineSQL/actions/workflows/maven.yml</url>
     </ciManagement>
 
     <repositories>
@@ -68,7 +68,7 @@
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>easysql-plugin-core</artifactId>
+            <artifactId>minesql-core</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>
@@ -97,8 +97,8 @@
             <scope>compile</scope>
         </dependency>
 
-
     </dependencies>
+
 
     <build>
         <plugins>
@@ -113,37 +113,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.3</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <finalName>${project.name}-${project.version}</finalName>
-                    <outputDirectory>${project.parent.basedir}/asset/</outputDirectory>
-                    <createDependencyReducedPom>false</createDependencyReducedPom>
-                    <filters>
-                        <filter>
-                            <artifact>*:*</artifact>
-                            <excludes>
-                                <exclude>META-INF/MANIFEST.MF</exclude>
-                                <exclude>META-INF/*.txt</exclude>
-                            </excludes>
-                        </filter>
-                    </filters>
-                </configuration>
             </plugin>
         </plugins>
     </build>
