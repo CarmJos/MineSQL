@@ -30,8 +30,6 @@ import java.util.logging.Logger;
 )
 public class MineSQLVelocity implements MineSQLPlatform {
 
-    private static MineSQLVelocity instance;
-
     private final ProxyServer server;
     private final Logger logger;
     private final File dataFolder;
@@ -45,7 +43,6 @@ public class MineSQLVelocity implements MineSQLPlatform {
     public MineSQLVelocity(ProxyServer server, Logger logger,
                            @DataDirectory Path dataDirectory,
                            Metrics.Factory metricsFactory) {
-        instance = this;
         this.server = server;
         this.logger = logger;
         this.dataFolder = dataDirectory.toFile();
@@ -57,7 +54,7 @@ public class MineSQLVelocity implements MineSQLPlatform {
 
     @Subscribe(order = PostOrder.FIRST)
     public void onInitialize(ProxyInitializeEvent event) {
-
+        outputInfo();
         getLogger().info("初始化指令管理器...");
         this.commandManager = new VelocityCommandManager(server, this);
 
@@ -87,16 +84,17 @@ public class MineSQLVelocity implements MineSQLPlatform {
 
     @Subscribe(order = PostOrder.LAST)
     public void onShutdown(ProxyShutdownEvent event) {
+        outputInfo();
         getLogger().info("终止全部数据库连接...");
         this.core.getRegistry().shutdownAll();
     }
 
-    public static MineSQLVelocity getInstance() {
-        return instance;
-    }
-
     public ProxyServer getServer() {
         return server;
+    }
+
+    public @NotNull Logger getLogger() {
+        return logger;
     }
 
     public String getVersion() {
@@ -110,9 +108,6 @@ public class MineSQLVelocity implements MineSQLPlatform {
         return this.dataFolder;
     }
 
-    public @NotNull Logger getLogger() {
-        return logger;
-    }
 
     @Override
     public @NotNull CommandManager<?, ?, ?, ?, ?, ?> getCommandManager() {
@@ -123,5 +118,7 @@ public class MineSQLVelocity implements MineSQLPlatform {
         return this.core.getConfig();
     }
 
-
+    public void outputInfo() {
+        //TODO
+    }
 }

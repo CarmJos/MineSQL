@@ -136,8 +136,12 @@
                             <shadedPattern>cc.carm.plugin.minesql.lib.jna</shadedPattern> <!-- Replace this -->
                         </relocation>
                         <relocation>
-                            <pattern>com.google</pattern>
-                            <shadedPattern>cc.carm.plugin.minesql.lib.google</shadedPattern> <!-- Replace this -->
+                            <pattern>com.google.protobuf</pattern>
+                            <shadedPattern>cc.carm.plugin.minesql.lib.google.protobuf</shadedPattern> <!-- Replace this -->
+                        </relocation>
+                        <relocation>
+                            <pattern>com.google.errorprone</pattern>
+                            <shadedPattern>cc.carm.plugin.minesql.lib.google.errorprone</shadedPattern> <!-- Replace this -->
                         </relocation>
                         <relocation>
                             <pattern>com.github</pattern>

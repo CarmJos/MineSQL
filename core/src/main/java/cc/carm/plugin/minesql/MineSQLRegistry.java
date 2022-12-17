@@ -7,7 +7,6 @@ import cc.carm.plugin.minesql.api.SQLRegistry;
 import cc.carm.plugin.minesql.api.source.SQLSourceConfig;
 import cn.beecp.BeeDataSource;
 import cn.beecp.BeeDataSourceConfig;
-import com.google.common.collect.ImmutableMap;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;
@@ -115,7 +114,7 @@ public class MineSQLRegistry implements SQLRegistry {
     @Override
     @Unmodifiable
     public @NotNull Map<String, SQLManagerImpl> list() {
-        return ImmutableMap.copyOf(this.managers);
+        return Collections.unmodifiableMap(this.managers);
     }
 
     @Override

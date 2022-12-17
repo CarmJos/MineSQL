@@ -1,5 +1,7 @@
 package cc.carm.plugin.minesql;
 
+import cc.carm.lib.easyplugin.utils.ColorParser;
+import cc.carm.lib.easyplugin.utils.JarResourceUtils;
 import cc.carm.plugin.minesql.conf.PluginConfiguration;
 import co.aikar.commands.BungeeCommandManager;
 import co.aikar.commands.CommandManager;
@@ -10,6 +12,8 @@ import org.bstats.charts.SimplePie;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 public class MineSQLBungee extends Plugin implements MineSQLPlatform {
@@ -29,6 +33,7 @@ public class MineSQLBungee extends Plugin implements MineSQLPlatform {
 
     @Override
     public void onEnable() {
+        outputInfo();
         getLogger().info("初始化指令管理器...");
         this.commandManager = new BungeeCommandManager(this);
 
@@ -59,6 +64,7 @@ public class MineSQLBungee extends Plugin implements MineSQLPlatform {
 
     @Override
     public void onDisable() {
+        outputInfo();
         getLogger().info("终止全部数据库连接...");
         this.core.getRegistry().shutdownAll();
     }
@@ -86,5 +92,11 @@ public class MineSQLBungee extends Plugin implements MineSQLPlatform {
         return this.commandManager;
     }
 
+    @SuppressWarnings("deprecation")
+    public void outputInfo() {
+        Optional.ofNullable(JarResourceUtils.readResource(this.getResourceAsStream("PLUGIN_INFO")))
+                .map(v -> ColorParser.parse(Arrays.asList(v)))
+                .ifPresent(list -> list.forEach(s -> ProxyServer.getInstance().getConsole().sendMessage(s)));
+    }
 
 }

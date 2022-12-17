@@ -14,14 +14,10 @@ import cc.carm.plugin.minesql.util.DBPropertiesUtil;
 import co.aikar.commands.CommandManager;
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.Locales;
-import com.google.common.collect.ImmutableList;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class MineSQLCore implements IMineSQL {
@@ -126,8 +122,8 @@ public class MineSQLCore implements IMineSQL {
             }
         });
         commandManager.getCommandCompletions().registerCompletion("sql-managers", c -> {
-            if (c.getIssuer().isPlayer()) return ImmutableList.of();
-            else return ImmutableList.copyOf(getRegistry().list().keySet());
+            if (c.getIssuer().isPlayer()) return Collections.emptyList();
+            else return getRegistry().list().keySet();
         });
         commandManager.registerCommand(new MineSQLCommand(this));
     }

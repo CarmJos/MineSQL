@@ -68,32 +68,30 @@
 
         <!--suppress VulnerableLibrariesLocal -->
         <dependency>
+            <groupId>com.velocitypowered</groupId>
+            <artifactId>velocity-api</artifactId>
+            <version>3.1.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--suppress VulnerableLibrariesLocal -->
+        <dependency>
             <groupId>${project.parent.groupId}</groupId>
             <artifactId>minesql-core</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>
 
-        <!--suppress VulnerableLibrariesLocal -->
-        <dependency>
-            <groupId>com.velocitypowered</groupId>
-            <artifactId>velocity-api</artifactId>
-            <version>3.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-
         <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-velocity</artifactId>
             <version>3.0.0</version>
-            <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>co.aikar</groupId>
             <artifactId>acf-velocity</artifactId>
             <version>0.5.1-SNAPSHOT</version>
-            <optional>true</optional>
         </dependency>
 
     </dependencies>
