@@ -63,7 +63,7 @@ jobs:
           rm -rf deploy
           mkdir -vp deploy
           cp -vrf $HOME/local-deploy/* deploy/
-          cp -vrf .documentation/repository/REPO-README.md deploy/README.md
+          cp -vrf .doc/repository/REPO-README.md deploy/README.md
 
       - name: "Copy Javadoc"
         run: |
