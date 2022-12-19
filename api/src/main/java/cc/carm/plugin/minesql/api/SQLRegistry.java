@@ -12,8 +12,7 @@ import java.util.Optional;
  * 入口类
  */
 public interface SQLRegistry {
-
-
+    
     /**
      * 获取原生注册的指定名称的 SQLManager 实例
      *

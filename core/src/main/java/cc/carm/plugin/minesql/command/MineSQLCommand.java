@@ -3,7 +3,6 @@ package cc.carm.plugin.minesql.command;
 import cc.carm.lib.easysql.api.SQLManager;
 import cc.carm.lib.easysql.api.SQLQuery;
 import cc.carm.plugin.minesql.MineSQLCore;
-import cc.carm.plugin.minesql.MineSQLRegistry;
 import cc.carm.plugin.minesql.util.VersionReader;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
@@ -66,7 +65,7 @@ public class MineSQLCommand extends BaseCommand {
             issuer.sendMessage("§c只有后台执行才能使用此命令。");
             return;
         }
-        Map<String, ? extends SQLManager> runningManagers = MineSQLRegistry.getInstance().list();
+        Map<String, ? extends SQLManager> runningManagers = MineSQLCore.getInstance().getRegistry().list();
         if (runningManagers.isEmpty()) {
             issuer.sendMessage("§r当前无正在运行的数据库管理器。");
         } else {

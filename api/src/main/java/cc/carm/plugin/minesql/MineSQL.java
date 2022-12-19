@@ -44,6 +44,15 @@ public class MineSQL {
     }
 
     /**
+     * 创建一个独立的管理器注册池。
+     *
+     * @return {@link SQLRegistry}
+     */
+    public static @NotNull SQLRegistry createRegistry() {
+        return instance.createRegistry();
+    }
+
+    /**
      * 创建一个新的 SQLManager 实例
      *
      * @param name          实例名称

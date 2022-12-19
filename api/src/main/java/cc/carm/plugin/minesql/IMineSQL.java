@@ -27,6 +27,8 @@ interface IMineSQL {
 
     @NotNull SQLRegistry getRegistry();
 
+    @NotNull SQLRegistry createRegistry();
+
     /**
      * 创建一个新的 SQLManager 实例
      *

@@ -29,6 +29,8 @@ import java.util.logging.Logger;
 
 public class MineSQLCore implements IMineSQL {
 
+    protected static MineSQLCore instance;
+
     public static final String REPO_OWNER = "CarmJos";
     public static final String REPO_NAME = "MineSQL";
 
@@ -39,6 +41,7 @@ public class MineSQLCore implements IMineSQL {
     protected final PluginConfiguration config;
 
     public MineSQLCore(MineSQLPlatform platform) {
+        instance = this;
         this.platform = platform;
 
         getLogger().info("加载配置文件...");
@@ -50,16 +53,57 @@ public class MineSQLCore implements IMineSQL {
         MineSQL.initializeAPI(this);
 
         getLogger().info("初始化注册池...");
-        this.registry = new MineSQLRegistry(this);
+        this.registry = createRegistry();
+
+        Map<String, Properties> dbProperties = readProperties();
+        Map<String, SQLSourceConfig> dbConfigurations = readConfigurations();
+
+        if (dbProperties.isEmpty() && dbConfigurations.isEmpty()) {
+            getLogger().warning("未检测到任何数据库配置，将不会预创建任何SQLManager。");
+            return;
+        }
+
+        dbProperties.forEach((id, properties) -> {
+            try {
+                getLogger().info("正在初始化数据库 #" + id + " ...");
+                SQLManagerImpl sqlManager = create(id, properties);
+                this.registry.getManagers().put(id, sqlManager);
+                getLogger().info("完成成初始化数据库 #" + id + " 。");
+            } catch (Exception ex) {
+                getLogger().severe("初始化SQLManager(#" + id + ") 出错，请检查配置文件: " + ex.getMessage());
+                ex.printStackTrace();
+            }
+        });
+
+        dbConfigurations.forEach((id, configuration) -> {
+            try {
+                getLogger().info("正在初始化数据库 #" + id + " ...");
+                SQLManagerImpl sqlManager = create(id, configuration);
+                this.registry.getManagers().put(id, sqlManager);
+                getLogger().info("完成初始化数据库 #" + id + " 。");
+            } catch (Exception ex) {
+                getLogger().severe("初始化SQLManager(#" + id + ") 出错，请检查配置文件: " + ex.getMessage());
+                ex.printStackTrace();
+            }
+        });
     }
 
     public MineSQLPlatform getPlatform() {
         return platform;
     }
 
+    public static MineSQLCore getInstance() {
+        return instance;
+    }
+
     @Override
     public @NotNull MineSQLRegistry getRegistry() {
         return this.registry;
+    }
+
+    @Override
+    public @NotNull MineSQLRegistry createRegistry() {
+        return new MineSQLRegistry();
     }
 
     @Override
