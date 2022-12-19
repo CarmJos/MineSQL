@@ -22,7 +22,11 @@
 ### 对于服主 (插件使用者)
 
 - 统一配置数据库连接，避免重复配置费时费力分神。
-- 支持更高级更全面的配置方式，以根据不同的使用场景独立优化[连接池配置](https://github.com/Chris2018998/BeeCP/wiki/Configuration--List)。
+-
+
+支持更高级更全面的配置方式，以根据不同的使用场景独立优化[连接池配置](https://github.com/Chris2018998/BeeCP/wiki/Configuration--List)
+。
+
 - 使相关插件共用连接池，避免每个插件单独新开连接池导致资源的浪费。
 
 ### 对于插件开发者
@@ -38,7 +42,8 @@
 
 ## 安装
 
-1. 从 [Releases(发行)](https://github.com/CarmJos/MineSQL/releases/) 中点击 [最新版](https://github.com/CarmJos/MineSQL/releases/latest) 下载 `MineSQL-x.y.z.jar` 。
+1. 从 [Releases(发行)](https://github.com/CarmJos/MineSQL/releases/)
+   中点击 [最新版](https://github.com/CarmJos/MineSQL/releases/latest) 下载 `MineSQL-x.y.z.jar` 。
 2. 将下载的 `MineSQL-x.y.z.jar` 放入服务器 `plugins/` 文件夹下。
 3. 启动服务器，预加载配置文件后关闭服务器。
 4. 修改 `plugins/MineSQL/config.yml` 以配置您的数据库选项。
@@ -89,6 +94,24 @@ Properties 文件的文件名几位数据源的ID，允许为英文、数字、�
 该功能一般用于专业开发者使用，若您不了解该功能，请尽量使用config.yml中提供的配置方式，简单便捷，能够满足大多数需求。
 
 更多帮助详见 [BeeCP项目帮助](https://github.com/Chris2018998/BeeCP) 。
+
+## 指令
+
+插件主指令为 `/minesql` ，所有指令只允许后台执行。
+
+```text
+# help
+- 查看插件指令帮助。
+
+# version
+- 查看当前插件、核心库(EasySQL)与连接池依赖版本。
+
+# list
+- 列出当前所有的数据源管理器与相关信息。
+
+# info <数据源名称>
+- 查看指定数据源的统计信息与当前仍未关闭的查询。
+```
 
 ## 开发
 
@@ -163,23 +186,40 @@ dependencies {
 
 </details>
 
-## 指令
+### 操作示例
 
-插件主指令为 `/minesql` ，所有指令只允许后台执行。
+本插件接口入口类为 `MineSQL` ，更多方法详见 [MineSQL-Javadoc](https://carmjos.github.io/MineSQL/) 。
 
-```text
-# help
-- 查看插件指令帮助。
+关于 EasySQL的使用方法，请详见 [EasySQL开发文档](https://github.com/CarmJos/EasySQL/tree/master/.documentation) 。
 
-# version
-- 查看当前插件、核心库(EasySQL)与连接池依赖版本。
 
-# list
-- 列出当前所有的数据源管理器与相关信息。
+<details>
+  <summary>点击查看简单实例</summary>
 
-# info <数据源名称>
-- 查看指定数据源的统计信息与当前仍未关闭的查询。
+```java
+
+public class Main extends JavaPlugin {
+
+    @Override
+    public void onEnable() {
+
+        SQLManager manager = MineSQL.getRegistery().get(getConfig().getString("database"));
+
+        if (manager == null) {
+            System.out.println("请配置一个正确的数据库名。");
+            setEnable(false);
+            return;
+        }
+
+        // do something...
+      
+    }
+
+}
+
 ```
+
+</details> 
 
 ## 开源协议
 
@@ -204,4 +244,4 @@ dependencies {
 > @PierreJoye 写的 Practical Guide to GPL Compliance 一文。使用 GPL 协议，你必须在源代码代码中包含相应信息，以及协议本身。
 >
 > *以上文字来自 [五种开源协议GPL,LGPL,BSD,MIT,Apache](https://www.oschina.net/question/54100_9455) 。*
-</details>
+</details> 
