@@ -70,7 +70,7 @@ jobs:
           rm -rf docs
           mkdir -vp docs
           cp -vrf api/target/apidocs/* docs/
-          cp -vrf .documentation/javadoc/JAVADOC-README.md docs/README.md
+          cp -vrf .doc/javadoc/JAVADOC-README.md docs/README.md
 
       - name: "Generate Javadoc sitemap"
         id: sitemap
