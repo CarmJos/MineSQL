@@ -7,6 +7,7 @@
 ```
 
 # MineSQL (EasySQL-Plugin)
+
 [![version](https://img.shields.io/github/v/release/CarmJos/MineSQL)](https://github.com/CarmJos/MineSQL/releases)
 [![License](https://img.shields.io/github/license/CarmJos/MineSQL)](https://opensource.org/licenses/GPL-3.0)
 [![workflow](https://github.com/CarmJos/MineSQL/actions/workflows/maven.yml/badge.svg?branch=master)](https://github.com/CarmJos/MineSQL/actions/workflows/maven.yml)
@@ -89,12 +90,12 @@ Properties 文件的文件名几位数据源的ID，允许为英文、数字、�
             <name>Maven Central</name>
             <url>https://repo1.maven.org/maven2</url>
         </repository>
-
+        
         <repository>
-            <!--采用github依赖库，安全稳定，但需要配置 (推荐)-->
+            <!--采用github分支依赖库，稳定更新快-->
             <id>MineSQL</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/CarmJos/MineSQL</url>
+            <name>GitHub Branch Repository</name>
+            <url>https://github.com/CarmJos/MineSQL/blob/repo/</url>
         </repository>
 
         <repository>
@@ -130,8 +131,8 @@ repositories {
     //采用Maven中心库，安全稳定，但版本更新需要等待同步
     mavenCentral()
 
-    // 采用github依赖库，安全稳定，但需要配置 (推荐)
-    maven { url 'https://maven.pkg.github.com/CarmJos/MineSQL' }
+    // 采用github分支依赖库，稳定更新快
+    maven { url 'https://github.com/CarmJos/MineSQL/blob/repo/' }
 
     // 采用我的私人依赖库，简单方便，但可能因为变故而无法使用
     maven { url 'https://repo.carm.cc/repository/maven-public/' }
@@ -146,7 +147,7 @@ dependencies {
 
 ## 指令
 
-插件主指令为 `/easysql` ，所有指令只允许后台执行。
+插件主指令为 `/minesql` ，所有指令只允许后台执行。
 
 ```text
 # help

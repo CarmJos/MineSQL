@@ -24,7 +24,7 @@
     <groupId>cc.carm.plugin</groupId>
     <artifactId>minesql-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <modules>
         <module>api</module>
         <module>core</module>
@@ -302,6 +302,19 @@
             </distributionManagement>
         </profile>
 
+        <profile>
+            <id>local</id>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>localRepository</id>
+                    <url>file:${user.home}/local-deploy/</url>
+                </snapshotRepository>
+                <repository>
+                    <id>localRepository</id>
+                    <url>file:${user.home}/local-deploy/</url>
+                </repository>
+            </distributionManagement>
+        </profile>
 
     </profiles>
 
