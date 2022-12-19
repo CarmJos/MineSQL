@@ -9,7 +9,7 @@ on:
 
 jobs:
   packages-deploy:
-    name: "Deploy Project (GitHub)"
+    name: "Deploy Project (GitHub Packages)"
     runs-on: ubuntu-latest
 
     steps:
@@ -44,6 +44,7 @@ jobs:
           asset_content_type: application/java-archive
 
   github-deploy:
+    name: "Deploy Project (GitHub Repo)"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -55,7 +56,7 @@ jobs:
           cache: maven
 
       - name: "Maven Deploy"
-        run: mvn -B -Plocal deploy --file pom.xml -DskipTests
+        run: mvn -B -Plocal deploy --file pom.xml -DskipTests -Dgpg.skip
 
       - name: "Copy artifacts"
         run: |
