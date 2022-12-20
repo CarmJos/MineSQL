@@ -29,13 +29,13 @@ properties:
 databases:
 
   "example-mariadb": # 数据库源名称 不可包含“.” 以“example-”开头的数据源不会被加载
-    driver-type: mariadb
+    type: mariadb # MySQL / MariaDB 类型
     host: 127.0.0.1 # 数据库地址
     port: 3306 # 数据库端口
     username: minecraft # 数据库用户名
     password: password #数据库连接密码
     database: minecraft #数据库名
 
-  "example-h2": # 数据库源名称 不可包含“.” 以“example-”开头的数据源不会被加载
-    driver-type: h2 #数据库驱动类型，目前支持 mariadb, mysql, h2
+  "example-h2":
+    type: h2-file
     file: "example.db" #数据库文件路径，相对于“plugins/MineSQL/db-files/”
