@@ -204,7 +204,7 @@ public class Main extends JavaPlugin {
 
         if (manager == null) {
             System.out.println("请配置一个正确的数据库名。");
-            setEnable(false);
+            setEnabled(false);
             return;
         }
 
