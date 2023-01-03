@@ -4,11 +4,14 @@ import cc.carm.lib.easysql.api.SQLManager;
 import cc.carm.lib.easysql.api.SQLQuery;
 import cc.carm.plugin.minesql.api.SQLRegistry;
 import cc.carm.plugin.minesql.api.source.SQLSourceConfig;
+import cc.carm.plugin.minesql.api.table.SQLTablesRoot;
+import cc.carm.plugin.minesql.api.table.SimpleSQLTable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.sql.DataSource;
 import java.io.File;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
@@ -60,5 +63,19 @@ interface IMineSQL {
      * @param activeQueries 终止前仍未被关闭的SQLQuery列表
      */
     void shutdown(SQLManager manager, @Nullable Consumer<Map<UUID, SQLQuery>> activeQueries);
+
+    /**
+     * 读取一个 {@link SQLTablesRoot} 中全部的 {@link SimpleSQLTable} 实例并初始化。
+     *
+     * @param tablesRoot {@link SQLTablesRoot}实例
+     */
+    void createTables(@NotNull SQLTablesRoot tablesRoot) throws Exception;
+
+    /**
+     * 读取一个 {@link SQLTablesRoot}类中 中全部的静态 {@link SimpleSQLTable} 实例并初始化。
+     *
+     * @param tablesRootClazz {@link SQLTablesRoot}静态类
+     */
+    void createTables(@NotNull Class<? extends SQLTablesRoot> tablesRootClazz) throws Exception;
 
 }

@@ -8,6 +8,8 @@ import cc.carm.lib.easysql.api.SQLQuery;
 import cc.carm.lib.easysql.manager.SQLManagerImpl;
 import cc.carm.lib.githubreleases4j.GithubReleases4J;
 import cc.carm.plugin.minesql.api.source.SQLSourceConfig;
+import cc.carm.plugin.minesql.api.table.SQLTablesRoot;
+import cc.carm.plugin.minesql.api.table.SimpleSQLTable;
 import cc.carm.plugin.minesql.command.MineSQLCommand;
 import cc.carm.plugin.minesql.command.MineSQLHelpFormatter;
 import cc.carm.plugin.minesql.conf.PluginConfiguration;
@@ -23,6 +25,8 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.sql.DataSource;
 import java.io.File;
+import java.lang.reflect.Field;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
@@ -154,6 +158,48 @@ public class MineSQLCore implements IMineSQL {
         if (manager.getDataSource() instanceof BeeDataSource) {
             BeeDataSource dataSource = (BeeDataSource) manager.getDataSource();
             dataSource.close();         //Close bee connection pool
+        }
+    }
+
+    @Override
+    public void createTables(@NotNull SQLTablesRoot tablesRoot) throws SQLException {
+        for (Field field : tablesRoot.getClass().getDeclaredFields()) {
+            initializeTableField(tablesRoot, field);
+        }
+    }
+
+    @Override
+    public void createTables(@NotNull Class<? extends SQLTablesRoot> clazz) throws SQLException {
+        initializeTableClass(clazz);
+    }
+
+    protected void initializeTableClass(@NotNull Class<?> clazz) throws SQLException {
+        if (!SQLTablesRoot.class.isAssignableFrom(clazz)) return;
+
+        for (Field field : clazz.getDeclaredFields()) {
+            initializeTableField(clazz, field);
+        }
+
+        for (Class<?> subClass : clazz.getDeclaredClasses()) {
+            initializeTableClass(subClass);
+        }
+
+    }
+
+    protected void initializeTableField(@NotNull Object source, @NotNull Field field) throws SQLException {
+        try {
+            field.setAccessible(true);
+            Object object = field.get(source);
+
+            if (object instanceof SimpleSQLTable) {
+                ((SimpleSQLTable) object).create();
+            } else if (source instanceof SQLTablesRoot && object instanceof SQLTablesRoot) {
+                createTables((SQLTablesRoot) object);
+            } else if (source instanceof Class<?> && object instanceof Class<?>) {
+                // 当且仅当 源字段与字段 均为静态类时，才对目标字段进行下一步初始化加载。
+                initializeTableClass((Class<?>) object);
+            }
+        } catch (IllegalAccessException ignored) {
         }
     }
 
