@@ -21,7 +21,9 @@ public class MineSQLRegistry implements SQLRegistry {
 
     @Override
     public @NotNull Optional<@Nullable SQLManager> getOptional(@Nullable String id) {
-        return Optional.of(this.managers.get(id));
+        if (id != null) return Optional.of(this.managers.get(id));
+        else if (managers.isEmpty()) return Optional.empty();
+        else return Optional.ofNullable(managers.values().iterator().next());
     }
 
     @Override
