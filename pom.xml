@@ -32,6 +32,7 @@
         <module>platforms/bukkit</module>
         <module>platforms/bungee</module>
         <module>platforms/velocity</module>
+        <module>platforms/sponge8</module>
         <module>plugin</module>
     </modules>
 
