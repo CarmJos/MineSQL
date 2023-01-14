@@ -12,6 +12,7 @@ import org.spongepowered.api.Server;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.event.Listener;
+import org.spongepowered.api.event.lifecycle.StartingEngineEvent;
 import org.spongepowered.api.event.lifecycle.StoppingEngineEvent;
 import org.spongepowered.plugin.PluginContainer;
 import org.spongepowered.plugin.builtin.jvm.Plugin;
@@ -27,15 +28,14 @@ import java.nio.file.Path;
  */
 @Plugin("minesql")
 public class MineSQLSponge implements MineSQLPlatform {
-    @Inject
+    private static MineSQLSponge instance;
+
     @ConfigDir(sharedRoot = false)
     private Path configDirectory;
     @Inject
     private org.apache.logging.log4j.Logger logger;
 
-    private static MineSQLSponge instance;
-    private PluginContainer pluginContainer;
-
+    private final PluginContainer pluginContainer;
     private final Metrics metrics;
 
     protected MineSQLCore core;
@@ -46,6 +46,10 @@ public class MineSQLSponge implements MineSQLPlatform {
         instance = this;
         this.core = new MineSQLCore(this);
         this.pluginContainer = pluginContainer;
+    }
+
+    @Listener
+    public void starting(StartingEngineEvent<Server> e) {
         enable();
     }
 
