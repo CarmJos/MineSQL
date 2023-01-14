@@ -21,7 +21,7 @@
 
     <artifactId>minesql-sponge</artifactId>
 
-    <name>EasySQL-Plugin-Sponge</name>
+    <name>MineSQL-Sponge</name>
     <description>轻松(用)SQL的独立运行库Sponge版本插件。</description>
     <url>https://github.com/CarmJos/MineSQL</url>
 
