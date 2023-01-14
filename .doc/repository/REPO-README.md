@@ -13,7 +13,7 @@
     <repository>
         <id>MineSQL</id>
         <name>GitHub Branch Repository</name>
-        <url>https://github.com/CarmJos/MineSQL/blob/repo/</url>
+        <url>https://raw.githubusercontent.com/CarmJos/MineSQL/repo/</url>
     </repository>
 </repositories>
 ```

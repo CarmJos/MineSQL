@@ -133,7 +133,7 @@ Properties 文件的文件名几位数据源的ID，允许为英文、数字、�
             <!--采用github分支依赖库，稳定更新快-->
             <id>MineSQL</id>
             <name>GitHub Branch Repository</name>
-            <url>https://github.com/CarmJos/MineSQL/blob/repo/</url>
+            <url>https://raw.githubusercontent.com/CarmJos/MineSQL/repo/</url>
         </repository>
 
         <repository>
