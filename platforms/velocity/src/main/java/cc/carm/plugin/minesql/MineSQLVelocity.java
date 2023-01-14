@@ -1,6 +1,8 @@
 package cc.carm.plugin.minesql;
 
 
+import cc.carm.lib.easyplugin.utils.ColorParser;
+import cc.carm.lib.easyplugin.utils.JarResourceUtils;
 import cc.carm.plugin.minesql.conf.PluginConfiguration;
 import co.aikar.commands.CommandManager;
 import co.aikar.commands.VelocityCommandManager;
@@ -14,6 +16,7 @@ import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.plugin.PluginDescription;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
+import net.kyori.adventure.text.Component;
 import org.bstats.charts.SimplePie;
 import org.bstats.velocity.Metrics;
 import org.jetbrains.annotations.NotNull;
@@ -21,6 +24,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 
@@ -120,6 +125,9 @@ public class MineSQLVelocity implements MineSQLPlatform {
     }
 
     public void outputInfo() {
-
+        Optional.ofNullable(JarResourceUtils.readResource(this.getClass().getResourceAsStream("PLUGIN_INFO")))
+                .map(v -> ColorParser.parse(Arrays.asList(v)))
+                .ifPresent(list -> list.forEach(s -> getServer().getConsoleCommandSource().sendMessage(Component.text(s))));
     }
+
 }

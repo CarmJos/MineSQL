@@ -24,7 +24,7 @@
     <groupId>cc.carm.plugin</groupId>
     <artifactId>minesql-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.2.2</version>
+    <version>1.3.0</version>
     <modules>
         <module>api</module>
         <module>core</module>
@@ -33,6 +33,7 @@
         <module>platforms/bungee</module>
         <module>platforms/velocity</module>
         <module>platforms/sponge8</module>
+
         <module>plugin</module>
     </modules>
 

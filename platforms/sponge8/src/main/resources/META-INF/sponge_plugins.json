@@ -1,0 +1,39 @@
+{
+  "loader": {
+    "name": "java_plain",
+    "version": "1.0"
+  },
+  "license": "GPL-3.0-or-later",
+  "global": {
+    "version": "8.0.0",
+    "links": {
+      "homepage": "${project.url}",
+      "source": "${project.url}",
+      "issues": "${project.url}/issues"
+    },
+    "contributors": [
+      {
+        "name": "huanmeng",
+        "description": "ContributorContributor"
+      },
+      {
+        "name": "CarmJos",
+        "description": "Lead Developer"
+      }
+    ],
+    "dependencies": [
+      {
+        "id": "spongeapi",
+        "version": "8.0.0"
+      }
+    ]
+  },
+  "plugins": [
+    {
+      "id": "minesql",
+      "name": "MineSQL (EasySQL-Plugin)",
+      "entrypoint": "cc.carm.plugin.minesql.MineSQLSponge",
+      "description": "${project.description}"
+    }
+  ]
+}
