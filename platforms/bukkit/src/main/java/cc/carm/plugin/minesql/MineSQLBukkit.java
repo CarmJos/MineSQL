@@ -2,10 +2,12 @@ package cc.carm.plugin.minesql;
 
 import cc.carm.lib.easyplugin.EasyPlugin;
 import cc.carm.plugin.minesql.conf.PluginConfiguration;
+import co.aikar.commands.CommandManager;
 import co.aikar.commands.PaperCommandManager;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SimplePie;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 
@@ -73,7 +75,7 @@ public class MineSQLBukkit extends EasyPlugin implements MineSQLPlatform {
         return this.core.getConfig();
     }
 
-    public @NotNull PaperCommandManager getCommandManager() {
+    public @Nullable CommandManager<?, ?, ?, ?, ?, ?> getCommandManager() {
         return commandManager;
     }
 

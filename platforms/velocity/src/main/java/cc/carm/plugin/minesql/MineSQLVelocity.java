@@ -17,6 +17,7 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import org.bstats.charts.SimplePie;
 import org.bstats.velocity.Metrics;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -110,7 +111,7 @@ public class MineSQLVelocity implements MineSQLPlatform {
 
 
     @Override
-    public @NotNull CommandManager<?, ?, ?, ?, ?, ?> getCommandManager() {
+    public @Nullable CommandManager<?, ?, ?, ?, ?, ?> getCommandManager() {
         return commandManager;
     }
 

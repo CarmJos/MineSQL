@@ -10,6 +10,7 @@ import net.md_5.bungee.api.plugin.Plugin;
 import org.bstats.bungeecord.Metrics;
 import org.bstats.charts.SimplePie;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.Arrays;
@@ -88,7 +89,7 @@ public class MineSQLBungee extends Plugin implements MineSQLPlatform {
     }
 
     @Override
-    public @NotNull CommandManager<?, ?, ?, ?, ?, ?> getCommandManager() {
+    public @Nullable CommandManager<?, ?, ?, ?, ?, ?> getCommandManager() {
         return this.commandManager;
     }
 
