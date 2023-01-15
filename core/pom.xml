@@ -102,13 +102,6 @@
         </dependency>
 
         <dependency>
-            <groupId>cc.carm.lib</groupId>
-            <artifactId>githubreleases4j</artifactId>
-            <version>1.3.1</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
             <scope>compile</scope>
@@ -131,10 +124,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
