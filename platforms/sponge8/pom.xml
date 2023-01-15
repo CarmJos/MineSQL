@@ -19,7 +19,7 @@
         <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
 
-    <artifactId>minesql-sponge</artifactId>
+    <artifactId>minesql-platform-sponge</artifactId>
 
     <name>MineSQL-Sponge</name>
     <description>轻松(用)SQL的独立运行库Sponge版本插件。</description>

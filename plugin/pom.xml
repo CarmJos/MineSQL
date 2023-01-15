@@ -22,28 +22,28 @@
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>minesql-bukkit</artifactId>
+            <artifactId>minesql-platform-bukkit</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>minesql-bungee</artifactId>
+            <artifactId>minesql-platform-bungee</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>minesql-sponge</artifactId>
+            <artifactId>minesql-platform-sponge</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>minesql-velocity</artifactId>
+            <artifactId>minesql-platform-velocity</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>

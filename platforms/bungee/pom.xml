@@ -19,7 +19,7 @@
         <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
 
-    <artifactId>minesql-bungee</artifactId>
+    <artifactId>minesql-platform-bungee</artifactId>
     <packaging>jar</packaging>
 
     <name>MineSQL-Bungee</name>

@@ -19,7 +19,7 @@
         <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
 
-    <artifactId>minesql-bukkit</artifactId>
+    <artifactId>minesql-platform-bukkit</artifactId>
     <packaging>jar</packaging>
 
     <name>MineSQL-Bukkit</name>

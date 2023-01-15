@@ -19,7 +19,7 @@
         <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
 
-    <artifactId>minesql-velocity</artifactId>
+    <artifactId>minesql-platform-velocity</artifactId>
     <packaging>jar</packaging>
 
     <name>MineSQL-Velocity</name>
