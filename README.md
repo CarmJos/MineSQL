@@ -170,7 +170,7 @@ repositories {
     mavenCentral()
 
     // 采用github分支依赖库，稳定更新快
-    maven { url 'https://github.com/CarmJos/MineSQL/blob/repo/' }
+    maven { url 'https://raw.githubusercontent.com/CarmJos/MineSQL/repo/' }
 
     // 采用我的私人依赖库，简单方便，但可能因为变故而无法使用
     maven { url 'https://repo.carm.cc/repository/maven-public/' }

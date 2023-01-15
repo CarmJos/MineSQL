@@ -22,6 +22,6 @@
 
 ```groovy
 repositories {
-    maven { url 'https://github.com/CarmJos/MineSQL/blob/repo/' }
+    maven { url 'https://raw.githubusercontent.com/CarmJos/MineSQL/repo/' }
 }
 ```
