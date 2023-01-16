@@ -78,7 +78,7 @@ public class MineSQLVelocity implements MineSQLPlatform {
             );
         }
 
-        if (getConfiguration().PROPERTIES.ENABLE.getNotNull()) {
+        if (getConfiguration().UPDATE_CHECKER.getNotNull()) {
             getLogger().info("开始检查更新，可能需要一小段时间...");
             getLogger().info("   如不希望检查更新，可在配置文件中关闭。");
             server.getScheduler().buildTask(this, () -> this.core.checkUpdate(getVersion())).schedule();

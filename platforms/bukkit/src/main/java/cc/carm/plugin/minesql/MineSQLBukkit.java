@@ -45,7 +45,7 @@ public class MineSQLBukkit extends EasyPlugin implements MineSQLPlatform {
             );
         }
 
-        if (getConfiguration().PROPERTIES.ENABLE.getNotNull()) {
+        if (getConfiguration().UPDATE_CHECKER.getNotNull()) {
             log("开始检查更新，可能需要一小段时间...");
             log("   如不希望检查更新，可在配置文件中关闭。");
             getScheduler().runAsync(() -> this.core.checkUpdate(getDescription().getVersion()));
