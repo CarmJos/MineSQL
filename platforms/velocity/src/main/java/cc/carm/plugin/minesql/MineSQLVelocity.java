@@ -29,7 +29,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 
-@Plugin(id = "minesql", name = "MineSQL (EasySQL-Plugin)", version = "1.0.0",
+@Plugin(id = "minesql", name = "MineSQL (EasySQL-Plugin)", version = "1.3.1",
         description = "EasySQL Plugin For Velocity",
         url = "https://github.com/CarmJos/MineSQL",
         authors = {"CarmJos", "GhostChu"}
