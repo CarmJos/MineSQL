@@ -17,7 +17,7 @@ public class DBPropertiesUtil {
         if (!propertiesFolder.exists() || !propertiesFolder.isDirectory()) return propertiesMap;
 
         File[] files = propertiesFolder.listFiles();
-        if (files == null || files.length == 0) return propertiesMap;
+        if (files == null) return propertiesMap;
         for (File file : files) {
             if (!validateName(file.getName())) continue;
             String name = file.getName().substring(0, file.getName().lastIndexOf("."));
