@@ -5,7 +5,7 @@
     <parent>
         <artifactId>minesql-parent</artifactId>
         <groupId>cc.carm.plugin</groupId>
-        <version>1.3.1</version>
+        <version>1.4.0</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -91,16 +91,23 @@
         </dependency>
 
         <dependency>
+            <groupId>net.byteflux</groupId>
+            <artifactId>libby-bungee</artifactId>
+            <version>${deps.libby.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bungeecord</artifactId>
-            <version>3.0.0</version>
+            <version>${deps.bstats.version}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>co.aikar</groupId>
             <artifactId>acf-bungee</artifactId>
-            <version>0.5.1-SNAPSHOT</version>
+            <version>${deps.acf.version}</version>
             <scope>compile</scope>
         </dependency>
 

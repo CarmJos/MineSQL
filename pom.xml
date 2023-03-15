@@ -11,20 +11,26 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
 
-        <deps.easysql.version>0.4.6</deps.easysql.version>
+        <deps.easysql.version>0.4.7</deps.easysql.version>
         <deps.easyconf.version>3.3.1</deps.easyconf.version>
         <deps.easyplugin.version>1.4.18</deps.easyplugin.version>
         <deps.beecp.version>3.3.9</deps.beecp.version>
 
+        <deps.libby.version>1.1.5</deps.libby.version>
+        <deps.acf.version>0.5.1-SNAPSHOT</deps.acf.version>
+        <deps.bstats.version>3.0.0</deps.bstats.version>
+
         <deps.mysql-driver.version>8.0.31</deps.mysql-driver.version>
         <deps.mariadb-driver.version>3.1.0</deps.mariadb-driver.version>
         <deps.h2-driver.version>2.1.214</deps.h2-driver.version>
+
+        <code.package>cc.carm.plugin.minesql</code.package>
     </properties>
 
     <groupId>cc.carm.plugin</groupId>
     <artifactId>minesql-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.3.1</version>
+    <version>1.4.0</version>
     <modules>
         <module>api</module>
         <module>core</module>
@@ -100,6 +106,11 @@
         </repository>
 
         <repository>
+            <id>AlessioDP</id>
+            <url>https://repo.alessiodp.com/releases/</url>
+        </repository>
+
+        <repository>
             <id>central</id>
             <url>https://repo1.maven.org/maven2/</url>
         </repository>
@@ -162,8 +173,8 @@
 
             <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
             <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
                 <version>${deps.mysql-driver.version}</version>
             </dependency>
 

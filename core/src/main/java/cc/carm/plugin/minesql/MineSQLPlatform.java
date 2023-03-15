@@ -1,6 +1,7 @@
 package cc.carm.plugin.minesql;
 
 import co.aikar.commands.CommandManager;
+import net.byteflux.libby.LibraryManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -14,5 +15,7 @@ public interface MineSQLPlatform {
     @NotNull Logger getLogger();
 
     @Nullable CommandManager<?, ?, ?, ?, ?, ?> getCommandManager();
+
+    @NotNull LibraryManager getLibraryManager();
 
 }

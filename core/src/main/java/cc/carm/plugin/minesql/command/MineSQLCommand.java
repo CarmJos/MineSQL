@@ -3,6 +3,7 @@ package cc.carm.plugin.minesql.command;
 import cc.carm.lib.easysql.api.SQLManager;
 import cc.carm.lib.easysql.api.SQLQuery;
 import cc.carm.plugin.minesql.MineSQLCore;
+import cc.carm.plugin.minesql.lib.PluginLibraries;
 import cc.carm.plugin.minesql.util.VersionReader;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
@@ -42,7 +43,7 @@ public class MineSQLCommand extends BaseCommand {
             issuer.sendMessage("§c只有后台执行才能使用此命令。");
             return;
         }
-        VersionReader reader = new VersionReader();
+        VersionReader reader = PluginLibraries.READER;
         String pluginVersion = reader.get("plugin", null);
         if (pluginVersion == null) {
             issuer.sendMessage("§c无法获取当前版本信息，请保证使用原生版本以避免安全问题。");
@@ -50,9 +51,9 @@ public class MineSQLCommand extends BaseCommand {
         }
         issuer.sendMessage("§r当前插件版本为 §b" + pluginVersion + "§r。 §7(基于 EasySQL &3" + reader.get("api") + "&7)");
         issuer.sendMessage("§8 - &f连接池依赖 BeeCP §9" + reader.get("beecp"));
-        issuer.sendMessage("§8 - &f数据库驱动 MySQL §9" + reader.get("mysql-driver"));
-        issuer.sendMessage("§8 - &f数据库驱动 MariaDB §9" + reader.get("mariadb-driver"));
-        issuer.sendMessage("§8 - &f数据库驱动 h2-database §9" + reader.get("h2-driver"));
+        issuer.sendMessage("§8 - &f数据库驱动 MySQL §9" + PluginLibraries.MYSQL_DRIVER.getVersion());
+        issuer.sendMessage("§8 - &f数据库驱动 MariaDB §9" + PluginLibraries.MARIADB_DRIVER.getVersion());
+        issuer.sendMessage("§8 - &f数据库驱动 h2-database §9" + PluginLibraries.H2_DRIVER.getVersion());
 
         issuer.sendMessage("§r正在检查插件更新，请稍候...");
         core.checkUpdate(pluginVersion);
