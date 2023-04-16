@@ -1,0 +1,7 @@
+cc.carm.plugin.minesql
+cc.carm.plugin.minesql.api
+cc.carm.plugin.minesql.api.conf
+cc.carm.plugin.minesql.api.conf.drivers
+cc.carm.plugin.minesql.api.conf.impl
+cc.carm.plugin.minesql.api.source
+cc.carm.plugin.minesql.api.table

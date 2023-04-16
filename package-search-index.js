@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"cc.carm.plugin.minesql"},{"l":"cc.carm.plugin.minesql.api"},{"l":"cc.carm.plugin.minesql.api.conf"},{"l":"cc.carm.plugin.minesql.api.conf.drivers"},{"l":"cc.carm.plugin.minesql.api.conf.impl"},{"l":"cc.carm.plugin.minesql.api.source"},{"l":"cc.carm.plugin.minesql.api.table"}]
