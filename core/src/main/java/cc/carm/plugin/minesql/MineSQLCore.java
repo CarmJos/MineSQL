@@ -124,7 +124,7 @@ public class MineSQLCore implements IMineSQL {
     }
 
     @Override
-    public @NotNull SQLManagerImpl create(@NotNull String name, @NotNull SQLSourceConfig conf) {
+    public @NotNull SQLManagerImpl create(@NotNull String name, @NotNull SQLSourceConfig conf) throws Exception {
         BeeDataSourceConfig config = new BeeDataSourceConfig();
         config.setDriverClassName(conf.getDriverClassName());
         config.setJdbcUrl(conf.getJdbcURL());
@@ -147,7 +147,12 @@ public class MineSQLCore implements IMineSQL {
         Optional.ofNullable(conf.getSettings().getValidationTimeout()).ifPresent(config::setValidTestTimeout);
         Optional.ofNullable(conf.getSettings().getValidationInterval()).ifPresent(config::setValidAssumeTime);
 
-        return create(name, config);
+        SQLManagerImpl manager = create(name, config);
+        if (conf.getInitializer() != null) {
+            conf.getInitializer().accept(manager);
+        }
+
+        return manager;
     }
 
     @Override
