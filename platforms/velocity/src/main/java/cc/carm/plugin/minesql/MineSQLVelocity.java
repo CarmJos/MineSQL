@@ -1,7 +1,5 @@
 package cc.carm.plugin.minesql;
 
-import cc.carm.lib.easyplugin.utils.ColorParser;
-import cc.carm.lib.easyplugin.utils.JarResourceUtils;
 import cc.carm.plugin.minesql.conf.PluginConfiguration;
 import co.aikar.commands.CommandManager;
 import co.aikar.commands.VelocityCommandManager;
@@ -15,19 +13,16 @@ import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.plugin.PluginDescription;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
-import net.kyori.adventure.text.Component;
 import org.bstats.charts.SimplePie;
 import org.bstats.velocity.Metrics;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 
-@Plugin(id = "minesql", name = "MineSQL (EasySQL-Plugin)", version = "1.4.0",
+@Plugin(id = "minesql", name = "MineSQL (EasySQL-Plugin)", version = "1.4.2",
         description = "EasySQL Plugin For Velocity",
         url = "https://github.com/CarmJos/MineSQL",
         authors = {"CarmJos", "GhostChu"}
@@ -52,7 +47,6 @@ public class MineSQLVelocity implements MineSQLPlatform {
         this.dataFolder = dataDirectory.toFile();
         this.metricsFactory = metricsFactory;
 
-        outputInfo();
         getLogger().info("加载基础核心...");
         this.core = new MineSQLCore(this);
     }
@@ -90,7 +84,6 @@ public class MineSQLVelocity implements MineSQLPlatform {
 
     @Subscribe(order = PostOrder.LAST)
     public void onShutdown(ProxyShutdownEvent event) {
-        outputInfo();
         getLogger().info("终止全部数据库连接...");
         this.core.shutdownAll();
     }
@@ -122,11 +115,4 @@ public class MineSQLVelocity implements MineSQLPlatform {
     public @NotNull PluginConfiguration getConfiguration() {
         return this.core.getConfig();
     }
-
-    public void outputInfo() {
-        Optional.ofNullable(JarResourceUtils.readResource(this.getClass().getResourceAsStream("PLUGIN_INFO")))
-                .map(v -> ColorParser.parse(Arrays.asList(v)))
-                .ifPresent(list -> list.forEach(s -> getServer().getConsoleCommandSource().sendMessage(Component.text(s))));
-    }
-
 }
