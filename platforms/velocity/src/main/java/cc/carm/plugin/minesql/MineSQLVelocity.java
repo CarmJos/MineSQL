@@ -123,7 +123,6 @@ public class MineSQLVelocity implements MineSQLPlatform {
         return this.dataFolder;
     }
 
-
     @Override
     public @NotNull CommandManager<?, ?, ?, ?, ?, ?> getCommandManager() {
         return commandManager;

@@ -16,14 +16,14 @@ import cc.carm.plugin.minesql.conf.PluginConfiguration;
 import cc.carm.plugin.minesql.conf.SQLSourceGroup;
 import cc.carm.plugin.minesql.lib.PluginLibraries;
 import cc.carm.plugin.minesql.util.DBPropertiesUtil;
-import cn.beecp.BeeDataSource;
-import cn.beecp.BeeDataSourceConfig;
 import co.aikar.commands.CommandManager;
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.Locales;
 import net.byteflux.libby.Library;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.stone.beecp.BeeDataSource;
+import org.stone.beecp.BeeDataSourceConfig;
 
 import javax.sql.DataSource;
 import java.io.File;
@@ -143,9 +143,9 @@ public class MineSQLCore implements IMineSQL {
         Optional.ofNullable(conf.getSettings().getReadOnly()).ifPresent(config::setDefaultReadOnly);
         Optional.ofNullable(conf.getSettings().getSchema()).ifPresent(config::setDefaultSchema);
 
-        Optional.ofNullable(conf.getSettings().getValidationSQL()).ifPresent(config::setValidTestSql);
-        Optional.ofNullable(conf.getSettings().getValidationTimeout()).ifPresent(config::setValidTestTimeout);
-        Optional.ofNullable(conf.getSettings().getValidationInterval()).ifPresent(config::setValidAssumeTime);
+        Optional.ofNullable(conf.getSettings().getValidationSQL()).ifPresent(config::setAliveTestSql);
+        Optional.ofNullable(conf.getSettings().getValidationTimeout()).ifPresent(config::setAliveTestTimeout);
+        Optional.ofNullable(conf.getSettings().getValidationInterval()).ifPresent(config::setTimerCheckInterval);
 
         SQLManagerImpl manager = create(name, config);
         if (conf.getInitializer() != null) {
