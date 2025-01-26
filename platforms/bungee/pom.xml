@@ -73,13 +73,6 @@
         </dependency>
 
         <dependency>
-            <groupId>net.byteflux</groupId>
-            <artifactId>libby-bungee</artifactId>
-            <version>${deps.libby.version}</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bungeecord</artifactId>
             <version>${deps.bstats.version}</version>

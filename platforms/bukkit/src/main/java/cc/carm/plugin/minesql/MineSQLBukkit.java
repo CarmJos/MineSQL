@@ -86,11 +86,6 @@ public class MineSQLBukkit extends EasyPlugin implements MineSQLPlatform {
     }
 
     @Override
-    public @NotNull LibraryManager getLibraryManager() {
-        return this.libraryManager;
-    }
-
-    @Override
     public @NotNull File getPluginFolder() {
         return getDataFolder();
     }

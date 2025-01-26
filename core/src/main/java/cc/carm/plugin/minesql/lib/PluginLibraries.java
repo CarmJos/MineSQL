@@ -1,7 +1,6 @@
 package cc.carm.plugin.minesql.lib;
 
 import cc.carm.plugin.minesql.util.VersionReader;
-import net.byteflux.libby.Library;
 import org.jetbrains.annotations.NotNull;
 
 public enum PluginLibraries {
@@ -21,16 +20,8 @@ public enum PluginLibraries {
         this.artifactID = artifactID;
     }
 
-    public @NotNull Library getLibrary() {
-        return Library.builder().id(name())
-                .groupId(this.groupID).artifactId(this.artifactID)
-                .version(getVersion())
-                .build();
-    }
-
     public @NotNull String getVersion() {
         return READER.get(name().toLowerCase().replace('_', '-'));
     }
-
 
 }

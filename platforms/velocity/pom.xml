@@ -83,13 +83,6 @@
         </dependency>
 
         <dependency>
-            <groupId>net.byteflux</groupId>
-            <artifactId>libby-velocity</artifactId>
-            <version>${deps.libby.version}</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-velocity</artifactId>
             <version>${deps.bstats.version}</version>

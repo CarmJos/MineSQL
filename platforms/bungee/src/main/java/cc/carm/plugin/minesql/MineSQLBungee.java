@@ -5,8 +5,6 @@ import cc.carm.lib.easyplugin.utils.JarResourceUtils;
 import cc.carm.plugin.minesql.conf.PluginConfiguration;
 import co.aikar.commands.BungeeCommandManager;
 import co.aikar.commands.CommandManager;
-import net.byteflux.libby.BungeeLibraryManager;
-import net.byteflux.libby.LibraryManager;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 import org.bstats.bungeecord.Metrics;
@@ -22,17 +20,12 @@ public class MineSQLBungee extends Plugin implements MineSQLPlatform {
 
     protected static MineSQLBungee instance;
 
-    protected BungeeLibraryManager libraryManager;
-
     protected MineSQLCore core;
     protected BungeeCommandManager commandManager;
 
     @Override
     public void onLoad() {
         MineSQLBungee.instance = this;
-
-        getLogger().info("加载依赖管理器...");
-        this.libraryManager = new BungeeLibraryManager(this);
 
         getLogger().info("加载基础核心...");
         this.core = new MineSQLCore(this);
@@ -97,11 +90,6 @@ public class MineSQLBungee extends Plugin implements MineSQLPlatform {
     @Override
     public @NotNull CommandManager<?, ?, ?, ?, ?, ?> getCommandManager() {
         return this.commandManager;
-    }
-
-    @Override
-    public @NotNull LibraryManager getLibraryManager() {
-        return this.libraryManager;
     }
 
     @SuppressWarnings("deprecation")

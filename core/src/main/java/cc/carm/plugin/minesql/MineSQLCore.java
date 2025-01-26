@@ -14,12 +14,10 @@ import cc.carm.plugin.minesql.command.MineSQLCommand;
 import cc.carm.plugin.minesql.command.MineSQLHelpFormatter;
 import cc.carm.plugin.minesql.conf.PluginConfiguration;
 import cc.carm.plugin.minesql.conf.SQLSourceGroup;
-import cc.carm.plugin.minesql.lib.PluginLibraries;
 import cc.carm.plugin.minesql.util.DBPropertiesUtil;
 import co.aikar.commands.CommandManager;
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.Locales;
-import net.byteflux.libby.Library;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.stone.beecp.BeeDataSource;
@@ -49,17 +47,6 @@ public class MineSQLCore implements IMineSQL {
     public MineSQLCore(MineSQLPlatform platform) {
         instance = this;
         this.platform = platform;
-
-        getLogger().info("加载数据库依赖文件...");
-        getPlatform().getLibraryManager().addMavenLocal();
-        getPlatform().getLibraryManager().addMavenCentral();
-        getPlatform().getLibraryManager().addSonatype();
-
-        for (PluginLibraries value : PluginLibraries.values()) {
-            Library lib = value.getLibrary();
-            getLogger().info("  加载 " + lib.getArtifactId() + " (" + lib.getVersion() + ") ...");
-            getPlatform().getLibraryManager().loadLibrary(value.getLibrary());
-        }
 
         getLogger().info("加载配置文件...");
         this.configProvider = EasyConfiguration.from(new File(platform.getPluginFolder(), "config.yml"));

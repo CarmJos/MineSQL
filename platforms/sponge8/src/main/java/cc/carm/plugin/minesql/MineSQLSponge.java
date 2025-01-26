@@ -5,8 +5,6 @@ import cc.carm.lib.easyplugin.utils.JarResourceUtils;
 import cc.carm.plugin.minesql.conf.PluginConfiguration;
 import co.aikar.commands.CommandManager;
 import com.google.inject.Inject;
-import net.byteflux.libby.LibraryManager;
-import net.byteflux.libby.SpongeLibraryManager;
 import net.kyori.adventure.text.Component;
 import org.bstats.charts.SimplePie;
 import org.bstats.sponge.Metrics;
@@ -43,17 +41,13 @@ public class MineSQLSponge implements MineSQLPlatform {
     private final PluginContainer pluginContainer;
     private final Metrics.Factory metricsFactory;
 
-    protected final SpongeLibraryManager<MineSQLSponge> libraryManager;
     protected final MineSQLCore core;
 //    protected SpongeCommandManager commandManager;
 
     @Inject
-    public MineSQLSponge(Metrics.Factory factory,
-                         PluginContainer pluginContainer,
-                         SpongeLibraryManager<MineSQLSponge> libraryManager) {
+    public MineSQLSponge(Metrics.Factory factory, PluginContainer pluginContainer) {
         this.pluginContainer = pluginContainer;
         this.metricsFactory = factory;
-        this.libraryManager = libraryManager;
 
         getLogger().info("加载基础核心...");
         this.core = new MineSQLCore(this);
@@ -113,11 +107,6 @@ public class MineSQLSponge implements MineSQLPlatform {
     @Override
     public @Nullable CommandManager<?, ?, ?, ?, ?, ?> getCommandManager() {
         return null;
-    }
-
-    @Override
-    public @NotNull LibraryManager getLibraryManager() {
-        return this.libraryManager;
     }
 
     public String getVersion() {

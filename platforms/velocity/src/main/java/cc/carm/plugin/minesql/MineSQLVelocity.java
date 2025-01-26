@@ -1,6 +1,5 @@
 package cc.carm.plugin.minesql;
 
-
 import cc.carm.lib.easyplugin.utils.ColorParser;
 import cc.carm.lib.easyplugin.utils.JarResourceUtils;
 import cc.carm.plugin.minesql.conf.PluginConfiguration;
@@ -16,13 +15,10 @@ import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.plugin.PluginDescription;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
-import net.byteflux.libby.LibraryManager;
-import net.byteflux.libby.VelocityLibraryManager;
 import net.kyori.adventure.text.Component;
 import org.bstats.charts.SimplePie;
 import org.bstats.velocity.Metrics;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -43,7 +39,6 @@ public class MineSQLVelocity implements MineSQLPlatform {
     private final File dataFolder;
 
     private final Metrics.Factory metricsFactory;
-    protected VelocityLibraryManager<MineSQLVelocity> libraryManager;
 
     protected MineSQLCore core;
     protected VelocityCommandManager commandManager;
@@ -56,18 +51,16 @@ public class MineSQLVelocity implements MineSQLPlatform {
         this.logger = logger;
         this.dataFolder = dataDirectory.toFile();
         this.metricsFactory = metricsFactory;
-        this.libraryManager = new VelocityLibraryManager<>(
-                LoggerFactory.getLogger("minesql"), dataDirectory,
-                server.getPluginManager(), this
-        );
+
+        outputInfo();
+        getLogger().info("加载基础核心...");
+        this.core = new MineSQLCore(this);
     }
 
     @Subscribe(order = PostOrder.FIRST)
     public void onInitialize(ProxyInitializeEvent event) {
-        outputInfo();
-        getLogger().info("加载基础核心...");
 
-        this.core = new MineSQLCore(this);
+
         getLogger().info("初始化指令管理器...");
         this.commandManager = new VelocityCommandManager(server, this);
 
@@ -124,11 +117,6 @@ public class MineSQLVelocity implements MineSQLPlatform {
     @Override
     public @NotNull CommandManager<?, ?, ?, ?, ?, ?> getCommandManager() {
         return commandManager;
-    }
-
-    @Override
-    public @NotNull LibraryManager getLibraryManager() {
-        return this.libraryManager;
     }
 
     public @NotNull PluginConfiguration getConfiguration() {
