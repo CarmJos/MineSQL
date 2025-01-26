@@ -30,7 +30,7 @@
     <groupId>cc.carm.plugin</groupId>
     <artifactId>minesql-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.4.1</version>
+    <version>1.4.2</version>
     <modules>
         <module>api</module>
         <module>core</module>
