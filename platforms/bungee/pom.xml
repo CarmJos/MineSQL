@@ -60,7 +60,7 @@
 
         <repository>
             <id>bungeecord-repo</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <url>https://s1.oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
 
     </repositories>
