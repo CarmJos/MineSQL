@@ -60,14 +60,15 @@ public class MineSQLVelocity implements MineSQLPlatform {
                 LoggerFactory.getLogger("minesql"), dataDirectory,
                 server.getPluginManager(), this
         );
-    }
 
-    @Subscribe(order = PostOrder.FIRST)
-    public void onInitialize(ProxyInitializeEvent event) {
         outputInfo();
 
         getLogger().info("加载基础核心...");
         this.core = new MineSQLCore(this);
+    }
+
+    @Subscribe(order = PostOrder.FIRST)
+    public void onInitialize(ProxyInitializeEvent event) {
 
         getLogger().info("初始化指令管理器...");
         this.commandManager = new VelocityCommandManager(server, this);
