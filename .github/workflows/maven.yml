@@ -29,13 +29,17 @@ jobs:
         run: mvn -B package --file pom.xml -Dgpg.skip
 
       - name: "Upload artifacts"
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: artifacts
           path: "**/target/"
+          retention-days: 5
+          include-hidden-files: true
 
       - name: "Upload assets"
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: assets
           path: ".asset/"
+          retention-days: 5
+          include-hidden-files: true
