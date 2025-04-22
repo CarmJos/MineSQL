@@ -1,7 +1,7 @@
 package cc.carm.plugin.minesql;
 
-import cc.carm.lib.configuration.EasyConfiguration;
-import cc.carm.lib.configuration.yaml.YAMLConfigProvider;
+import cc.carm.lib.configuration.source.ConfigurationHolder;
+import cc.carm.lib.configuration.source.yaml.YAMLConfigFactory;
 import cc.carm.lib.easyplugin.utils.JarResourceUtils;
 import cc.carm.lib.easysql.api.SQLManager;
 import cc.carm.lib.easysql.api.SQLQuery;
@@ -35,13 +35,11 @@ public class MineSQLCore implements IMineSQL {
 
     protected static MineSQLCore instance;
 
-    public static final String REPO_OWNER = "CarmJos";
-    public static final String REPO_NAME = "MineSQL";
 
     protected final MineSQLPlatform platform;
 
     protected final MineSQLRegistry registry;
-    protected final YAMLConfigProvider configProvider;
+    protected final ConfigurationHolder<?> configProvider;
     protected final PluginConfiguration config;
 
     public MineSQLCore(MineSQLPlatform platform) {
@@ -49,7 +47,7 @@ public class MineSQLCore implements IMineSQL {
         this.platform = platform;
 
         getLogger().info("加载配置文件...");
-        this.configProvider = EasyConfiguration.from(new File(platform.getPluginFolder(), "config.yml"));
+        this.configProvider = YAMLConfigFactory.from(new File(platform.getPluginFolder(), "config.yml")).build();
         this.config = new PluginConfiguration();
         this.configProvider.initialize(this.config);
 
@@ -239,7 +237,7 @@ public class MineSQLCore implements IMineSQL {
         return config;
     }
 
-    public YAMLConfigProvider getConfigProvider() {
+    public ConfigurationHolder<?> getConfigProvider() {
         return configProvider;
     }
 
@@ -300,8 +298,8 @@ public class MineSQLCore implements IMineSQL {
     public void checkUpdate(String currentVersion) {
         Logger logger = getLogger();
 
-        Integer behindVersions = GithubReleases4J.getVersionBehind(REPO_OWNER, REPO_NAME, currentVersion);
-        String downloadURL = GithubReleases4J.getReleasesURL(REPO_OWNER, REPO_NAME);
+        Integer behindVersions = GithubReleases4J.getVersionBehind(References.REPO_OWNER, References.REPO_NAME, currentVersion);
+        String downloadURL = GithubReleases4J.getReleasesURL(References.REPO_OWNER, References.REPO_NAME);
         if (behindVersions == null) {
             logger.severe("检查更新失败，请您定期查看插件是否更新，避免安全问题。");
             logger.severe("下载地址 " + downloadURL);

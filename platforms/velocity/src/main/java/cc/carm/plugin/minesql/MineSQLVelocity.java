@@ -22,7 +22,8 @@ import java.nio.file.Path;
 import java.util.logging.Logger;
 
 
-@Plugin(id = "minesql", name = "MineSQL (EasySQL-Plugin)", version = "1.4.2",
+@Plugin(id = "minesql", name = "MineSQL (EasySQL-Plugin)",
+        version = References.VERSION,
         description = "EasySQL Plugin For Velocity",
         url = "https://github.com/CarmJos/MineSQL",
         authors = {"CarmJos", "GhostChu"}

@@ -4,8 +4,6 @@ import cc.carm.lib.easyplugin.EasyPlugin;
 import cc.carm.plugin.minesql.conf.PluginConfiguration;
 import co.aikar.commands.CommandManager;
 import co.aikar.commands.PaperCommandManager;
-import net.byteflux.libby.BukkitLibraryManager;
-import net.byteflux.libby.LibraryManager;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SimplePie;
 import org.jetbrains.annotations.NotNull;
@@ -16,17 +14,12 @@ public class MineSQLBukkit extends EasyPlugin implements MineSQLPlatform {
 
     protected static MineSQLBukkit instance;
 
-    protected BukkitLibraryManager libraryManager;
-
     protected MineSQLCore core;
     protected PaperCommandManager commandManager;
 
     @Override
     protected void load() {
         MineSQLBukkit.instance = this;
-
-        log("加载依赖管理器...");
-        this.libraryManager = new BukkitLibraryManager(this);
 
         log("加载基础核心...");
         this.core = new MineSQLCore(this);

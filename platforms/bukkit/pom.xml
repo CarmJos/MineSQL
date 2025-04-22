@@ -5,7 +5,7 @@
     <parent>
         <artifactId>minesql-parent</artifactId>
         <groupId>cc.carm.plugin</groupId>
-        <version>1.4.2</version>
+        <version>1.4.3</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -77,13 +77,6 @@
             <artifactId>spigot-api</artifactId>
             <version>1.16.3-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>net.byteflux</groupId>
-            <artifactId>libby-bukkit</artifactId>
-            <version>${deps.libby.version}</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>

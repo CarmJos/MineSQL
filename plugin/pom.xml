@@ -5,7 +5,7 @@
     <parent>
         <artifactId>minesql-parent</artifactId>
         <groupId>cc.carm.plugin</groupId>
-        <version>1.4.2</version>
+        <version>1.4.3</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <properties>
@@ -30,13 +30,6 @@
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
             <artifactId>minesql-platform-bungee</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>${project.parent.groupId}</groupId>
-            <artifactId>minesql-platform-sponge</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>

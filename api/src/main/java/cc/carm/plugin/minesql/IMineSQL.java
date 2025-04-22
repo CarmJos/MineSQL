@@ -11,7 +11,6 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.sql.DataSource;
 import java.io.File;
-import java.sql.SQLException;
 import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;

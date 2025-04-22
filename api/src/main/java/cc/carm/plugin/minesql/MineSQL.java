@@ -6,6 +6,7 @@ import cc.carm.plugin.minesql.api.SQLRegistry;
 import cc.carm.plugin.minesql.api.source.SQLSourceConfig;
 import cc.carm.plugin.minesql.api.table.SQLTablesRoot;
 import cc.carm.plugin.minesql.api.table.SimpleSQLTable;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,9 +20,15 @@ import java.util.logging.Logger;
 
 public class MineSQL {
 
+    private MineSQL() {
+        throw new UnsupportedOperationException("API Instance");
+    }
+
     private static IMineSQL instance;
 
-    protected static void initializeAPI(IMineSQL api) {
+    @ApiStatus.Internal
+    @SuppressWarnings("ClassEscapesDefinedScope")
+    protected static void initializeAPI(@NotNull IMineSQL api) {
         MineSQL.instance = api;
     }
 

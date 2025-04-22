@@ -1,6 +1,6 @@
 package cc.carm.plugin.minesql.conf;
 
-import cc.carm.lib.configuration.core.source.ConfigurationWrapper;
+import cc.carm.lib.configuration.source.section.ConfigureSection;
 import cc.carm.plugin.minesql.MineSQL;
 import cc.carm.plugin.minesql.api.SQLDriverType;
 import cc.carm.plugin.minesql.api.conf.SQLDriverConfig;
@@ -44,11 +44,11 @@ public class SQLSourceGroup {
         return new SQLSourceGroup(configs);
     }
 
-    public static @NotNull SQLSourceGroup parse(ConfigurationWrapper<?> rootSection) {
+    public static @NotNull SQLSourceGroup parse(ConfigureSection rootSection) {
         LinkedHashMap<String, SQLDriverConfig> configs = new LinkedHashMap<>();
         for (String name : rootSection.getKeys(false)) {
-            if (!rootSection.isConfigurationSection(name)) continue;
-            ConfigurationWrapper<?> section = rootSection.getConfigurationSection(name);
+            if (!rootSection.isSection(name)) continue;
+            ConfigureSection section = rootSection.getSection(name);
             if (section == null) continue;
             SQLDriverConfig conf = parse(name, section);
             if (conf != null) configs.put(name, conf);
@@ -56,7 +56,7 @@ public class SQLSourceGroup {
         return new SQLSourceGroup(configs);
     }
 
-    public static @Nullable SQLDriverConfig parse(String name, ConfigurationWrapper<?> section) {
+    public static @Nullable SQLDriverConfig parse(String name, ConfigureSection section) {
         @Nullable String driverString = section.getString("type");
         @Nullable SQLDriverType driverType = SQLDriverType.parse(driverString);
         if (driverType == null) {
