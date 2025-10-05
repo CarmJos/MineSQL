@@ -22,7 +22,7 @@
 
         <deps.mysql-driver.version>8.2.0</deps.mysql-driver.version>
         <deps.mariadb-driver.version>3.5.6</deps.mariadb-driver.version>
-        <deps.h2-driver.version>2.2.220</deps.h2-driver.version>
+        <deps.h2-driver.version>2.4.240</deps.h2-driver.version>
 
         <code.package>cc.carm.plugin.minesql</code.package>
     </properties>
