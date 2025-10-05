@@ -18,7 +18,7 @@
 
         <deps.libby.version>1.1.5</deps.libby.version>
         <deps.acf.version>0.5.1-SNAPSHOT</deps.acf.version>
-        <deps.bstats.version>3.0.0</deps.bstats.version>
+        <deps.bstats.version>3.1.0</deps.bstats.version>
 
         <deps.mysql-driver.version>8.2.0</deps.mysql-driver.version>
         <deps.mariadb-driver.version>3.5.6</deps.mariadb-driver.version>
