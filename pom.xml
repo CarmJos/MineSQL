@@ -14,7 +14,7 @@
         <deps.easysql.version>0.4.7</deps.easysql.version>
         <deps.easyconf.version>4.2.0</deps.easyconf.version>
         <deps.easyplugin.version>1.5.14</deps.easyplugin.version>
-        <deps.beecp.version>5.0.0</deps.beecp.version>
+        <deps.beecp.version>5.2.1</deps.beecp.version>
 
         <deps.libby.version>1.1.5</deps.libby.version>
         <deps.acf.version>0.5.1-SNAPSHOT</deps.acf.version>
